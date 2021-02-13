@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../../flaminGoFrontEnd/client/dist')));
+app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist')));
 
 app.use('/frontDesk', fdRouter);
 app.use('/maintenance', hmRouter);
