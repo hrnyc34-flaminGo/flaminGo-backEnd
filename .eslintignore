@@ -1,0 +1,4 @@
+.eslint*
+.eslintrc.*
+**/node_modules
+package.json
