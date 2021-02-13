@@ -85,10 +85,15 @@ Document can be found [here](URL_for_link).
   * Edit rooms
 
 ## Installation Guidelines
-  1. clone this repo to your local machine
-  2. run ```npm install``` in the 'root' directory
-  3. run ```npm start```
-  4. find the site on ***localhost:7777***
+
+  1. clone 'flaminGo-frontEnd' repo to your local machine in same folder for this repo
+  2. run ```npm install```  in the flaminGo-frontEnd 'root'
+  3. run ```npm run build-dev``` in the flaminGo-frontEnd 'root'
+  4. run ```npm run sass```  in the flaminGo-frontEnd 'root'
+  5. clone this repo to your local machine
+  6. run ```npm install``` in the 'root' directory
+  7. run ```npm start``` in the 'root' directory``
+  8. find the site on ***localhost:7777***
 
 
 _Have a great day!_
