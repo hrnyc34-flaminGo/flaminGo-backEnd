@@ -4,16 +4,61 @@
 
 - [Login](#login)
 
+  - [Authenticate User](#authenticate-user)
+  
+  - [Validate Token](#validate-token)
+
 - [Rooms](#rooms)
+
+  - [List Rooms](#list-rooms)
+  
+  - [Add A Room](#add-a-room)
+  
+  - [Edit A Room](#edit-a-room)
+  
+  - [Get Specific Room](#get-specific-room)
+  
+  - [List Amenities](#list-amenities)
+  
+  - [List Room Types](#list-room-types)
 
 - [Reservations](#reservations)
 
+  - [Inquire Room Availability](#inquire-room-availability)
+  
+  - [List Reservations](#list-reservations)
+  
+  - [Add New REservation](#add-new-reservation)
+  
+  - [Check-In A Reservation](#check-in-a-reservation)
+  
+  - [Check-Out A Reservation](#check-out-a-reservation)
+  
+
 - [Tasks](#tasks)
+
+  - [List Tasks](#list-tasks)
+  
+  - [Add New Task](#add-new-task)
+  
+  - [Edit Task](#edit-task)
 
 - [Employees](#employees)
 
+  - [List Employees](#list-employees)
+  
+  - [Get Specific Employee](#get-specific-employee)
+  
+  - [Add New Employee](#add-new-employee)
+  
+  - [Edit Employee](#edit-employee)
+  
 - [Timesheets](#timesheets)
 
+  - [Get Employee's Timesheet](#get-employee's-timesheet)
+  
+  - [Edit A Timesheet](#edit-a-timesheet)
+  
 ## Login
 
 ### Authenticate User
@@ -60,7 +105,7 @@ Parameters :
 
 ## Rooms
 ### List Rooms
-`GET /rooms` Retrives a list of rooms. By default all r0oms are returned
+`GET /rooms` Retrives a list of rooms. By default all rooms are returned
 
 Parameters
 
@@ -556,7 +601,7 @@ Response
 [
   {
     "_id": "60108729ffefc9bae107564e",
-    "fistName": "John",
+    "firstName": "John",
     "lastName": "Smith",
     "address1": "123 Hackreactor Rd",
     "address2": "",
@@ -600,7 +645,7 @@ Response
 ```JSON
 {
   "_id": "60108729ffefc9bae107564e",
-  "fistName": "John",
+  "firstName": "John",
   "lastName": "Smith",
   "address1": "123 Hackreactor Rd",
   "address2": "Apt 2",
@@ -645,7 +690,7 @@ Response
 ```JSON
 {
   "_id": "60108729ffefc9bae107564e",
-  "fistName": "John",
+  "firstName": "John",
   "lastName": "Smith",
   "address1": "123 Hackreactor Rd",
   "address2": "Apt 2",
