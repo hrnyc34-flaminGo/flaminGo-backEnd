@@ -1,7 +1,7 @@
-exports.frontDesk = require('./frontDesk/frontDesk.js');
+exports.reservations = require('./reservations/reservations.js');
 
-exports.maintenance = require('./maintenance/maintenance.js');
+exports.tasks = require('./tasks/tasks.js');
 
-exports.management = require('./management/management.js');
+exports.employees = require('./employees/employees.js');
 
-exports.admin = require('./admin/admin.js');
+exports.rooms = require('./rooms/rooms.js');
