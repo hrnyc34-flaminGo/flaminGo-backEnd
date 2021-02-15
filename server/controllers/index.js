@@ -1,7 +1,7 @@
-exports.reservations = require('./reservations/reservations.js');
+exports.reservations = require('./reservations.js');
 
-exports.tasks = require('./tasks/tasks.js');
+exports.tasks = require('./tasks.js');
 
-exports.employees = require('./employees/employees.js');
+exports.employees = require('./employees.js');
 
-exports.rooms = require('./rooms/rooms.js');
+exports.rooms = require('./rooms.js');

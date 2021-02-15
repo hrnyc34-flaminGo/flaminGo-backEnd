@@ -676,8 +676,11 @@ Body Parameter
 | address1 | string | body | String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | String of the employee's city |
-| state | string | body | String of the employee's adress state |
+| state | string | body | String of the employee's address state |
 | zipcode | string | body | String of the employee's zipcode |
+| country | string | body | String of the employee's address country |
+| phone | string | body | String of the employee's phone number |
+| email | string | body | String of the employee's email address |
 | wage | number | body | Number of the employee's hourly wage |
 | startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
 | username | string | body | String of the employee's username |
@@ -723,6 +726,9 @@ Body Parameter
 | city | string | body | [Optional] String of the employee's city |
 | state | string | body | [Optional] String of the employee's adress state |
 | zipcode | string | body | [Optional] String of the employee's zipcode |
+| country | string | body | String of the employee's address country |
+| phone | string | body | String of the employee's phone number |
+| email | string | body | String of the employee's email address |
 | wage | number | body | [Optional] Number of the employee's hourly wage |
 | startDate | string | body | [Optional] String of the employee's start date in the format "YYYY-MM-DD" |
 | username | string | body | [Optional] String of the employee's username |
@@ -731,6 +737,19 @@ Body Parameter
 Response
 
 `Status: 201 CREATED`
+
+### Delete Employee
+`DELETE /employees/:employee_id` Will delete an existing employee
+
+Path Variable
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| employee_id | string | path | String representation of mongo _id |
+
+Response
+
+`Status: 200 OK`
 
 <!-- 
 ** After some thought last night I don't think we need to be able to add/edit employee positions.  We can just hard code the values in the front end as constants that can be referenced for dropdown menus. - Colin 
@@ -842,12 +861,6 @@ Response
 
 `Status: 200 OK`
 
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id field |
-
-
-Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
@@ -867,13 +880,14 @@ Response
 
 
 ### Edit A Timesheet
-`PUT /timesheets/:timesheet_id` Will update the timesheet with corresponding id
+`PUT /timesheets` Will update the timesheet
 
 `Status: 200 OK`
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| timesheet_id | string | path | String representation of mongo _id field |
+| timesheet_id | string | body | String representation of mongo _id field |
+| employee_id | string | body | String representation of mongo employee_id field |
 | monday | number | body | Total hours the employee worked on Monday |
 | tuesday | number | body | Total hours the employee worked on Tuesday |
 | wednesday | number | body | Total hours the employee worked on Wednesday |
