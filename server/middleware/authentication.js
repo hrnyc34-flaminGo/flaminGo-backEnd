@@ -20,6 +20,19 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
+const checkHousekeepingPermissions = jwtAuthz(["housekeeping/maintenance"], {
+  customScopeKey: "permissions"
+})
+const checkFrontDeskPermissions = jwtAuthz(["frontdesk"], {
+  customScopeKey: "permissions"
+})
+const checkManagerPermissions = jwtAuthz(["manager"], {
+  customScopeKey: "permissions"
+})
+const checkAdminPermissions = jwtAuthz(["admin"], {
+  customScopeKey: "permissions"
+})
+
 module.exports = {
   checkJwt,
 };
