@@ -1,4 +1,4 @@
-const { } = require('../../../db/models/example.js');
+const Example = require('../../db/models/example.js');
 
 module.exports = {
   get: (req, res) => {

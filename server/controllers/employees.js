@@ -1,4 +1,4 @@
-const Employee = require('../../../db/models/Employee.js');
+const Employee = require('../../db/models/Employee.js');
 
 module.exports = {
   getAll: (req, res) => {
@@ -39,9 +39,8 @@ module.exports = {
   },
 
   editOne: (req, res) => {
-    const {employee_id, firstName, lastName, address1, address2, city, state, zipcode, country, phone, email, wage, startDate, position} = req.body;
-    console.log(employee_id)
-    Employee.findByIdAndUpdate( employee_id, { ...(firstName && {firstName}), ...(lastName && {lastName}), ...(address1 && {address1}), ...(address2 && {address2}), ...(city && {city}), ...(state && {state}), ...(zipcode && {zipcode}), ...(country && {country}), ...(phone && {phone}), ...(email && {email}), ...(wage && {wage}), ...(startDate && {startDate}), ...(position && {position}) } ).exec()
+    const {employee_id, firstName, lastName, address1, address2, city, state, zipcode, country, phone, email, wage, startDate, position, isActive} = req.body;
+    Employee.findByIdAndUpdate( employee_id, { ...(firstName && {firstName}), ...(lastName && {lastName}), ...(address1 && {address1}), ...(address2 && {address2}), ...(city && {city}), ...(state && {state}), ...(zipcode && {zipcode}), ...(country && {country}), ...(phone && {phone}), ...(email && {email}), ...(wage && {wage}), ...(startDate && {startDate}), ...(position && {position}), ...(isActive && {isActive}) } ).exec()
       .then(result => {
         res.status(200).json(result);
       })
@@ -52,7 +51,7 @@ module.exports = {
 
   removeOne: (req, res) => {
     const { employee_id } = req.params;
-    Employee.findOneAndDelete({ _id: employee_id }).exec()
+    Employee.findByIdAndDelete( employee_id ).exec()
       .then(result => {
         res.status(200);
       })

@@ -861,12 +861,6 @@ Response
 
 `Status: 200 OK`
 
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id field |
-
-
-Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
@@ -886,13 +880,14 @@ Response
 
 
 ### Edit A Timesheet
-`PUT /timesheets/:timesheet_id` Will update the timesheet with corresponding id
+`PUT /timesheets` Will update the timesheet
 
 `Status: 200 OK`
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| timesheet_id | string | path | String representation of mongo _id field |
+| timesheet_id | string | body | String representation of mongo _id field |
+| employee_id | string | body | String representation of mongo employee_id field |
 | monday | number | body | Total hours the employee worked on Monday |
 | tuesday | number | body | Total hours the employee worked on Tuesday |
 | wednesday | number | body | Total hours the employee worked on Wednesday |
