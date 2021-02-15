@@ -2,11 +2,42 @@ db.createCollection('rooms', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: [],
+      required: [
+        'roomType_id',
+        'roomNumber',
+        'amenities',
+        'isClean',
+        'isOccupied'
+      ],
       properties: {
-        'property': {
-          bsonType: 'int',
+        'reservation_id': {
+          bsonType: 'objectId'
         },
+        'roomType_id': {
+          bsonType: 'objectId'
+        },
+        'roomNumber': {
+          bsonType: 'string'
+        },
+        'floorNumber': {
+          bsonType: 'int'
+        },
+        'amenities': {
+          bsonType: ['array'],
+          minItems: 0,
+          items: {
+            bsonType: 'string'
+          }
+        },
+        'isClean': {
+          bsonType: 'boolean',
+        },
+        'isOccupied': {
+          bsonType: 'boolean'
+        },
+        'isUsable': {
+          bsonType: 'boolean'
+        }
       }
     }
   }
