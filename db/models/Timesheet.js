@@ -12,7 +12,9 @@ const timesheetSchema = new Schema({
   saturday: {type: Number, default: 0},
   sunday: {type: Number, default: 0},
   weekStart: {type: String, default: null},
-  weekEnd: {type: String, default: null},
+  weekEnd: {type: String, default: null}
+},
+{
   versionKey: false
 });
 
