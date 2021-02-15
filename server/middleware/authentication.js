@@ -20,6 +20,7 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
+
 const checkHousekeepingPermissions = jwtAuthz(['housekeeping/maintenance'], {
   customScopeKey: 'permissions'
 });
