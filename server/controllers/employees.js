@@ -7,7 +7,7 @@ module.exports = {
     const firstName = searchName ? searchName.split(' ')[0] : null;
     const lastName = searchName ? searchName.split(' ')[1] : null;
     //firstName and lastName may not exist therefore using spread operator to conditionally add those properties if exists
-    const query = {isActive, ...(firstName && {firstName}), ...(lastName && {lastName})};
+    const query = {...(firstName && {firstName}), ...(lastName && {lastName}, isActive)};
     Employee.find(query).exec()
       .then(result => {
         res.status(200).json(result);
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   createOne: (req, res) => {
-    Employee.create({...req.body, weekHours: 0, isActive: true})
+    Employee.create({...req.body})
       .then(result => {
         res.status(201).json(result);
       })
@@ -51,7 +51,7 @@ module.exports = {
 
   removeOne: (req, res) => {
     const { employee_id } = req.params;
-    Employee.findByIdAndDelete( employee_id ).exec()
+    Employee.findByIdAndDelete(employee_id).exec()
       .then(result => {
         res.status(200);
       })
