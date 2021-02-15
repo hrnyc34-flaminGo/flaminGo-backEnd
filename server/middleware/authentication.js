@@ -35,4 +35,8 @@ const checkAdminPermissions = jwtAuthz(["admin"], {
 
 module.exports = {
   checkJwt,
+  checkHousekeepingPermissions,
+  checkFrontDeskPermissions,
+  checkManagerPermissions,
+  checkAdminPermissions
 };
