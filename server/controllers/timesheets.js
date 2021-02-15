@@ -23,10 +23,10 @@ module.exports = {
     const weekEnd = new Date(curr.setDate(end)).toISOString().slice(0, 10); //"2021-02-21"
 
     const update = {...(monday && {monday}), ...(tuesday && {tuesday}), ...(wednesday && {wednesday}), ...(thursday && {thursday}), ...(friday && {friday}), ...(saturday && {saturday}), ...(sunday && {sunday}), ...(weekStart && {weekStart}), ...(weekEnd && {weekEnd}) }
-
+    const weekHours = Object.values(update).reduce((a, b) => {return (typeof a === 'string' ? 0 : a) + (typeof b === 'string' ? 0 : b)})
     const options = {upsert: true, new: true}
 
-    Timesheet.findOneAndUpdate({employee_id, weekStart}, update, options).exec()
+    Timesheet.findOneAndUpdate({employee_id, weekStart}, {...update, weekHours}, options).exec()
       .then(result => {
         res.status(201).json(result);
       })
