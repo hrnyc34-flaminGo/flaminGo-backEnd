@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-const   {checkManagerPermissions, checkAdminPermissions} = require ('../middleware/authentication');
+const {
+  checkManagerPermissions,
+  checkAdminPermissions
+} = require ('../middleware/authentication');
 
 router.get('/', checkManagerPermissions, checkAdminPermissions, controller.employees.get);
 router.get('/:employee_id', checkManagerPermissions, checkAdminPermissions, controller.employees.get);

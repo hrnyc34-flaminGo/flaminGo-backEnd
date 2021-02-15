@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-const   {checkJwt, checkHousekeepingPermissions, checkFrontDeskPermissions, checkManagerPermissions, checkAdminPermissions} = require ('../middleware/authentication');
+const {
+  checkHousekeepingPermissions,
+  checkFrontDeskPermissions,
+  checkManagerPermissions,
+  checkAdminPermissions
+} = require ('../middleware/authentication');
 
 router.get('/', checkHousekeepingPermissions, checkFrontDeskPermissions, checkManagerPermissions, checkAdminPermissions, controller.rooms.get);
 router.get('/:room_id', checkHousekeepingPermissions, checkFrontDeskPermissions, checkManagerPermissions, checkAdminPermissions, controller.rooms.get);
