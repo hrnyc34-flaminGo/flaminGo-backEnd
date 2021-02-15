@@ -7,7 +7,8 @@ db.createCollection('rooms', {
         'roomNumber',
         'amenities',
         'isClean',
-        'isOccupied'
+        'isOccupied',
+        'isUsable'
       ],
       properties: {
         'reservation_id': {

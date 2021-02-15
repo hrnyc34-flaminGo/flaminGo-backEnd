@@ -4,9 +4,16 @@ db.createCollection('tasks', {
       bsonType: 'object',
       required: [],
       properties: {
-        'property': {
-          bsonType: 'int',
+        'room_id': {
+          bsonType: 'object_id',
         },
+        'location': {
+          bsonType: 'string'
+        },
+        'taskTitle': {
+          bsonType: 'string',
+        },
+
       }
     }
   }
