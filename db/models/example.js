@@ -1,21 +1,21 @@
-var mongoose = require('mongoose');
-var db = require('../../db');
-const table = 'examples';
+// var mongoose = require('mongoose');
+// var db = require('../../db');
+// const table = 'examples';
 
-console.log(`connected to collection : "${table}"!`);
+// console.log(`connected to collection : "${table}"!`);
 
-var exampleSchema = mongoose.Schema({
-});
+// var exampleSchema = mongoose.Schema({
+// });
 
-var Examples = mongoose.model('Examples', exampleSchema);
+// var Examples = mongoose.model('Examples', exampleSchema);
 
-const dbMethods = {
-  read: ()=>{
-  },
-  update: () => {
-  },
-  deleteOne: ()=>{
-  }
-};
+// const dbMethods = {
+//   read: ()=>{
+//   },
+//   update: () => {
+//   },
+//   deleteOne: ()=>{
+//   }
+// };
 
-module.exports = dbMethods;
+// module.exports = dbMethods;

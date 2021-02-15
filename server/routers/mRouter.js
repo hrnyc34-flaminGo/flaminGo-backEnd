@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers');
+const controller = require('../controllers/index.js');
 
 router.get('/employees', controller.employees.getAll);
 router.get('/employees/:employee_id', controller.employees.getOne);
