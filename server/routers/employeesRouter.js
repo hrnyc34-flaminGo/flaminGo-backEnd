@@ -7,8 +7,8 @@ const {
 
 router.get('/', checkManagerPermissions, checkAdminPermissions, controller.employees.get);
 router.get('/:employee_id', checkManagerPermissions, checkAdminPermissions, controller.employees.get);
-router.post('/', checkAdminPermissions, controller.employees.post);
-router.put('/:employee_id', checkAdminPermissions, controller.employees.put);
-router.delete('/', checkAdminPermissions, controller.employees.delete);
+router.post('/', checkManagerPermissions, checkAdminPermissions, controller.employees.post);
+router.put('/:employee_id', checkManagerPermissions, checkAdminPermissions, controller.employees.put);
+router.delete('/', checkManagerPermissions, checkAdminPermissions, controller.employees.delete);
 
 module.exports = router;
