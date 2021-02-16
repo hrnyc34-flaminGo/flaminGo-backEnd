@@ -52,6 +52,7 @@ module.exports = {
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
+          updateInfo['roomType_id'] = result._id;
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
           updateInfo['isClean'] = false;
