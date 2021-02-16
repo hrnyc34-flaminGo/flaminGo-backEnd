@@ -15,10 +15,22 @@ module.exports = {
   },
 
   post: (req, res) => {
-
+    const {taskTitle, location, department, taskDescription, room_id, dueBy} = req.body;
+    const createdAt = (new Date).toISOString;
+    Task.create({})
   },
 
   put: (req, res) => {
-
+    const { task_id } = req.params;
+    //if Task isComplete, set completeAt to current date/time
+    const completedAt = req.body.isComplete ? (new Date).toISOString : '';
+    const update = {}
+    Task.findByIdAndUpdate(task_id, update, {new: true}).exec()
+      .then(result => {
+        res.status(201).json(result);
+      })
+      .catch(err => {
+        res.sendStatus(500);
+      })
   }
 };

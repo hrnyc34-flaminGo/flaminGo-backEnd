@@ -4,19 +4,19 @@ const db = require('../../db');
 
 const taskSchema = new Schema({
   room_id: {type: Schema.Types.ObjectId, ref: 'Room'},
-  roomNumber: String,
-  location: String,
-  department: {type: String, required: true},
+  location: {type: String, required: true},
   taskTitle: {type: String, required: true},
-  taskDescription: {type: String, required: true},
+  department: {type: String, required: true},
+  taskDescription: String,
+  isCleaning: {type: String, required: true},
   employeeCreated: {type: String, required: true},
-  dueBy: {type: String, default: null},
+  createdAt: {type: String, required: true},
+  dueBy: {type: String, default: ''},
   isCompleted: {type: Boolean, default: false},
-  employeeCompleted: {type: String, default: null},
-  completedAt: {type: String, default: null}
+  employeeCompleted: {type: String, default: ''},
+  completedAt: {type: String, default: ''}
 },
 {
-  timestamps: true,
   versionKey: false
 });
 
