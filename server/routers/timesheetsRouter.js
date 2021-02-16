@@ -1,7 +1,7 @@
-// const router = require('express').Router();
-// const controller = require('../controllers');
+const router = require('express').Router();
+const controller = require('../controllers');
 
-// router.get('/', controller.employees.get);
-// router.put('/:timesheet_id', controller.employees.put);
+router.get('/:employee_id', controller.timesheets.get);
+router.put('/', controller.timesheets.addOrEdit);
 
-// module.exports = router;
+module.exports = router;

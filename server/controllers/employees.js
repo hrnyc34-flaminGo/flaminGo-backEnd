@@ -29,7 +29,8 @@ module.exports = {
   },
 
   createOne: (req, res) => {
-    Employee.create({...req.body})
+    //req.body = { firstName, lastName, address1, address2, city, state, zipcode, country, phone, email, wage, startDate, position }
+    Employee.create(req.body)
       .then(result => {
         res.status(201).json(result);
       })
@@ -40,9 +41,9 @@ module.exports = {
 
   editOne: (req, res) => {
     const {employee_id, firstName, lastName, address1, address2, city, state, zipcode, country, phone, email, wage, startDate, position, isActive} = req.body;
-    Employee.findByIdAndUpdate( employee_id, { ...(firstName && {firstName}), ...(lastName && {lastName}), ...(address1 && {address1}), ...(address2 && {address2}), ...(city && {city}), ...(state && {state}), ...(zipcode && {zipcode}), ...(country && {country}), ...(phone && {phone}), ...(email && {email}), ...(wage && {wage}), ...(startDate && {startDate}), ...(position && {position}), ...(isActive && {isActive}) } ).exec()
+    Employee.findByIdAndUpdate( employee_id, { ...(firstName && {firstName}), ...(lastName && {lastName}), ...(address1 && {address1}), ...(address2 && {address2}), ...(city && {city}), ...(state && {state}), ...(zipcode && {zipcode}), ...(country && {country}), ...(phone && {phone}), ...(email && {email}), ...(wage && {wage}), ...(startDate && {startDate}), ...(position && {position}), ...(isActive && {isActive}) }, {new: true} ).exec()
       .then(result => {
-        res.status(200).json(result);
+        res.sendStatus(201)
       })
       .catch(err => {
         res.sendStatus(500);
@@ -50,10 +51,10 @@ module.exports = {
   },
 
   removeOne: (req, res) => {
-    const { employee_id } = req.params;
+    console.log(employee_id)
     Employee.findByIdAndDelete(employee_id).exec()
       .then(result => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch(err => {
         res.sendStatus(500);

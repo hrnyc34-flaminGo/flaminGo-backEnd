@@ -683,7 +683,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | Number of the employee's hourly wage |
 | startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
-| username | string | body | String of the employee's username |
 | position | string | body | String of the employee's position (reference official list) |
 
 Response
@@ -873,7 +872,8 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 
 ```
@@ -912,6 +912,7 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 ```
