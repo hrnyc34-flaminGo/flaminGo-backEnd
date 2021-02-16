@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 const db = require('../../db');
 
 const timesheetSchema = new Schema({
-  employee_id: {type: Schema.Types.ObjectId, required: true},
+  employee_id: {type: Schema.Types.ObjectId, ref: 'Employee', required: true},
   monday: {type: Number, default: 0},
   tuesday: {type: Number, default: 0},
   wednesday: {type: Number, default: 0},
