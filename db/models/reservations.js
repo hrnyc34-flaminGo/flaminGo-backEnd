@@ -16,4 +16,6 @@ const reservationsSchema = new Schema({
 
 const Reservation = mongoose.model('Reservation', reservationsSchema);
 
+Reservation.find().limit(10).exec().then( res => console.log(res));
+
 module.exports = Reservation;
