@@ -1,13 +1,14 @@
-var mongoose = require('mongoose');
-var db = require('../../db');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+const db = require('../../db');
 
-const amenitiesSchema = mongoose.Schema({
+const amenitiesSchema = new Schema({
   amenity: { type: String, unique: true }
 });
 
 const Amenities = mongoose.model('Amenities', amenitiesSchema);
 
-module.exports = {
+let amenitiesMethod = {
   readAll: () => {
     return Amenities.find().exec();
   },
@@ -23,3 +24,6 @@ module.exports = {
     return Amenities.deleteOne( { _id: id });
   },
 };
+
+module.exports = Amenities;
+module.exports = amenitiesMethod;
