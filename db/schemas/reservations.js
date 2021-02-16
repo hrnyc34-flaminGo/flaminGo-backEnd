@@ -3,7 +3,7 @@ db.createCollection('reservations', {
     $jsonSchema: {
       bsonType: 'object',
       required: [
-        'bookingClient',
+        'bookingGuest',
         'checkIn',
         'checkOut',
         'roomType_id',
@@ -11,7 +11,7 @@ db.createCollection('reservations', {
         'guestList'
       ],
       properties: {
-        'bookingClient': {
+        'bookingGuest': {
           bsonType: 'object',
         },
         'room_id': {
