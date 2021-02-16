@@ -28,7 +28,7 @@
   
   - [List Reservations](#list-reservations)
   
-  - [Add New REservation](#add-new-reservation)
+  - [Add New Reservation](#add-new-reservation)
   
   - [Check-In A Reservation](#check-in-a-reservation)
   
@@ -295,7 +295,7 @@ Response
   "_id": "507c7f79bcf86cd7994f6c0e",
   "roomNumber": "110",
   "floorNumber": 1,
-  "roomType_id": "507c7f79bcf86cd7994f6c0e"
+  "roomType_id": "507c7f79bcf86cd7994f6c0e",
   "roomType": "Double Queen",
   "amenities": [
     "Non-Smoking",
@@ -505,11 +505,11 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| bookingGuest | string | body | Guest object. Guests can have 4 properites: firstName, lastName, phone, email. All values should be strings Ex: `{firstName: "Bob", lastName: "French", phone: "123-456-7890", email: "bobFrench@email.com"}`|
-| guestList | array | body | Array of guest objects. Guests can have 4 properites: firstName, lastName, phone, email. All values should be strings |
+| bookingGuest | string | body | Guest object. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings Ex: `{firstName: "Bob", lastName: "French", phone: "123-456-7890", email: "bobFrench@email.com"}`|
+| guestList | array | body | Array of guest objects. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings |
 | checkIn | string | body | String representation of date in YYYY-MM-DD format |
 | checkOut | string | body | String representation of date in YYYY-MM-DD format |
-| roomType | string | body | Room type being booked.  Should use the offical list of room types. |
+| roomType | string | body | Room type being booked.  Should use the official list of room types. |
 
 Response
 
@@ -700,7 +700,7 @@ Response
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10002,
+    "zipcode": "10002",
     "country": "United States",
     "phone": "123-456-7890",
     "email": "jsmith@gmail.com",
@@ -744,7 +744,7 @@ Response
   "address2": "Apt 2",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
+  "zipcode": "10002",
   "country": "United States",
   "phone": "123-456-7890",
   "email": "jsmith@gmail.com",
@@ -791,7 +791,7 @@ Response
   "address2": "Apt 2",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
+  "zipcode": "10002",
   "country": "United States",
   "phone": "123-456-7890",
   "email": "jsmith@gmail.com",
