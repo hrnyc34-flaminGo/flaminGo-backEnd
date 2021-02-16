@@ -30,7 +30,7 @@ db.createCollection('tasks', {
         'isCleaning': {
           bsonType: 'bool'
         },
-        'createdEmployee': {
+        'employeeCreated': {
           bsonType: 'string'
         },
         'createdAt': {
@@ -39,13 +39,13 @@ db.createCollection('tasks', {
         'dueBy': {
           bsonType: ['date', 'string']
         },
-        'isComplete': {
+        'isComplete': {git
           bsonType: 'bool'
         },
         'completedAt': {
           bsonType: ['date', 'string']
         },
-        'completedEmployee': {
+        'employeeCompleted': {
           bsonType: 'string'
         }
       }

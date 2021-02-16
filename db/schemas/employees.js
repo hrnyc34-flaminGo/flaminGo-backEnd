@@ -10,7 +10,8 @@ db.createCollection('employees', {
         'country',
         'wage',
         'position',
-        'isActive'
+        'isActive',
+        'email'
       ],
       properties: {
         'firstName': {
@@ -39,6 +40,12 @@ db.createCollection('employees', {
         },
         'wage': {
           bsonType: 'decimal'
+        },
+        'phone': {
+          bsonType: 'string'
+        },
+        'email': {
+          bsonType: 'string'
         },
         'startDate': {
           bsonType: 'date'
