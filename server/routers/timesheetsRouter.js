@@ -1,13 +1,11 @@
 const router = require('express').Router();
 const controller = require('../controllers');
 const {
-  checkFrontDeskPermissions,
-  checkAdminPermissions,
-  checkHousekeepingPermissions,
-  checkManagerPermissions
+  adminManagerPermissions,
+  allPermissions,
 } = require('../middleware/authentication');
 
-router.get('/', checkAdminPermissions, checkManagerPermissions, controller.employees.get);
-router.put('/:timesheet_id', checkAdminPermissions, checkFrontDeskPermissions, checkHousekeepingPermissions, checkManagerPermissions, controller.employees.put);
+router.get('/', adminManagerPermissions, controller.employees.get);
+router.put('/:timesheet_id', allPermissions, controller.employees.put);
 
 module.exports = router;

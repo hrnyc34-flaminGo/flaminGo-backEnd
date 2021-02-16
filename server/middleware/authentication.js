@@ -1,6 +1,12 @@
 const jwt = require('express-jwt');
 const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa');
+const {
+  MANAGER,
+  HOUSEKEEPING_MAINTENANCE,
+  ADMIN,
+  FRONTDESK,
+} = require('./constants');
 
 // Authorization middleware. When used, the
 // Access Token must exist and be verified against
@@ -20,24 +26,26 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
+const adminManagerPermissions = jwtAuthz([MANAGER, ADMIN], {
+  customScopeKey: 'permissions'
+});
 
-const checkHousekeepingPermissions = jwtAuthz(['housekeeping/maintenance'], {
+const reservationsRouterPermissions = jwtAuthz([FRONTDESK, MANAGER, ADMIN], {
   customScopeKey: 'permissions'
 });
-const checkFrontDeskPermissions = jwtAuthz(['frontdesk'], {
+
+const taskRouterPermissions = jwtAuthz([HOUSEKEEPING_MAINTENANCE, MANAGER, ADMIN], {
   customScopeKey: 'permissions'
 });
-const checkManagerPermissions = jwtAuthz(['manager'], {
-  customScopeKey: 'permissions'
-});
-const checkAdminPermissions = jwtAuthz(['admin'], {
+
+const allPermissions = jwtAuthz([FRONTDESK, HOUSEKEEPING_MAINTENANCE, MANAGER, ADMIN], {
   customScopeKey: 'permissions'
 });
 
 module.exports = {
   checkJwt,
-  checkHousekeepingPermissions,
-  checkFrontDeskPermissions,
-  checkManagerPermissions,
-  checkAdminPermissions,
+  adminManagerPermissions,
+  reservationsRouterPermissions,
+  taskRouterPermissions,
+  allPermissions,
 };
