@@ -4,7 +4,7 @@ const database = 'flaminGo';
 if ( process.env.MONGO_URL ) {
   mongoose.connect( process.env.MONGO_URL );
 } else {
-mongoose.connect( `mongodb://localhost/${ database }`, { useNewUrlParser: true, useUnifiedTopology: true } );
+  mongoose.connect( `mongodb://localhost/${ database }`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false } );
 }
 
 mongoose.Promise = Promise;
