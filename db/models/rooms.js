@@ -27,6 +27,23 @@ let roomsMethod = {
   readOne: ( id ) => {
     return Rooms.findOne({ _id: id}).exec();
   },
+  create: (one) => {
+    return Rooms.create(
+      {
+        reservations_id: one.  reservations_id,
+        floorNumber: one.floorNumber,
+        roomNumber: one.roomNumber,
+        roomType: one.roomType,
+        price: one.price,
+        amenities: one.amenities,
+        isClean: one.isClean,
+        isOccupied: one.isOccupied,
+        isUsable: one.isUsable,
+        currentGuests: one.currentGuests,
+        tasks: one.tasks
+      }
+    );
+  },
   update: (one) => {
     console.log('one!!!!!!:', one);
     return Rooms.updateMany(

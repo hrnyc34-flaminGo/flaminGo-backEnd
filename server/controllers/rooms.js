@@ -6,10 +6,9 @@ const amenitiesMethod = require('../../db/models/amenities.js');
 
 module.exports = {
   get: (req, res) => {
-    // GET /rooms Retrieves a list of rooms. By default all rooms are returned
+
     // GET /rooms/:room_id Retrieves a specific room by its id
-    // GET /rooms/amenities Retrieves a list of all room amenities(Status: 200 OK)
-    // GET /rooms/types Retrieves a list of all room types
+
     if (req.url === '/') {
       roomsMethod.readAll()
         .then(result => {
@@ -18,6 +17,7 @@ module.exports = {
         .catch(err => {
           res.sendStatus(500);
         });
+
     } else if (req.url === '/amenities') {
       amenitiesMethod.readAll()
         .then(result => {
@@ -38,15 +38,19 @@ module.exports = {
     }
   },
   post: (req, res) => {
-    console.log('req.url:', req.url);
     let updateInfo = req.body;
-    // POST /rooms Add a new room to the room list
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
-          roomsMethod.update(updateInfo)
+          updateInfo['isClean'] = false;
+          updateInfo['isOccupied'] = false;
+          updateInfo['isUsable'] = false;
+          updateInfo['currentGuests'] = [];
+          updateInfo['tasks'] = [];
+
+          roomsMethod.create(updateInfo)
             .then(result => {
               res.sendStatus(201);
             });
@@ -54,6 +58,7 @@ module.exports = {
         .catch(err => {
           res.sendStatus(500);
         });
+
     } else if (req.url === '/amenities') {
       amenitiesMethod.create(updateInfo)
         .then(result => {
@@ -62,6 +67,7 @@ module.exports = {
         .catch(err => {
           res.sendStatus(500);
         });
+
     } else if (req.url === '/types') {
       roomTypeMethod.update(updateInfo)
         .then(result => {
@@ -73,7 +79,6 @@ module.exports = {
     }
   },
   put: (req, res) => {
-    // PUT /rooms/:room_id
     const { room_id } = req.params;
     let roomIdInfo = new ObjectId(room_id);
     let updateInfo = req.body;
@@ -82,6 +87,9 @@ module.exports = {
         updateInfo['_id'] = roomIdInfo;
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
+
+        //ADD tasks HERE
+
         roomsMethod.update(updateInfo)
           .then(result => {
             res.sendStatus(201);
@@ -93,6 +101,5 @@ module.exports = {
 
   },
   delete: (req, res) => {
-
   }
 };
