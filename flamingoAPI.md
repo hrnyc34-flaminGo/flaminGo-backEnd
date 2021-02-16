@@ -62,7 +62,7 @@
 ## Login
 
 ### Authenticate User
-`POST employees/authenticate-user`  Sends User Information
+`POST /employees/authenticate-user`  Sends User Information
 
 Response
 
@@ -85,7 +85,7 @@ Parameters
 ```
 
 ### Validate Token
-`GET employees/validate-token`
+`GET /employees/validate-token`
 
 Response
 
@@ -105,7 +105,7 @@ Parameters :
 
 ## Rooms
 ### List Rooms
-`GET /rooms` Retrives a list of rooms. By default all rooms are returned
+`GET /rooms` Retrieves a list of rooms. By default all rooms are returned
 
 Parameters
 
@@ -207,7 +207,7 @@ Parameters
 | roomnumber | string | body | [Optional] String of room number |  |
 | floornumber | number | body | [Optional] Floor number |  |
 | roomType | string | body | [Optional] Room type of new room |
-| amenities | array | body | [Optional] Array with room amenities (Will completely overide the old array of amenities) |
+| amenities | array | body | [Optional] Array with room amenities (Will completely override the old array of amenities) |
 
 Response
 
@@ -228,7 +228,7 @@ Response
 ```
 
 ### Get Specific Room
-`GET /rooms/:room_id` Retrives a specific room by its id
+`GET /rooms/:room_id` Retrieves a specific room by its id
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -272,7 +272,7 @@ Response
 },
 ```
 ### List Amenities
-`GET /rooms/amenities` Retrives a list of all room amenities.
+`GET /rooms/amenities` Retrieves a list of all room amenities.
 
 Response
 
@@ -301,7 +301,7 @@ Response
 ```
 
 ### List Room Types
-`GET /rooms/types` Retrives a list of all room types
+`GET /rooms/types` Retrieves a list of all room types
 
 Response
 
@@ -312,7 +312,7 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single Queen",
-    "price": 150.00,
+    "price": 150.00
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
@@ -589,7 +589,7 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| searchName | string | query | [Optional] String to match seaching for employee name |
+| searchName | string | query | [Optional] String to match searching for employee name |
 | isActive | boolean | query | [Optional] Default: true |
 
 
@@ -683,7 +683,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | Number of the employee's hourly wage |
 | startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
-| username | string | body | String of the employee's username |
 | position | string | body | String of the employee's position (reference official list) |
 
 Response
@@ -724,7 +723,7 @@ Body Parameter
 | address1 | string | body | [Optional] String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | [Optional] String of the employee's city |
-| state | string | body | [Optional] String of the employee's adress state |
+| state | string | body | [Optional] String of the employee's address state |
 | zipcode | string | body | [Optional] String of the employee's zipcode |
 | country | string | body | String of the employee's address country |
 | phone | string | body | String of the employee's phone number |
@@ -873,7 +872,8 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 
 ```
@@ -912,6 +912,7 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 ```

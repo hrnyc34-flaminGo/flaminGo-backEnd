@@ -11,12 +11,14 @@
   "author": "Claire Sujin Kim",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.7",
     "webpack": "^5.13.0",
     "webpack-cli": "^4.3.1"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "eslint": "^7.17.0",
     "eslint-plugin-react": "^7.22.0",
@@ -29,7 +31,6 @@
     "mongoose": "^5.11.13",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7",
-    "styled-components": "^5.2.1"
+    "path": "^0.12.7"
   }
 }
