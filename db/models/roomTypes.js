@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const db = require('../../db');
 
-const Amenities = require('../../db/models/amenities.js');
-
 const roomTypesSchema = new Schema({
   roomType: { type: String, unique: true },
   price: Number,
