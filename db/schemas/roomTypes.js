@@ -12,7 +12,14 @@ db.createCollection('roomTypes', {
         },
         'price': {
           bsonType: 'decimal'
-        }
+        },
+        'amenities': {
+          bsonType: ['array'],
+          minItems: 0,
+          items: {
+            bsonType: 'string'
+          }
+        },
       }
     }
   }

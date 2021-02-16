@@ -1,0 +1,1 @@
+{"options":{"validator":{"$jsonSchema":{"bsonType":"object","required":["amenity"],"properties":{"amenity":{"bsonType":"string"}}}},"validationLevel":"strict","validationAction":"error"},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"be64f5e654dd4292a3e4f96cd17277b7","collectionName":"amenities"}

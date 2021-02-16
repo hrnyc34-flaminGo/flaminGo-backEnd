@@ -13,7 +13,7 @@ db.createCollection('tasks', {
       ],
       properties: {
         'room_id': {
-          bsonType: 'object_id',
+          bsonType: ['objectId', 'null'],
         },
         'location': {
           bsonType: 'string'
@@ -28,7 +28,7 @@ db.createCollection('tasks', {
           bsonType: 'string'
         },
         'isCleaning': {
-          bsonType: 'boolean'
+          bsonType: 'bool'
         },
         'createdEmployee': {
           bsonType: 'string'
@@ -37,13 +37,13 @@ db.createCollection('tasks', {
           bsonType: 'date'
         },
         'dueBy': {
-          bsonType: 'date'
+          bsonType: ['date', 'string']
         },
         'isComplete': {
-          bsonType: 'boolean'
+          bsonType: 'bool'
         },
         'completedAt': {
-          bsonType: 'date'
+          bsonType: ['date', 'string']
         },
         'completedEmployee': {
           bsonType: 'string'

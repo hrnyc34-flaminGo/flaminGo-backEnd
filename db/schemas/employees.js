@@ -2,7 +2,16 @@ db.createCollection('employees', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: [],
+      required: [
+        'firstName',
+        'lastName',
+        'address1',
+        'city',
+        'country',
+        'wage',
+        'position',
+        'isActive'
+      ],
       properties: {
         'firstName': {
           bsonType: 'string',
@@ -22,6 +31,9 @@ db.createCollection('employees', {
         'state': {
           bsonType: 'string'
         },
+        'country': {
+          bsonType: 'string'
+        },
         'zipcode': {
           bsonType: 'string'
         },
@@ -34,22 +46,15 @@ db.createCollection('employees', {
         'username': {
           bsonType: 'string'
         },
-        'passwordHash': {
-          bsonType: 'string'
-        },
-        'needsNewPassword': {
-          bsonType: 'boolean'
-        },
-        'salt': {
-          bsonType: 'string'
-        },
         'position': {
           bsonType: 'string'
         },
         'isActive': {
-          bsonType: 'boolean'
+          bsonType: 'bool'
         }
       }
     }
   }
 });
+
+

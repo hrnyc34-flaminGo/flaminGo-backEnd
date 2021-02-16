@@ -1,3 +1,6 @@
+conn = new Mongo();
+db = conn.getDB('flaminGo');
+
 db.createCollection('rooms', {
   validator: {
     $jsonSchema: {
@@ -5,14 +8,13 @@ db.createCollection('rooms', {
       required: [
         'roomType_id',
         'roomNumber',
-        'amenities',
         'isClean',
         'isOccupied',
         'isUsable'
       ],
       properties: {
         'reservation_id': {
-          bsonType: 'objectId'
+          bsonType: ['objectId', 'string']
         },
         'roomType_id': {
           bsonType: 'objectId'
@@ -23,21 +25,14 @@ db.createCollection('rooms', {
         'floorNumber': {
           bsonType: 'int'
         },
-        'amenities': {
-          bsonType: ['array'],
-          minItems: 0,
-          items: {
-            bsonType: 'string'
-          }
-        },
         'isClean': {
-          bsonType: 'boolean',
+          bsonType: 'bool',
         },
         'isOccupied': {
-          bsonType: 'boolean'
+          bsonType: 'bool'
         },
         'isUsable': {
-          bsonType: 'boolean'
+          bsonType: 'bool'
         }
       }
     }
