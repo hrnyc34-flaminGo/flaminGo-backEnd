@@ -19,10 +19,10 @@ db.createCollection('timesheets', {
           bsonType: 'objectId',
         },
         'weekStart': {
-          bsonType: 'date',
+          bsonType: 'string',
         },
         'weekEnd': {
-          bsonType: 'date',
+          bsonType: 'string',
         },
         'monday': {
           bsonType: 'decimal',
