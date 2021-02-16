@@ -1,18 +1,33 @@
 const Reservation = require('../../db/models/reservations');
 const reformat = require('../helpers/reformat');
 
+const formatReservation = (reservation) => {
+  let bookingGuest = reformat.guestToName(reservation.bookingGuest);
+  let guestList = reformat.guestListToNameList(reservation.guestList);
+  let totalCost = reformat.decimal128ToFloat(reservation.totalCost);
+  let {_id, room_id, roomNumber, roomType, checkIn, checkOut} = reservation;
+  return {
+    bookingGuest,
+    guestList,
+    totalCost,
+    _id,
+    room_id,
+    roomNumber,
+    roomType,
+    checkIn,
+    checkOut
+  };
+};
+
 module.exports = {
   get: (req, res) => {
     Reservation.find().sort({checkIn: -1})
       .then((result) => {
-        result.forEach((reservation) => {
-          reservation.bookingGuest = reformat.guestToName(reservation.bookingGuest);
-          reservation.guestList = reformat.guestListToNameList(reservation.guestList);
-        });
-        res.status(200).send(result);
+        let body = result.map(formatReservation);
+        res.status(200).send(body);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.sendStatus(500);
       });
   },

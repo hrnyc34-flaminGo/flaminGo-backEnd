@@ -7,4 +7,8 @@ const guestListToNameList = (guestList) => {
   return guestList.map(guestToName);
 };
 
-module.exports = {guestToName, guestListToNameList};
+const decimal128ToFloat = (decimal) => {
+  return parseFloat(decimal.toString()).toFixed(2);
+};
+
+module.exports = {guestToName, guestListToNameList, decimal128ToFloat};
