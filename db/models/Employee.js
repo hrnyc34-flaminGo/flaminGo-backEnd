@@ -12,12 +12,12 @@ const employeeSchema = new Schema({
   zipcode: {type: Number, default: ''},
   country: {type: String, required: true},
   phone: {type: Number, default: ''},
-  email: {type: String, unique: true, required: true},
+  email: {type: String, required: true, unique: true},
   wage: {type: Number, required: true},
-  startDate: {type: String, required: true},
+  startDate: {type: String},
   position: {type: String, required: true},
   weekHours: {type: Number, default: 0},
-  isActive: {type: Boolean, default: true}
+  isActive: {type: Boolean, required: true, default: true}
 }, {
   versionKey: false
 });
