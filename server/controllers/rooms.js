@@ -28,7 +28,6 @@ module.exports = {
         });
 
     } else if (req.url === '/amenities') {
-      console.log('req.url:', req.url);
       amenitiesMethod.readAll()
         .then(result => {
           res.status(200).json(result);
