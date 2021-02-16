@@ -4,6 +4,8 @@ const db = require('../../db');
 
 const amenitiesSchema = new Schema({
   amenity: { type: String, unique: true }
+}, {
+  versionKey: false
 });
 
 const Amenities = mongoose.model('Amenities', amenitiesSchema);
@@ -15,9 +17,9 @@ let amenitiesMethod = {
   readOne: ( id )=>{
     return Amenities.findOne({ _id: id }).exec();
   },
-  create: (type) => {
+  create: ( one ) => {
     return Amenities.create({
-      amenity: type
+      amenity: one.type
     });
   },
   deleteOne: ( id )=>{

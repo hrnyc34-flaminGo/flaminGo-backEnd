@@ -6,6 +6,8 @@ const roomTypesSchema = new Schema({
   roomType: { type: String, unique: true },
   price: Number,
   amenities: []
+}, {
+  versionKey: false
 });
 
 const RoomTypes = mongoose.model('RoomTypes', roomTypesSchema);
@@ -30,7 +32,7 @@ let roomTypeMethod = {
   },
   deleteOne: (type) => {
     return RoomTypes.deleteOne({ roomType: type });
-  },
+  }
 };
 
 module.exports = RoomTypes;
