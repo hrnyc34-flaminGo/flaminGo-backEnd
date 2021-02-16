@@ -1,8 +1,8 @@
-const Example = require('../../db/models/example.js');
+const Reservation = require('../../db/models/reservations');
 
 module.exports = {
   get: (req, res) => {
-
+    res.status(200).send();
   },
   post: (req, res) => {
 
