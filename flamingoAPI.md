@@ -353,11 +353,19 @@ Response:
   "results": [
     {
       "name": "Single Queen",
+      "amenities": [
+        "TV"
+      ],
       "qty": 10,
       "price": 150.00
     },
     {
       "name": "Double Queen",
+      "amenities": [
+        "Ocean View",
+        "TV",
+        "Non-Smoking"
+      ],
       "qty": 7,
       "price": 225.00
     },
@@ -389,6 +397,7 @@ Response
 [
   {
     "_id": "5ffa25a6a13f985fdeda9e70",
+    "room_id": "602b14fd541461fcab3686b5",
     "bookingGuest": "John Smith",
     "roomNumber": "",
     "roomType": "Single Queen",
@@ -423,11 +432,11 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| bookingGuest_id | string | body | String representation of guest's mongo _id field |
-| guestList | array | body | List of names for all guests staying on this reservation |
+| bookingGuest | string | body | Guest object. Guests can have 4 properites: firstName, lastName, phone, email. All values should be strings Ex: `{firstName: "Bob", lastName: "French", phone: "123-456-7890", email: "bobFrench@email.com"}`|
+| guestList | array | body | Array of guest objects. Guests can have 4 properites: firstName, lastName, phone, email. All values should be strings |
 | checkIn | string | body | String representation of date in YYYY-MM-DD format |
 | checkOut | string | body | String representation of date in YYYY-MM-DD format |
-| bookedRoom | string | body | Name of the room type being booked |
+| roomType | string | body | Room type being booked.  Should use the offical list of room types. |
 
 Response
 
@@ -464,14 +473,25 @@ Response
 ```JSON
 {
     "_id": "60108729ffefc9bae107564c",
-    "bookingGuest": "Soo Yung",
+    "bookingGuest": {
+        "firstName": "Adam",
+        "lastName": "Pollock",
+        "phone": "540-771-6242",
+        "email": "AdamDPollock@teleworm.us"
+    },
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
-    "checkIn": "2021-05-03",
-    "checkOut": "2021-05-10",
+    "totalCost": 1050.00,
+    "checkIn": "2021-05-03T13:44:00.000Z",
+    "checkOut": "2021-05-10T13:44:00.000Z",
     "guestList": [
-      "Soo Yung"
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+      },
+    ...
     ]
   }
 ```
