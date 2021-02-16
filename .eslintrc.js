@@ -1,6 +1,8 @@
 module.exports = {
   env: {
-    'es6': true
+    'commonjs': true,
+    'node': true,
+
   },
   parserOptions: {
     sourceType: 'module',
@@ -14,7 +16,7 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 2,
     'indent': [2, 2],
     /* Variable names */
-    'camelcase': 2,
+    'camelcase': 0,
     /* Language constructs */
     'curly': 2,
     'eqeqeq': [2, 'smart'],

@@ -6,7 +6,7 @@ router.use(adminManagerPermissions);
 
 router.get('/', controller.employees.get);
 router.get('/:employee_id', controller.employees.get);
-router.post('/', employees.post);
+router.post('/', controller.employees.post);
 router.put('/:employee_id', controller.employees.put);
 router.delete('/', controller.employees.delete);
 
