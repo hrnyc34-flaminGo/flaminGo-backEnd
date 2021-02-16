@@ -11,7 +11,7 @@ const roomTypesSchema = new Schema({
 const RoomTypes = mongoose.model('RoomTypes', roomTypesSchema);
 
 let roomTypeMethod = {
-  readAll: ( type ) => {
+  readAll: () => {
     return RoomTypes.find().exec();
   },
   readOne: ( type ) => {
