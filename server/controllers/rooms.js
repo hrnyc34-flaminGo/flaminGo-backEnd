@@ -16,7 +16,7 @@ module.exports = {
           res.sendStatus(500);
         });
 
-    } else if (req.params) {
+    } else if (req.params && req.url !== '/amenities' && req.url !== '/types') {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
@@ -29,6 +29,7 @@ module.exports = {
         });
 
     } else if (req.url === '/amenities') {
+      console.log('req.url:', req.url);
       amenitiesMethod.readAll()
         .then(result => {
           res.status(200).json(result);
@@ -52,7 +53,9 @@ module.exports = {
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
-          updateInfo['roomType_id'] = result._id;
+          let roomTypeIdInfo = new ObjectId(result._id);
+
+          updateInfo['roomType_id'] = roomTypeIdInfo;
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
           updateInfo['isClean'] = false;
@@ -99,8 +102,10 @@ module.exports = {
         updateInfo['_id'] = roomIdInfo;
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
+        updateInfo['reservations_id'] = result.reservations_id || '';
 
-        //ADD tasks HERE
+        // ADD  and Update reservations HERE (reservation_id, currentGuest, isOccupied )
+        // ADD tasks HERE (isClean, isUsable, tasks[])
 
         roomsMethod.update(updateInfo)
           .then(result => {

@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 const db = require('../../db');
 
 const roomsSchema = new Schema({
-  // reservations_id: { type: Schema.Types.ObjectId, ref: 'Reservations' },
-  roomType_id: { type: Schema.Types.ObjectId, ref: 'Roomtypes', required: true },
+  reservations_id: { type: String },
+  roomType_id: { type: Schema.Types.ObjectId, ref: 'roomtypes', required: true },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
   roomType: { type: String },
@@ -31,7 +31,7 @@ let roomsMethod = {
   create: (one) => {
     return Rooms.create(
       {
-        reservations_id: one.  reservations_id,
+        roomType_id: one.roomType_id,
         floorNumber: one.floorNumber,
         roomNumber: one.roomNumber,
         roomType: one.roomType,

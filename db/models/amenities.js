@@ -18,8 +18,9 @@ let amenitiesMethod = {
     return Amenities.findOne({ _id: id }).exec();
   },
   create: ( one ) => {
+    console.log('create:', one);
     return Amenities.create({
-      amenity: one.type
+      amenity: one.amenity
     });
   },
   deleteOne: ( id )=>{
