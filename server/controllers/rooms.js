@@ -7,10 +7,20 @@ const amenitiesMethod = require('../../db/models/amenities.js');
 module.exports = {
   get: (req, res) => {
 
-    // GET /rooms/:room_id Retrieves a specific room by its id
-
     if (req.url === '/') {
       roomsMethod.readAll()
+        .then(result => {
+          res.status(200).json(result);
+        })
+        .catch(err => {
+          res.sendStatus(500);
+        });
+
+    } else if (req.params) {
+      const { room_id } = req.params;
+      let roomIdInfo = new ObjectId(room_id);
+
+      roomsMethod.readOne(roomIdInfo)
         .then(result => {
           res.status(200).json(result);
         })
@@ -82,6 +92,7 @@ module.exports = {
     const { room_id } = req.params;
     let roomIdInfo = new ObjectId(room_id);
     let updateInfo = req.body;
+
     roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
         updateInfo['_id'] = roomIdInfo;

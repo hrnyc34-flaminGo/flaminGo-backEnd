@@ -45,7 +45,6 @@ let roomsMethod = {
     );
   },
   update: (one) => {
-    console.log('one!!!!!!:', one);
     return Rooms.updateMany(
       { _id: one._id },
       {
