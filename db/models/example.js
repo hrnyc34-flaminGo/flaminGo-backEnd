@@ -5,13 +5,8 @@
 // console.log(`connected to collection : "${table}"!`);
 
 // const exampleSchema = mongoose.Schema({
-//   name: {type: String, unique: true}
 // });
 
 // const Example = mongoose.model('Example', exampleSchema);
 
-
-// module.exports = {
-//   readAll: ()=>{},
-//   create: ()=>{}
-// };
+// module.exports = Example;
