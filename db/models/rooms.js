@@ -25,8 +25,8 @@ let roomsMethod = {
   readAll: () => {
     return Rooms.find().exec();
   },
-  readOne: ( id ) => {
-    return Rooms.findOne({ _id: id}).exec();
+  readOne: (id) => {
+    return Rooms.findOne({ _id: id }).exec();
   },
   create: (one) => {
     return Rooms.create(
@@ -46,6 +46,7 @@ let roomsMethod = {
     );
   },
   update: (one) => {
+    console.log('one:', one);
     return Rooms.updateMany(
       { _id: one._id },
       {

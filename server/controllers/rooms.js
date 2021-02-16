@@ -6,7 +6,6 @@ const amenitiesMethod = require('../../db/models/amenities.js');
 
 module.exports = {
   get: (req, res) => {
-
     if (req.url === '/') {
       roomsMethod.readAll()
         .then(result => {
