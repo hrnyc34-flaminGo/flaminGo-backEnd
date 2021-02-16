@@ -1,5 +1,4 @@
-
-const guestToName = ({firstName, lastName}) => {
+const guestToName = ({ firstName, lastName }) => {
   return firstName + ' ' + lastName;
 };
 
@@ -11,4 +10,14 @@ const decimal128ToFloat = (decimal) => {
   return parseFloat(decimal.toString()).toFixed(2);
 };
 
-module.exports = {guestToName, guestListToNameList, decimal128ToFloat};
+const toDashDate = (timeString) => {
+  let date = new Date(timeString);
+  return date.toISOString().slice(0, 10);
+};
+
+module.exports = {
+  guestToName,
+  guestListToNameList,
+  decimal128ToFloat,
+  toDashDate,
+};
