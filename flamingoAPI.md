@@ -367,7 +367,7 @@ Response:
 ```
 
 ### List Reservations
-`GET /reservations` Will return a list of reservations matching the search criteria.  By default it will return any reservations that are checking in/out today.
+`GET /reservations` Will return a list of reservations sorted by the check-in date
 
 Parameters
 
