@@ -1,4 +1,5 @@
 const Timesheet = require('../../db/models/Timesheet.js');
+const Employee = require('../../db/models/Employee.js')
 
 module.exports = {
   get: (req, res) => {
@@ -26,8 +27,17 @@ module.exports = {
     const weekHours = Object.values(update).reduce((a, b) => {return (typeof a === 'string' ? 0 : a) + (typeof b === 'string' ? 0 : b)})
     const options = {upsert: true, new: true}
 
+
     Timesheet.findOneAndUpdate({employee_id, weekStart}, {...update, weekHours}, options).exec()
       .then(result => {
+        //Update weekHours parameter for Employee based on employee_id
+        Employee.findByIdAndUpdate(employee_id, {weekHours}).exec()
+          .then(() => {
+            console.log(`Employee Weekly Hours Updated: ${weekHours}`)
+          })
+          .catch(err => {
+            console.error('Failed to update Employee Weekly Hours after updating Timesheet.')
+          })
         res.status(201).json(result);
       })
       .catch(err => {

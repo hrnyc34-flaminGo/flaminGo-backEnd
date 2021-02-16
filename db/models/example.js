@@ -9,5 +9,4 @@
 
 // const Example = mongoose.model('Example', exampleSchema);
 
-
 // module.exports = Example;
