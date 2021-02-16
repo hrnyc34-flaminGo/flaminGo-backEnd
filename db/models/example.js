@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var db = require('../../db');
-const table = 'examples';
+// var mongoose = require('mongoose');
+// var db = require('../../db');
+// const table = 'examples';
 
-console.log(`connected to collection : "${table}"!`);
+// console.log(`connected to collection : "${table}"!`);
 
-const exampleSchema = mongoose.Schema({
-});
+// const exampleSchema = mongoose.Schema({
+// });
 
-const Example = mongoose.model('Example', exampleSchema);
+// const Example = mongoose.model('Example', exampleSchema);
 
 
-module.exports = Example;
+// module.exports = Example;

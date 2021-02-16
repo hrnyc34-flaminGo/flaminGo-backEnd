@@ -873,7 +873,8 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 
 ```
@@ -912,6 +913,7 @@ Response
   "saturday": 0,
   "sunday": 0,
   "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14"
+  "weekEnd": "2021-02-14",
+  "weekHours": 37
 }
 ```
