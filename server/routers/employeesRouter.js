@@ -5,10 +5,12 @@ const {
   checkAdminPermissions
 } = require ('../middleware/authentication');
 
-router.get('/', checkManagerPermissions, checkAdminPermissions, controller.employees.get);
-router.get('/:employee_id', checkManagerPermissions, checkAdminPermissions, controller.employees.get);
-router.post('/', checkManagerPermissions, checkAdminPermissions, controller.employees.post);
-router.put('/:employee_id', checkManagerPermissions, checkAdminPermissions, controller.employees.put);
-router.delete('/', checkManagerPermissions, checkAdminPermissions, controller.employees.delete);
+router.get('/', controller.employees.getAll);
+router.get('/:employee_id', controller.employees.getOne);
+router.post('/', controller.employees.createOne);
+router.put('/:employee_id', controller.employees.editOne);
+router.delete('/:employee_id', controller.employees.removeOne);
+// router.post('/authenticate-user', controller.employees.post);
+// router.get('/validate-token', controller.employees.get);
 
 module.exports = router;

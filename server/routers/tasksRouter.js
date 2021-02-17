@@ -1,15 +1,10 @@
-const router = require('express').Router();
-const controller = require('../controllers');
-const {
-  checkHousekeepingPermissions,
-  checkAdminPermissions,
-  checkManagerPermissions
-} = require('../middleware/authentication');
+// const router = require('express').Router();
+// const controller = require('../controllers');
 
-router.get('/', checkManagerPermissions, checkAdminPermissions, checkHousekeepingPermissions, controller.tasks.get);
-router.post('/', checkManagerPermissions, checkAdminPermissions, checkHousekeepingPermissions, controller.tasks.post);
-router.put('/:task_id', checkManagerPermissions, checkAdminPermissions, checkHousekeepingPermissions, controller.tasks.put);
-router.delete('/', checkManagerPermissions, checkAdminPermissions, checkHousekeepingPermissions, controller.tasks.delete);
+// router.get('/', controller.tasks.get);
+// router.post('/', controller.tasks.post);
+// router.put('/:task_id', controller.tasks.put);
+// router.delete('/', controller.tasks.delete);
 
 
-module.exports = router;
+// module.exports = router;

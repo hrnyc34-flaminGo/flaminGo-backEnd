@@ -7,7 +7,7 @@ const {
   checkManagerPermissions
 } = require('../middleware/authentication');
 
-router.get('/', checkAdminPermissions, checkManagerPermissions, controller.employees.get);
-router.put('/:timesheet_id', checkAdminPermissions, checkFrontDeskPermissions, checkHousekeepingPermissions, checkManagerPermissions, controller.employees.put);
+router.get('/:employee_id', controller.timesheets.get);
+router.put('/', controller.timesheets.addOrEdit);
 
 module.exports = router;
