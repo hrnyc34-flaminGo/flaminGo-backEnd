@@ -750,7 +750,7 @@ Path Variable
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 
 Response
 
@@ -829,7 +829,7 @@ Body Parameter
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 | firstName | string | body |[Optional] String of the employee's first name |
 | lastName | string | body | [Optional]String of the employee's last name |
 | address1 | string | body | [Optional] String of the employee's address |
@@ -842,7 +842,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | [Optional] Number of the employee's hourly wage |
 | startDate | string | body | [Optional] String of the employee's start date in the format "YYYY-MM-DD" |
-| username | string | body | [Optional] String of the employee's username |
 | position | string | body | [Optional] String of the employee's position (reference official list) |
 
 Response
@@ -856,7 +855,7 @@ Path Variable
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 
 Response
 
