@@ -1,11 +1,8 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-const {
-  checkHousekeepingPermissions,
-  checkFrontDeskPermissions,
-  checkManagerPermissions,
-  checkAdminPermissions
-} = require ('../middleware/authentication');
+const { allPermissions } = require ('../middleware/authentication');
+
+// router.use(allPermissions);
 
 router.get('/', controller.rooms.get);
 router.get('/:room_id', controller.rooms.get);
