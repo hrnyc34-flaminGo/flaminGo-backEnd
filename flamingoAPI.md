@@ -2,12 +2,6 @@
 
 ## Table of Contents
 
-- [Login](#login)
-
-  - [Authenticate User](#authenticate-user)
-  
-  - [Validate Token](#validate-token)
-
 - [Rooms](#rooms)
 
   - [List Rooms](#list-rooms)
@@ -59,49 +53,6 @@
   
   - [Edit A Timesheet](#edit-a-timesheet)
   
-## Login
-
-### Authenticate User
-`POST /employees/authenticate-user`  Sends User Information
-
-Response
-
-`Status: 200 OK`
-
-Bad Request Response
-`Status: 400 BAD_REQUEST`
-
-Internal Server Error Response
-`Status: 500 INTERNAL_SERVER_ERROR`
-
-Parameters
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | body | String of username |
-| password | string | body | String of hashed password |
-
-```JSON
-{TBD}
-```
-
-### Validate Token
-`GET /employees/validate-token`
-
-Response
-
-`Status: 200 OK`
-
-Unauthorized Response
-`Status: 401 UNAUTHORIZED`
-
-Parameters :
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | ? | String of username |
-
-```JSON
-{ "user": {req.user(TBD)} }
-```
 
 ## Rooms
 ### List Rooms
@@ -765,28 +716,26 @@ Response
 ```JSON
 [
   {
-    "_id": "60108729ffefc9bae107564e",
-    "firstName": "John",
-    "lastName": "Smith",
-    "address1": "123 Hackreactor Rd",
+    "id": "auth0|999999999999999999999999",
+    "name": "Theo Telonis",
+    "email": "theo123@gmail.com",
+    "address1": "456 Main St.",
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": "10002",
-    "country": "United States",
+    "zipcode": 10012,
+    "country": "USA",
     "phone": "123-456-7890",
-    "email": "jsmith@gmail.com",
-    "wage": 15.00,
+    "wage": 12654,
     "startDate": "2021-02-13",
-    "position": "Front Desk",
+    "position": "systemAdministration",
     "weekHours": 30,
     "isActive": true
   },
   {
-    "_id": 2,
-    "firstName": "Jane",
-    "lastName": "Doe",
-    "address1": "456 Generic PL"
+    "id": "auth0|000000000000000000000000",
+    "name": "Josh Adams",
+    "email": "josh123@gmail.com",
     ...
   },
   ...
@@ -809,20 +758,19 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
-  "firstName": "John",
-  "lastName": "Smith",
-  "address1": "123 Hackreactor Rd",
-  "address2": "Apt 2",
+  "id": "auth0|999999999999999999999999",
+  "name": "Theo Telonis",
+  "email": "theo123@gmail.com",
+  "address1": "456 Main St.",
+  "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": "10002",
-  "country": "United States",
+  "zipcode": 10012,
+  "country": "USA",
   "phone": "123-456-7890",
-  "email": "jsmith@gmail.com",
-  "wage": 15.00,
+  "wage": 12654,
   "startDate": "2021-02-13",
-  "position": "Front Desk",
+  "position": "systemAdministration",
   "weekHours": 30,
   "isActive": true
 }
@@ -856,21 +804,20 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
-  "firstName": "John",
-  "lastName": "Smith",
-  "address1": "123 Hackreactor Rd",
-  "address2": "Apt 2",
+  "id": "auth0|999999999999999999999999",
+  "name": "Theo Telonis",
+  "email": "theo123@gmail.com",
+  "address1": "456 Main St.",
+  "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": "10002",
-  "country": "United States",
+  "zipcode": 10012,
+  "country": "USA",
   "phone": "123-456-7890",
-  "email": "jsmith@gmail.com",
-  "wage": 15.00,
+  "wage": 12654,
   "startDate": "2021-02-13",
-  "position": "Front Desk",
-  "weekHours": 0,
+  "position": "systemAdministration",
+  "weekHours": 30,
   "isActive": true
 }
 ```

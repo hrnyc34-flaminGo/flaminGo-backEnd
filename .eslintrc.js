@@ -1,10 +1,11 @@
 module.exports = {
   env: {
-    'es6': true
+    'commonjs': true,
+    'node': true,
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 6,
+    ecmaVersion: 2018,
     ecmaFeatures: {
       'jsx': true
     }
@@ -14,7 +15,7 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 2,
     'indent': [2, 2],
     /* Variable names */
-    'camelcase': 2,
+    'camelcase': 0,
     /* Language constructs */
     'curly': 2,
     'eqeqeq': [2, 'smart'],

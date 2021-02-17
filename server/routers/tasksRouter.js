@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const controller = require('../controllers');
+const { taskRouterPermissions } = require('../middleware/authentication');
+
+// router.use(taskRouterPermissions);
 
 router.get('/', controller.tasks.get);
 router.post('/', controller.tasks.post);
