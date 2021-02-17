@@ -6,7 +6,7 @@ const guestListToNameList = (guestList) => {
   return guestList.map(guestToName);
 };
 
-const decimal128ToFloat = (decimal) => {
+const decimal128ToMoneyString = (decimal) => {
   return parseFloat(decimal.toString()).toFixed(2);
 };
 
@@ -18,6 +18,6 @@ const toDashDate = (timeString) => {
 module.exports = {
   guestToName,
   guestListToNameList,
-  decimal128ToFloat,
+  decimal128ToMoneyString,
   toDashDate,
 };
