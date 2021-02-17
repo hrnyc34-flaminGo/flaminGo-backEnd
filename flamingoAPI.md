@@ -140,7 +140,7 @@ Response
     "isClean":true,
     "isOccupied": true,
     "isUsable": true,
-    "price": 150.00,
+    "price": "150.00",
     "bookingGuest": {
         "firstName": "Muriel",
         "lastName": "Albers",
@@ -210,7 +210,7 @@ Response
     "isClean":true,
     "isOccupied": true,
     "isUsable": true,
-    "price": 150.00,
+    "price": "150.00",
     "bookingGuest": {
         "firstName": "Muriel",
         "lastName": "Albers",
@@ -265,7 +265,7 @@ Response
   "floorNumber": 1,
   "roomType": "Double Queen",
   "roomType_id": "507c7f79bcf86cd7994f6c0e",
-  "price": 150.00,
+  "price": "150.00",
   "isClean":true,
   "isOccupied": true,
   "isUsable": true,
@@ -365,7 +365,7 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single Queen",
-    "price": 150.00,
+    "price": "150.00",
     "amenities": [
       "TV",
       "Ocean View",
@@ -375,7 +375,7 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single King",
-    "price": 200.00,
+    "price": "200.00",
     "amenities": [
       "Mini-Fridge",
       "Pool Side",
@@ -385,7 +385,7 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Suite",
-    "price": 400.00,
+    "price": "400.00",
     "amenities": [
       "Kitchen",
       "Hot Tub",
@@ -396,7 +396,7 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Double Twin",
-    "price": 100.00,
+    "price": "100.00",
     "amenities": [
       "Pet Friendly",
       "Non-Smoking"
@@ -430,7 +430,7 @@ Response:
         "TV"
       ],
       "qty": 10,
-      "price": 150.00
+      "price": "150.00"
     },
     {
       "name": "Double Queen",
@@ -440,7 +440,7 @@ Response:
         "Non-Smoking"
       ],
       "qty": 7,
-      "price": 225.00
+      "price": "225.00"
     },
     ...
   ]
@@ -448,7 +448,7 @@ Response:
 ```
 
 ### List Reservations
-`GET /reservations` Will return a list of reservations matching the search criteria.  By default it will return any reservations that are checking in/out today.
+`GET /reservations` Will return a list of reservations sorted by the check-in date
 
 Parameters
 
@@ -472,9 +472,10 @@ Response
     "_id": "5ffa25a6a13f985fdeda9e70",
     "room_id": "602b14fd541461fcab3686b5",
     "bookingGuest": "John Smith",
+    "room_id": "",
     "roomNumber": "",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-10-22",
     "checkOut": "2021-10-28",
     "guestList": [
@@ -485,9 +486,10 @@ Response
   {
     "_id": "60108729ffefc9bae107564c",
     "bookingGuest": "Soo Yung",
+    "room_id": "60108729ffefc9bae10756bc",
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-05-03",
     "checkOut": "2021-05-10",
     "guestList": [
@@ -554,7 +556,7 @@ Response
     },
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 1050.00,
+    "totalCost": "1050.00",
     "checkIn": "2021-05-03T13:44:00.000Z",
     "checkOut": "2021-05-10T13:44:00.000Z",
     "guestList": [
@@ -843,101 +845,7 @@ Response
 
 `Status: 200 OK`
 
-<!-- 
-** After some thought last night I don't think we need to be able to add/edit employee positions.  We can just hard code the values in the front end as constants that can be referenced for dropdown menus. - Colin 
-**
-
-### List Employee Positions
-`GET /employees/positions` Will get list of employee types.
-
-Response
-
-`Status: 200 OK`
-
-```JSON
-[
-  "Front Desk",
-  "Housekeeping",
-  "Maintenance",
-  "Management",
-  "System Administration"
-]
-```
-
-### Add Employee Position
-`POST /employees/positions` Will add a new employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| type | string | body | String of new employee type |
-
-
-Response
-
-`Status: 201 CREATED`
-
-```JSON
-{
-  "_id":"60108729ffefc9bae107564f",
-  "position": "Front Desk",
-}
-``` 
-
-### Edit Employee Type
-`PUT /employees/positions/:position_id` Will edit an existing employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| position_id | string | path | String representation of employee's unique mongo _id |
-| position | string | body | Position name to replace previous name |
-
-Response
-
-`Status: 204 OK`
--->
-
 ## Timesheets
-
-<!-- 
-** I dont think we need this one for MVP, we just need a list of timesheets for a specific employee - Colin **
-
-
-### List Timesheets
-`GET /timesheets` Will return a list of timesheets for all hotel employees.
-
-Response
-
-`Status: 200 OK`.
-
-```JSON
-[
-    {
-      "timesheet_id": "60108729ffefc9bae1075652",
-      "employee_id": "60108729ffefc9bae1075651",
-      "monday": 8,
-      "tuesday": 7,
-      "wednesday": 8,
-      "thursday": 5,
-      "friday": 9,
-      "saturday": 0,
-      "sunday": 0,
-      "weekStart": "2021-02-08",
-      "weekEnd": "2021-02-14"
-    },
-    {
-      "timesheet_id": "60108729ffefc9bae1075653",
-      "employee_id": "60108729ffefc9bae1075654",
-      ...
-    },
-    ...
-]
-
-```
--->
 
 ### Get Employee's Timesheet
 `GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique id.  Results are sorted with the most recent first
