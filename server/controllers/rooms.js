@@ -101,7 +101,6 @@ module.exports = {
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
         updateInfo['isOccupied'] = false;
-        // updateInfo['reservations_id'] = result.reservations_id || '';
 
         // ADD and Update reservations HERE (
         // if reservation
