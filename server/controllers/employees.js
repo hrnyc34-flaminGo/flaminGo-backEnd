@@ -135,7 +135,6 @@ module.exports = {
   },
 
   removeOne: (req, res) => {
-
     const { employee_id } = req.params;
     axios.delete(`https://${AUTH0_DOMAIN}/api/v2/users/${employee_id}`, {
       headers: {
