@@ -5,7 +5,7 @@ const reservationsRouter = require('./routers/reservationsRouter');
 const roomsRouter = require('./routers/roomsRouter');
 const tasksRouter = require('./routers/tasksRouter');
 const timesheetsRouter = require('./routers/timesheetsRouter');
-const autoFeatures = require('./controllers/autoFeatures')
+const autoFeatures = require('./controllers/autoFeatures');
 
 const app = express();
 

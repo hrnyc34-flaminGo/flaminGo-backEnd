@@ -8,11 +8,10 @@ db.createCollection('tasks', {
         'department',
         'createdAt',
         'isComplete',
-        'createdEmployee'
       ],
       properties: {
         'room_id': {
-          bsonType: ['objectId', 'null'],
+          bsonType: ['objectId', 'string'],
         },
         'location': {
           bsonType: 'string'

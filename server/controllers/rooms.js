@@ -6,7 +6,6 @@ const amenitiesMethod = require('../../db/models/amenities.js');
 
 module.exports = {
   get: (req, res) => {
-
     if (req.url === '/') {
       roomsMethod.readAll()
         .then(result => {
@@ -16,7 +15,7 @@ module.exports = {
           res.sendStatus(500);
         });
 
-    } else if (req.params) {
+    } else if (req.params && req.url !== '/amenities' && req.url !== '/types') {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
@@ -52,6 +51,9 @@ module.exports = {
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
+          let roomTypeIdInfo = new ObjectId(result._id);
+
+          updateInfo['roomType_id'] = roomTypeIdInfo;
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
           updateInfo['isClean'] = false;
@@ -98,8 +100,19 @@ module.exports = {
         updateInfo['_id'] = roomIdInfo;
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
+        updateInfo['isOccupied'] = false;
+        // updateInfo['reservations_id'] = result.reservations_id || '';
 
-        //ADD tasks HERE
+        // ADD and Update reservations HERE (
+        // if reservation
+        // reservation_id
+        ////// let reservationInfo = new ObjectId(result._id);
+        ////// updateInfo['reservations_id'] = reservationInfo ;
+        // currentGuest
+        ////// updateInfo['currentGuest'] = result.guestList
+        ////// updateInfo['isOccupied'] = true )
+
+        // ADD tasks HERE (isClean, isUsable, tasks[])
 
         roomsMethod.update(updateInfo)
           .then(result => {

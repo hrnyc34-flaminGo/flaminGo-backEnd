@@ -19,7 +19,7 @@ let amenitiesMethod = {
   },
   create: ( one ) => {
     return Amenities.create({
-      amenity: one.type
+      amenity: one.amenity
     });
   },
   deleteOne: ( id )=>{

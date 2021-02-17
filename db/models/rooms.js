@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, Mixed } = mongoose;
 const db = require('../../db');
 
 const roomsSchema = new Schema({
-  // reservations_id: { type: Schema.Types.ObjectId, ref: 'Reservations', required: true },
+  reservations_id: { type: Mixed, default: '' },
+  roomType_id: { type: Schema.Types.ObjectId, ref: 'roomtypes', required: true },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
   roomType: { type: String },
