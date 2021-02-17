@@ -1,11 +1,15 @@
 const Timesheet = require('../../db/models/Timesheet.js');
 const Employee = require('../../db/models/Employee.js');
 
+const getTimesheetsByEmployee = (employee_id, count) =>
+  Timesheet.find({employee_id}).sort({weekStart: 'desc'}).limit(Number(count)).exec();
+
 module.exports = {
+  getTimesheetsByEmployee,
   get: (req, res) => {
     const { employee_id } = req.params;
     const count = req.query.count ? req.query.count : 0;
-    Timesheet.find({employee_id}).sort({weekStart: 'desc'}).limit(Number(count)).exec()
+    getTimesheetsByEmployee(employee_id, count)
       .then(result => {
         res.status(200).json(result);
       })
@@ -13,7 +17,6 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-
   addOrEdit: (req, res) => {
     const {timesheet_id, employee_id, monday, tuesday, wednesday, thursday, friday, saturday, sunday} = req.body;
 

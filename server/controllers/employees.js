@@ -1,20 +1,23 @@
-const Employee = require('../../db/models/Employee.js');
 const { AUTH0_DOMAIN, MGMT_API_TOKEN } = process.env;
-var axios = require('axios');
+const axios = require('axios');
+const { getTimesheetsByEmployee } = require('./timesheets');
 
 module.exports = {
   getAll: (req, res) => {
-    // Add isActive filter
+    const isActive = req.query.isActive ? req.query.isActive : true;
+    //const isActive = false;
     const { searchName } = req.query;
     axios.get(`https://${AUTH0_DOMAIN}/api/v2/users`, {
       params: {
         q: searchName ? `name:*${searchName}*` : undefined,
+        q: `user_metadata.isActive:${isActive}`,
       },
       headers: {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     })
       .then(({ data }) => res.status(200).json(data.map((user) => ({
+        id: user.user_id,
         name: user.name,
         email: user.email,
         ...user.user_metadata,
@@ -42,7 +45,12 @@ module.exports = {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     })
-      .then(({ data }) => res.status(200).json(data))
+      .then(({ data: user }) => res.status(200).json(({
+        id: user.user_id,
+        name: user.name,
+        email: user.email,
+        ...user.user_metadata,
+      })))
       .catch(() => res.sendStatus(500));
 
     // const { employee_id } = req.params;
