@@ -87,8 +87,8 @@ module.exports = {
   },
 
   editOne: (req, res) => {
+    const { employee_id } = req.params;
     const {
-      employee_id,
       firstName,
       lastName,
       address1,
@@ -130,8 +130,8 @@ module.exports = {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     })
-      .then(() => res.status(200))
-      .catch(() => res.sendStatus(500));
+      .then(() => res.sendStatus(200))
+      .catch((err) => res.sendStatus(500));
   },
 
   removeOne: (req, res) => {
