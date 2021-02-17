@@ -2,12 +2,6 @@
 
 ## Table of Contents
 
-- [Login](#login)
-
-  - [Authenticate User](#authenticate-user)
-  
-  - [Validate Token](#validate-token)
-
 - [Rooms](#rooms)
 
   - [List Rooms](#list-rooms)
@@ -59,49 +53,6 @@
   
   - [Edit A Timesheet](#edit-a-timesheet)
   
-## Login
-
-### Authenticate User
-`POST /employees/authenticate-user`  Sends User Information
-
-Response
-
-`Status: 200 OK`
-
-Bad Request Response
-`Status: 400 BAD_REQUEST`
-
-Internal Server Error Response
-`Status: 500 INTERNAL_SERVER_ERROR`
-
-Parameters
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | body | String of username |
-| password | string | body | String of hashed password |
-
-```JSON
-{TBD}
-```
-
-### Validate Token
-`GET /employees/validate-token`
-
-Response
-
-`Status: 200 OK`
-
-Unauthorized Response
-`Status: 401 UNAUTHORIZED`
-
-Parameters :
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | ? | String of username |
-
-```JSON
-{ "user": {req.user(TBD)} }
-```
 
 ## Rooms
 ### List Rooms
