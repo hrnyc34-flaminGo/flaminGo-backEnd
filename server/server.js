@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist')));
 
 app.use('/employees', employeesRouter);
-// app.use('/reservations', reservationsRouter);
+app.use('/reservations', reservationsRouter);
 app.use('/rooms', roomsRouter);
 app.use('/tasks', tasksRouter);
 app.use('/timesheets', timesheetsRouter);
