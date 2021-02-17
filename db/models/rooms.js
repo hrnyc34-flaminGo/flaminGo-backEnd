@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, Mixed } = mongoose;
 const db = require('../../db');
 
 const roomsSchema = new Schema({
-  // reservations_id: { type: Schema.Types.ObjectId, ref: 'Reservations', required: true },
+  reservations_id: { type: Mixed, default: '' },
+  roomType_id: { type: Schema.Types.ObjectId, ref: 'roomtypes', required: true },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
   roomType: { type: String },
@@ -24,13 +25,13 @@ let roomsMethod = {
   readAll: () => {
     return Rooms.find().exec();
   },
-  readOne: ( id ) => {
-    return Rooms.findOne({ _id: id}).exec();
+  readOne: (id) => {
+    return Rooms.findOne({ _id: id }).exec();
   },
   create: (one) => {
     return Rooms.create(
       {
-        reservations_id: one.  reservations_id,
+        roomType_id: one.roomType_id,
         floorNumber: one.floorNumber,
         roomNumber: one.roomNumber,
         roomType: one.roomType,
@@ -45,6 +46,7 @@ let roomsMethod = {
     );
   },
   update: (one) => {
+    console.log('one:', one);
     return Rooms.updateMany(
       { _id: one._id },
       {
