@@ -28,7 +28,7 @@
   
   - [List Reservations](#list-reservations)
   
-  - [Add New REservation](#add-new-reservation)
+  - [Add New Reservation](#add-new-reservation)
   
   - [Check-In A Reservation](#check-in-a-reservation)
   
@@ -129,6 +129,8 @@ Response
     "_id": "507c7f79bcf86cd7994f6c0e",
     "roomNumber": "110",
     "floorNumber": 1,
+    "roomType_id": "602b118a541461fcab3686ac",
+    "reservation_id": "602b3b5e94bd6e1e4f85decf",
     "roomType": "Double Queen",
     "amenities": [
       "Non-Smoking",
@@ -137,10 +139,22 @@ Response
     ],
     "isClean":true,
     "isOccupied": true,
+    "isUsable": true,
+    "price": "150.00",
+    "bookingGuest": {
+        "firstName": "Muriel",
+        "lastName": "Albers",
+        "phone": "340-771-6242",
+        "email": "MurielAlbers@teleworm.us"
+    },
     "currentGuests": [
-      "Bob Palmer",
-      "Alice Palmer",
-      "Bobby Jr Palmer"
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+    },
+    ...
     ],
     "tasks": [
       {
@@ -175,7 +189,6 @@ Parameters
 | roomnumber | string | body | String of room number |
 | floornumber | number | body | [Optional] Floor number |
 | roomType | string | body | Room type of new room |
-| amenities | array | body | [Optional] Array with room amenities |
 
 Response
 
@@ -183,17 +196,50 @@ Response
 
 ```JSON
 {
-  "_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "floorNumber": 1,
-  "roomType": "Double Queen",
-  "price": 150.00,
-  "amenities": [
-    "Non-Smoking",
-    "Pool Side",
-    "Mini-Fridge"
-  ]
-}
+    "_id": "507c7f79bcf86cd7994f6c0e",
+    "roomNumber": "110",
+    "floorNumber": 1,
+    "roomType_id": "602b118a541461fcab3686ac",
+    "reservation_id": "602b3b5e94bd6e1e4f85decf",
+    "roomType": "Double Queen",
+    "amenities": [
+      "Non-Smoking",
+      "Pool Side",
+      "Mini-Fridge"
+    ],
+    "isClean":true,
+    "isOccupied": true,
+    "isUsable": true,
+    "price": "150.00",
+    "bookingGuest": {
+        "firstName": "Muriel",
+        "lastName": "Albers",
+        "phone": "340-771-6242",
+        "email": "MurielAlbers@teleworm.us"
+    },
+    "currentGuests": [
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+    },
+    ...
+    ],
+    "tasks": [
+      {
+        "_id":"5febcfb988e5d76e417427c6",
+        "taskTitle": "Daily cleaning",
+        "department":"Housekeeping"
+      },
+      {
+        "_id":"5febcfc488e5d76e417427c7",
+        "taskTitle": "Shower needs new caulk",
+        "department":"Maintenance"
+      },
+      ...
+    ]
+  }
 ```
 
 ### Edit A Room
@@ -207,7 +253,6 @@ Parameters
 | roomnumber | string | body | [Optional] String of room number |  |
 | floornumber | number | body | [Optional] Floor number |  |
 | roomType | string | body | [Optional] Room type of new room |
-| amenities | array | body | [Optional] Array with room amenities (Will completely override the old array of amenities) |
 
 Response
 
@@ -219,6 +264,13 @@ Response
   "roomNumber": "110",
   "floorNumber": 1,
   "roomType": "Double Queen",
+  "roomType_id": "507c7f79bcf86cd7994f6c0e",
+  "price": "150.00",
+  "isClean":true,
+  "isOccupied": true,
+  "isUsable": true,
+  "task":[],
+  "currentGuest": [],
   "amenities": [
     "Non-Smoking",
     "Pool Side",
@@ -243,6 +295,7 @@ Response
   "_id": "507c7f79bcf86cd7994f6c0e",
   "roomNumber": "110",
   "floorNumber": 1,
+  "roomType_id": "507c7f79bcf86cd7994f6c0e",
   "roomType": "Double Queen",
   "amenities": [
     "Non-Smoking",
@@ -312,22 +365,42 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single Queen",
-    "price": 150.00
+    "price": "150.00",
+    "amenities": [
+      "TV",
+      "Ocean View",
+      "Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single King",
-    "price": 200.00
+    "price": "200.00",
+    "amenities": [
+      "Mini-Fridge",
+      "Pool Side",
+      "Non-Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Suite",
-    "price": 400.00
+    "price": "400.00",
+    "amenities": [
+      "Kitchen",
+      "Hot Tub",
+      "Sauna",
+      "Non-Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Double Twin",
-    "price": 100.00
+    "price": "100.00",
+    "amenities": [
+      "Pet Friendly",
+      "Non-Smoking"
+    ]
   },
   ...
 ]
@@ -341,7 +414,7 @@ Response
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| :date | string | path | Date of inquirery as a string in the format "YYYY-MM-DD" |
+| :date | string | path | Date of inquiry as a string in the format "YYYY-MM-DD" |
 
 Response:
 
@@ -353,13 +426,21 @@ Response:
   "results": [
     {
       "name": "Single Queen",
+      "amenities": [
+        "TV"
+      ],
       "qty": 10,
-      "price": 150.00
+      "price": "150.00"
     },
     {
       "name": "Double Queen",
+      "amenities": [
+        "Ocean View",
+        "TV",
+        "Non-Smoking"
+      ],
       "qty": 7,
-      "price": 225.00
+      "price": "225.00"
     },
     ...
   ]
@@ -367,7 +448,7 @@ Response:
 ```
 
 ### List Reservations
-`GET /reservations` Will return a list of reservations matching the search criteria.  By default it will return any reservations that are checking in/out today.
+`GET /reservations` Will return a list of reservations sorted by the check-in date
 
 Parameters
 
@@ -389,10 +470,12 @@ Response
 [
   {
     "_id": "5ffa25a6a13f985fdeda9e70",
+    "room_id": "602b14fd541461fcab3686b5",
     "bookingGuest": "John Smith",
+    "room_id": "",
     "roomNumber": "",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-10-22",
     "checkOut": "2021-10-28",
     "guestList": [
@@ -403,9 +486,10 @@ Response
   {
     "_id": "60108729ffefc9bae107564c",
     "bookingGuest": "Soo Yung",
+    "room_id": "60108729ffefc9bae10756bc",
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-05-03",
     "checkOut": "2021-05-10",
     "guestList": [
@@ -423,11 +507,11 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| bookingGuest_id | string | body | String representation of guest's mongo _id field |
-| guestList | array | body | List of names for all guests staying on this reservation |
+| bookingGuest | string | body | Guest object. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings Ex: `{firstName: "Bob", lastName: "French", phone: "123-456-7890", email: "bobFrench@email.com"}`|
+| guestList | array | body | Array of guest objects. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings |
 | checkIn | string | body | String representation of date in YYYY-MM-DD format |
 | checkOut | string | body | String representation of date in YYYY-MM-DD format |
-| bookedRoom | string | body | Name of the room type being booked |
+| roomType | string | body | Room type being booked.  Should use the official list of room types. |
 
 Response
 
@@ -464,14 +548,25 @@ Response
 ```JSON
 {
     "_id": "60108729ffefc9bae107564c",
-    "bookingGuest": "Soo Yung",
+    "bookingGuest": {
+        "firstName": "Adam",
+        "lastName": "Pollock",
+        "phone": "540-771-6242",
+        "email": "AdamDPollock@teleworm.us"
+    },
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
-    "checkIn": "2021-05-03",
-    "checkOut": "2021-05-10",
+    "totalCost": "1050.00",
+    "checkIn": "2021-05-03T13:44:00.000Z",
+    "checkOut": "2021-05-10T13:44:00.000Z",
     "guestList": [
-      "Soo Yung"
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+      },
+    ...
     ]
   }
 ```
@@ -607,7 +702,7 @@ Response
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10002,
+    "zipcode": "10002",
     "country": "United States",
     "phone": "123-456-7890",
     "email": "jsmith@gmail.com",
@@ -651,7 +746,7 @@ Response
   "address2": "Apt 2",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
+  "zipcode": "10002",
   "country": "United States",
   "phone": "123-456-7890",
   "email": "jsmith@gmail.com",
@@ -698,7 +793,7 @@ Response
   "address2": "Apt 2",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
+  "zipcode": "10002",
   "country": "United States",
   "phone": "123-456-7890",
   "email": "jsmith@gmail.com",
@@ -750,101 +845,7 @@ Response
 
 `Status: 200 OK`
 
-<!-- 
-** After some thought last night I don't think we need to be able to add/edit employee positions.  We can just hard code the values in the front end as constants that can be referenced for dropdown menus. - Colin 
-**
-
-### List Employee Positions
-`GET /employees/positions` Will get list of employee types.
-
-Response
-
-`Status: 200 OK`
-
-```JSON
-[
-  "Front Desk",
-  "Housekeeping",
-  "Maintenance",
-  "Management",
-  "System Administration"
-]
-```
-
-### Add Employee Position
-`POST /employees/positions` Will add a new employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| type | string | body | String of new employee type |
-
-
-Response
-
-`Status: 201 CREATED`
-
-```JSON
-{
-  "_id":"60108729ffefc9bae107564f",
-  "position": "Front Desk",
-}
-``` 
-
-### Edit Employee Type
-`PUT /employees/positions/:position_id` Will edit an existing employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| position_id | string | path | String representation of employee's unique mongo _id |
-| position | string | body | Position name to replace previous name |
-
-Response
-
-`Status: 204 OK`
--->
-
 ## Timesheets
-
-<!-- 
-** I dont think we need this one for MVP, we just need a list of timesheets for a specific employee - Colin **
-
-
-### List Timesheets
-`GET /timesheets` Will return a list of timesheets for all hotel employees.
-
-Response
-
-`Status: 200 OK`.
-
-```JSON
-[
-    {
-      "timesheet_id": "60108729ffefc9bae1075652",
-      "employee_id": "60108729ffefc9bae1075651",
-      "monday": 8,
-      "tuesday": 7,
-      "wednesday": 8,
-      "thursday": 5,
-      "friday": 9,
-      "saturday": 0,
-      "sunday": 0,
-      "weekStart": "2021-02-08",
-      "weekEnd": "2021-02-14"
-    },
-    {
-      "timesheet_id": "60108729ffefc9bae1075653",
-      "employee_id": "60108729ffefc9bae1075654",
-      ...
-    },
-    ...
-]
-
-```
--->
 
 ### Get Employee's Timesheet
 `GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique id.  Results are sorted with the most recent first
