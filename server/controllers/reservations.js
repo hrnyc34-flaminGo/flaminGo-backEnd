@@ -1,5 +1,6 @@
 const Reservation = require('../../db/models/reservations');
 const reformat = require('../helpers/reformat');
+const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
 
 const formatReservation = (reservation) => {
@@ -27,19 +28,17 @@ module.exports = {
     let {
       firstName = '',
       lastName = '',
-      checkIn,
-      checkOut,
+      checkIn = '',
+      checkOut = '',
       reservation_id,
     } = req.query;
 
     const query = {};
-    if (firstName.length > 0 || lastName.length > 0) {
-      query.$text = { $search: firstName + ' ' + lastName };
-    }
-    if (checkIn) { query.checkIn = new Date(checkIn); }
-    if (checkOut) { query.checkOut = new Date(checkOut); }
+    Object.assign(query,
+      makeQuery.searchText(firstName, lastName),
+      makeQuery.checkInDate(checkIn),
+      makeQuery.checkOutDate(checkOut));
     if (reservation_id) { query.reservation_id = ObjectId(reservation_id); }
-    debugger;
 
     Reservation.searchReservations(query)
       .then((result) => {
