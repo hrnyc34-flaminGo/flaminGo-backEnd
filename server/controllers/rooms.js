@@ -51,9 +51,11 @@ module.exports = {
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
+          console.log('result:', result)
           let roomTypeIdInfo = new ObjectId(result._id);
 
           updateInfo['roomType_id'] = roomTypeIdInfo;
+          updateInfo['reservations_id'] = '';
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
           updateInfo['isClean'] = false;
@@ -61,6 +63,7 @@ module.exports = {
           updateInfo['isUsable'] = false;
           updateInfo['currentGuests'] = [];
           updateInfo['tasks'] = [];
+          console.log('updateInfo:', updateInfo);
 
           roomsMethod.create(updateInfo)
             .then(result => {
@@ -69,6 +72,7 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
+          console.log('POST/rooms', err);
         });
 
     } else if (req.url === '/amenities') {
@@ -78,6 +82,7 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
+          console.log('POST/rooms/amenities', err);
         });
 
     } else if (req.url === '/types') {
@@ -87,6 +92,7 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
+          console.log('POST/rooms/types', err);
         });
     }
   },
@@ -110,6 +116,7 @@ module.exports = {
       })
       .catch(err => {
         res.sendStatus(500);
+        console.log('PUT_/rooms', err);
       });
 
   },

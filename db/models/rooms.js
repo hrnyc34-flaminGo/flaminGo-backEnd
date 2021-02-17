@@ -24,13 +24,13 @@ module.exports = {
 
   roomsMethod: {
     readAll: () => {
-      return Rooms.find().exec();
+      return module.exports.Rooms.find().exec();
     },
     readOne: ( id ) => {
-      return Rooms.findOne({ _id: id}).exec();
+      return module.exports.Rooms.findOne({ _id: id}).exec();
     },
     create: (one) => {
-      return Rooms.create(
+      return module.exports.Rooms.create(
         {
           reservations_id: one.reservations_id,
           floorNumber: one.floorNumber,
@@ -47,7 +47,7 @@ module.exports = {
       );
     },
     update: (one) => {
-      return Rooms.updateMany(
+      return module.exports.Rooms.updateMany(
         { _id: one._id },
         {
           reservations_id: one.reservations_id,
@@ -66,7 +66,7 @@ module.exports = {
       );
     },
     deleteOne: (type) => {
-      return Rooms.deleteOne({ roomType: type });
+      return module.exports.Rooms.deleteOne({ roomType: type });
     },
   }
 };
