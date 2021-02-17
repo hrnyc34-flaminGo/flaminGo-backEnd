@@ -3,6 +3,7 @@ db.createCollection('reservations', {
     $jsonSchema: {
       bsonType: 'object',
       required: [
+        'idString',
         'bookingGuest',
         'checkIn',
         'checkOut',
@@ -11,6 +12,9 @@ db.createCollection('reservations', {
         'guestList'
       ],
       properties: {
+        'idString': {
+          bsonType: 'string',
+        },
         'bookingGuest': {
           bsonType: 'object',
         },
