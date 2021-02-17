@@ -784,7 +784,8 @@ Body Parameter
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| name | string | body | String of the employee's full name |
+| firstName | string | body |[Optional] String of the employee's first name |
+| lastName | string | body | [Optional]String of the employee's last name |
 | address1 | string | body | String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | String of the employee's city |
@@ -841,7 +842,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | [Optional] Number of the employee's hourly wage |
 | startDate | string | body | [Optional] String of the employee's start date in the format "YYYY-MM-DD" |
-| username | string | body | [Optional] String of the employee's username |
 | position | string | body | [Optional] String of the employee's position (reference official list) |
 
 Response
