@@ -55,10 +55,34 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-
-  post: (req, res) => {},
-  checkIn: (req, res) => {
-
+  getAvailibility: (req, res) => {
+    res.send({
+      "date": "2021-11-10",
+      "results": [
+        {
+          "name": "Single Queen",
+          "qty": 10,
+          "price": 150.00
+        },
+        {
+          "name": "Double Queen",
+          "qty": 7,
+          "price": 225.00
+        }
+      ]
+    }).status(200);
   },
-  delete: (req, res) => {},
+
+  post: (req, res) => {
+    // returning dummy data
+    res.sendStatus(201);
+  },
+  checkIn: (req, res) => {
+     // need to return dummy data
+     res.sendStatus(201);
+  },
+  checkOut: (req, res) => {
+     // need to return dummy data
+     res.sendStatus(200);
+  },
 };
