@@ -5,7 +5,9 @@ const {
   allPermissions,
 } = require('../middleware/authentication');
 
-router.get('/:employee_id', adminManagerPermissions, controller.timesheets.get);
-router.put('/', allPermissions, controller.timesheets.addOrEdit);
+//  adminManagerPermissions
+router.get('/:employee_id', controller.timesheets.get);
+// allPermissions
+router.put('/', controller.timesheets.addOrEdit);
 
 module.exports = router;

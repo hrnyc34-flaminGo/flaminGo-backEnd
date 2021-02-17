@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('../controllers');
 const { reservationsRouterPermissions } = require('../middleware/authentication');
 
-router.use(reservationsRouterPermissions);
+// router.use(reservationsRouterPermissions);
 
 router.get('/', controller.reservations.get);
 router.get('/availability/:date', controller.reservations.get);

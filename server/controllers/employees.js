@@ -5,7 +5,6 @@ const { getTimesheetsByEmployee } = require('./timesheets');
 module.exports = {
   getAll: (req, res) => {
     const isActive = req.query.isActive ? req.query.isActive : true;
-    //const isActive = false;
     const { searchName } = req.query;
     axios.get(`https://${AUTH0_DOMAIN}/api/v2/users`, {
       params: {
@@ -23,19 +22,6 @@ module.exports = {
         ...user.user_metadata,
       }))))
       .catch(() => res.sendStatus(500));
-
-    // const isActive = req.query.isActive ? false : true;
-    // const firstName = searchName ? searchName.split(' ')[0] : null;
-    // const lastName = searchName ? searchName.split(' ')[1] : null;
-    // //firstName and lastName may not exist therefore using spread operator to conditionally add those properties if exists
-    // const query = {...(firstName && {firstName}), ...(lastName && {lastName}, isActive)};
-    // Employee.find(query).exec()
-    //   .then(result => {
-    //     res.status(200).json(result);
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   })
   },
 
   getOne: (req, res) => {
@@ -52,15 +38,6 @@ module.exports = {
         ...user.user_metadata,
       })))
       .catch(() => res.sendStatus(500));
-
-    // const { employee_id } = req.params;
-    // Employee.findOne({_id: employee_id}).exec()
-    //   .then(result => {
-    //     res.status(200).json(result);
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   });
   },
 
   createOne: (req, res) => {
@@ -107,14 +84,6 @@ module.exports = {
     })
       .then(({ data }) => res.status(201).json(data))
       .catch((err) => { console.log(err); res.sendStatus(500); });
-
-    // Employee.create(req.body)
-    //   .then(result => {
-    //     res.status(201).json(result);
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   });
   },
 
   editOne: (req, res) => {
@@ -163,15 +132,6 @@ module.exports = {
     })
       .then(() => res.status(200))
       .catch(() => res.sendStatus(500));
-
-    // const {employee_id, firstName, lastName, address1, address2, city, state, zipcode, country, phone, email, wage, startDate, position, isActive} = req.body;
-    // Employee.findByIdAndUpdate( employee_id, { ...(firstName && {firstName}), ...(lastName && {lastName}), ...(address1 && {address1}), ...(address2 && {address2}), ...(city && {city}), ...(state && {state}), ...(zipcode && {zipcode}), ...(country && {country}), ...(phone && {phone}), ...(email && {email}), ...(wage && {wage}), ...(startDate && {startDate}), ...(position && {position}), ...(isActive && {isActive}) }, {new: true} ).exec()
-    //   .then(result => {
-    //     res.sendStatus(201)
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   })
   },
 
   removeOne: (req, res) => {
@@ -184,14 +144,5 @@ module.exports = {
     })
       .then(({ data }) => res.status(200).json(data))
       .catch(() => res.sendStatus(500));
-
-    // console.log(employee_id);
-    // Employee.findByIdAndDelete(employee_id).exec()
-    //   .then(result => {
-    //     res.sendStatus(200);
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   });
   }
 };
