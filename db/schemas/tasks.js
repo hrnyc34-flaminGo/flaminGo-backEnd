@@ -7,13 +7,11 @@ db.createCollection('tasks', {
         'taskTitle',
         'department',
         'createdAt',
-        'isCleaning',
         'isComplete',
-        'createdEmployee'
       ],
       properties: {
         'room_id': {
-          bsonType: ['objectId', 'null'],
+          bsonType: ['objectId', 'string'],
         },
         'location': {
           bsonType: 'string'
@@ -39,7 +37,7 @@ db.createCollection('tasks', {
         'dueBy': {
           bsonType: ['date', 'string']
         },
-        'isComplete': {git
+        'isComplete': {
           bsonType: 'bool'
         },
         'completedAt': {

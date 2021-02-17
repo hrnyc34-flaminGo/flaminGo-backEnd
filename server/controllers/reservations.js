@@ -34,11 +34,17 @@ module.exports = {
     } = req.query;
 
     const query = {};
-    Object.assign(query,
+    Object.assign(
+      query,
       makeQuery.searchText(firstName, lastName),
       makeQuery.checkInDate(checkIn),
-      makeQuery.checkOutDate(checkOut));
-    if (reservation_id) { query.reservation_id = ObjectId(reservation_id); }
+      makeQuery.checkOutDate(checkOut),
+      reservation_id.length < 24
+        ? makeQuery.regex('idString', reservation_id)
+        : { _id: ObjectId(reservation_id) }
+    );
+
+    // if (reservation_id) { query.reservation_id = ObjectId(reservation_id); }
 
     Reservation.searchReservations(query)
       .then((result) => {

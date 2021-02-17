@@ -187,7 +187,7 @@ Response
   "roomNumber": "110",
   "floorNumber": 1,
   "roomType": "Double Queen",
-  "price": 150.00,
+  "price": "150.00",
   "amenities": [
     "Non-Smoking",
     "Pool Side",
@@ -312,22 +312,22 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single Queen",
-    "price": 150.00
+    "price": "150.00"
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single King",
-    "price": 200.00
+    "price": "200.00"
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Suite",
-    "price": 400.00
+    "price": "400.00"
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Double Twin",
-    "price": 100.00
+    "price": "100.00"
   },
   ...
 ]
@@ -354,12 +354,12 @@ Response:
     {
       "name": "Single Queen",
       "qty": 10,
-      "price": 150.00
+      "price": "150.00"
     },
     {
       "name": "Double Queen",
       "qty": 7,
-      "price": 225.00
+      "price": "225.00"
     },
     ...
   ]
@@ -390,9 +390,10 @@ Response
   {
     "_id": "5ffa25a6a13f985fdeda9e70",
     "bookingGuest": "John Smith",
+    "room_id": "",
     "roomNumber": "",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-10-22",
     "checkOut": "2021-10-28",
     "guestList": [
@@ -403,9 +404,10 @@ Response
   {
     "_id": "60108729ffefc9bae107564c",
     "bookingGuest": "Soo Yung",
+    "room_id": "60108729ffefc9bae10756bc",
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-05-03",
     "checkOut": "2021-05-10",
     "guestList": [
@@ -467,7 +469,7 @@ Response
     "bookingGuest": "Soo Yung",
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-05-03",
     "checkOut": "2021-05-10",
     "guestList": [

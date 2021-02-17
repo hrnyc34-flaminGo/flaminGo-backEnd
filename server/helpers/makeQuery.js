@@ -40,6 +40,7 @@ const checkOutDate = (checkOutString) => {
   return {};
 };
 
+// returns a text search with all the strings passed in
 const searchText = (...strings) => {
   let search = strings.join(' ').trim();
   if (search.length > 0) {
@@ -50,8 +51,24 @@ const searchText = (...strings) => {
   return {};
 };
 
+// returns an object to make regex searches on a field
+const regex = (fieldName, search) => {
+  if (search.length > 0) {
+    return {
+      $expr: {
+        $regexMatch: {
+          input: `$${fieldName}`,
+          regex: new RegExp(search, 'i')
+        }
+      }
+    };
+  }
+  return {};
+};
+
 module.exports = {
   checkInDate,
   checkOutDate,
-  searchText
+  searchText,
+  regex,
 };
