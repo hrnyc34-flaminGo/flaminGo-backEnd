@@ -43,7 +43,6 @@ module.exports = {
 
     const options = {upsert: true, new: true};
 
-
     Timesheet.findOneAndUpdate({employee_id, weekStart}, {...update, weekHours}, options).exec()
       .then(result => {
         //Update weekHours parameter for Employee based on employee_id

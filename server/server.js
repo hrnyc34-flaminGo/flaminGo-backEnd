@@ -5,6 +5,7 @@ const reservationsRouter = require('./routers/reservationsRouter');
 const roomsRouter = require('./routers/roomsRouter');
 const tasksRouter = require('./routers/tasksRouter');
 const timesheetsRouter = require('./routers/timesheetsRouter');
+const autoFeatures = require('./controllers/autoFeatures');
 const { checkJwt } = require('./middleware/authentication');
 const morgan = require('morgan');
 
@@ -25,7 +26,7 @@ app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist
 // app.use(checkJwt);
 
 app.use('/employees', employeesRouter);
-app.use('/reservations', reservationsRouter);
+// app.use('/reservations', reservationsRouter);
 app.use('/rooms', roomsRouter);
 app.use('/tasks', tasksRouter);
 app.use('/timesheets', timesheetsRouter);
