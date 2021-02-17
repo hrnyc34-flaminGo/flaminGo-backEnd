@@ -3,6 +3,7 @@ const reformat = require('../helpers/reformat');
 const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
 
+//todo: This could maybe get moved to a helper file.
 const formatReservation = (reservation) => {
   let bookingGuest = reformat.guestToName(reservation.bookingGuest);
   let guestList = reformat.guestListToNameList(reservation.guestList);
@@ -30,7 +31,7 @@ module.exports = {
       lastName = '',
       checkIn = '',
       checkOut = '',
-      reservation_id,
+      reservation_id = '',
     } = req.query;
 
     const query = {};
@@ -54,7 +55,10 @@ module.exports = {
         res.sendStatus(500);
       });
   },
+
   post: (req, res) => {},
-  put: (req, res) => {},
+  checkIn: (req, res) => {
+
+  },
   delete: (req, res) => {},
 };
