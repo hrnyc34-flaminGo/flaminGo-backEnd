@@ -27,7 +27,6 @@ module.exports = {
     const weekHours = Object.values(update).reduce((a, b) => {return (typeof a === 'string' ? 0 : a) + (typeof b === 'string' ? 0 : b)})
     const options = {upsert: true, new: true}
 
-
     Timesheet.findOneAndUpdate({employee_id, weekStart}, {...update, weekHours}, options).exec()
       .then(result => {
         //Update weekHours parameter for Employee based on employee_id
