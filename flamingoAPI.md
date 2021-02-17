@@ -341,7 +341,7 @@ Response
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| :date | string | path | Date of inquirery as a string in the format "YYYY-MM-DD" |
+| :date | string | path | Date of inquiry as a string in the format "YYYY-MM-DD" |
 
 Response:
 
@@ -485,11 +485,11 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
+| isComplete | boolean | query | [Optional] Default: false |
 | room_id | string | query | [Optional] String representation of guest's mongo _id field |
 | roomNumber | string | query | [Optional] String of room number |
-| isComplete | boolean | query | [Optional] Default: false |
 | location | string | query | [Optional] String to search for location |
-| dueBy | string | query | [Optional] String representation of date in YYYY-MM-DD format |
+| dueBy | string | query | [Optional] String representation of date in ISO format |
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
 
@@ -503,8 +503,7 @@ Response
   {
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
-    "roomNumber": "110",
-    "location": "",
+    "location": "110",
     "employeeCompleted": "John Smith",
     "employeeCreated": "Jane Doe",
     "department": "Housekeeping",
@@ -518,7 +517,6 @@ Response
   {
     "task_id": 1,
     "room_id": "",
-    "roomNumber": "",
     "location": "Pool",
     ...
   },
@@ -537,22 +535,20 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
+| location | string | body | Room number if this is a room or name of location |
 | taskTitle | string | body | Title for the Description |
 | taskDescription | string | body | [Optional] Description of the new task |
-| room_id | string | body | [Optional] String representation of mongo _id field |
-| location | string | body | Room number if this is a room or name of location |
 | department | string | body | Selection for which Department this task is for (Maintenance or Housekeeping) |
+| room_id | string | body | [Optional] String representation of mongo _id field |
 | dueBy | string | body | [Optional] String of timestamp in ISO format |
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
-
 
 ```JSON
 {
   "task_id": "60108729ffefc9bae107564d",
   "room_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "location": "",
+  "location": "110",
   "employeeCompleted": "",
   "employeeCreated": "Jane Doe",
   "department": "Housekeeping",
@@ -566,21 +562,36 @@ Parameters
 ```
 
 ### Edit Task
-`PUT /tasks/:task_id` Will update the task with matching _id with any fields supplied in the body
-
-Response
-
-`Status: 200 OK`
+`PUT /tasks/:task_id` Will change the task to complete
 
 Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
-| taskTitle | string | body | [Optional] Title for the task |
-| taskDescription | string | body | [Optional] Description of the new task |
-| location | string | body | [Optional] Room number or name of location |
-| department | string | body | [Optional] Selection for which Department this task is for |
+| employeeCompleted | string | body | Employee first and last name who completed task |
+| isComplete | boolean | body | Task completion status |
+
+Response
+
+`Status: 200 OK`
+
+```JSON
+{
+  "task_id": "60108729ffefc9bae107564d",
+  "room_id": "507c7f79bcf86cd7994f6c0e",
+  "location": "110",
+  "employeeCompleted": "John Smith",
+  "employeeCreated": "Jane Doe",
+  "department": "Housekeeping",
+  "taskTitle": "Clean dirty spot",
+  "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
+  "createdAt": "2021-02-13T13:44:00.000Z",
+  "dueBy": "2021-02-14T10:00:00.000Z",
+  "isComplete": true,
+  "completedAt": "2021-02-13T19:00:00.000Z",
+}
+```
 
 ## Employees
 
@@ -591,7 +602,6 @@ Parameters
 | --------- | ---- | --- | ----------- |
 | searchName | string | query | [Optional] String to match searching for employee name |
 | isActive | boolean | query | [Optional] Default: true |
-
 
 Response
 
@@ -676,10 +686,10 @@ Body Parameter
 | address1 | string | body | String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | String of the employee's city |
-| state | string | body | String of the employee's address state |
-| zipcode | string | body | String of the employee's zipcode |
+| state | string | body | [Optional] String of the employee's address state |
+| zipcode | string | body | [Optional] String of the employee's zipcode |
 | country | string | body | String of the employee's address country |
-| phone | string | body | String of the employee's phone number |
+| phone | string | body | [Optional] String of the employee's phone number |
 | email | string | body | String of the employee's email address |
 | wage | number | body | Number of the employee's hourly wage |
 | startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
