@@ -4,6 +4,8 @@ const db = require("../../db");
 
 const reservationsSchema = new Schema(
   {
+    _id: {type: ObjectId, required: true},
+    idString: {type: String, required: true},
     bookingGuest: { type: Object, required: true },
     room_id: { type: Mixed, default: "" },
     roomType_id: { type: ObjectId, required: true },
@@ -63,8 +65,12 @@ const Reservation = mongoose.model("Reservation", reservationsSchema);
 
 // Quick and dirty tests to make sure I can add and query the DB
 // Reservation.find().limit(10).exec().then( res => console.log(res));
+// let _id =  new mongoose.Types.ObjectId();
+// let idString = _id.toString();
 // let res = new Reservation(
 //   {
+//     _id,
+//     idString,
 //     bookingGuest: {
 //       firstName: "Colin",
 //       lastName: "Chauche",

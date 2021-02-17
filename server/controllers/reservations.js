@@ -6,7 +6,7 @@ const { ObjectId } = require('mongoose').Types;
 const formatReservation = (reservation) => {
   let bookingGuest = reformat.guestToName(reservation.bookingGuest);
   let guestList = reformat.guestListToNameList(reservation.guestList);
-  let totalCost = reformat.decimal128ToFloat(reservation.totalCost);
+  let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
   let checkIn = reformat.toDashDate(reservation.checkIn);
   let checkOut = reformat.toDashDate(reservation.checkOut);
   let { _id, room_id, roomNumber = '', roomType } = reservation;
@@ -43,8 +43,6 @@ module.exports = {
         ? makeQuery.regex('idString', reservation_id)
         : { _id: ObjectId(reservation_id) }
     );
-
-    // if (reservation_id) { query.reservation_id = ObjectId(reservation_id); }
 
     Reservation.searchReservations(query)
       .then((result) => {
