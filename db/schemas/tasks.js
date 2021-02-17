@@ -38,7 +38,7 @@ db.createCollection('tasks', {
         'dueBy': {
           bsonType: ['date', 'string']
         },
-        'isComplete': {git
+        'isComplete': {
           bsonType: 'bool'
         },
         'completedAt': {
