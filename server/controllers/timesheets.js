@@ -34,7 +34,7 @@ module.exports = {
       ...(saturday && {saturday}),
       ...(sunday && {sunday}),
     };
-    const weekHours = sum(Object.values(weekDays));
+    const weekHours = (Object.values(weekDays)).reduce((a, b) => a + b);
     const update = {
       ...weekDays,
       weekStart,
