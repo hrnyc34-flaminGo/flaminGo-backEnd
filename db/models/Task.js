@@ -10,10 +10,12 @@ const taskSchema = new Schema({
   department: {type: String, required: true},
   isCleaning: {type: Boolean, default: false},
   employeeCreated: {type: String, default: ''},
+  employeeCreated_id: {type: Schema.Types.ObjectId, ref: 'Employee'},
   createdAt: {type: Date, required: true, default: Date.now},
   dueBy: {type: String, default: ''},
   isComplete: {type: Boolean, default: false},
   employeeCompleted: {type: String, default: ''},
+  employeeCompleted_id: {type: Schema.Types.ObjectsId, ref: 'Employee'},
   completedAt: {type: String, default: ''}
 },
 {
