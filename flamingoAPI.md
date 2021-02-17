@@ -841,7 +841,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | [Optional] Number of the employee's hourly wage |
 | startDate | string | body | [Optional] String of the employee's start date in the format "YYYY-MM-DD" |
-| username | string | body | [Optional] String of the employee's username |
 | position | string | body | [Optional] String of the employee's position (reference official list) |
 
 Response
