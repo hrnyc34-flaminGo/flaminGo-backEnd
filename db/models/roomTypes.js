@@ -10,7 +10,6 @@ const roomTypesSchema = new Schema({
   versionKey: false
 });
 
-
 module.exports = {
 
   RoomTypes: mongoose.model('RoomTypes', roomTypesSchema),
