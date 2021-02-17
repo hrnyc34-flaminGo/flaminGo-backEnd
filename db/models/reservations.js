@@ -1,20 +1,65 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema, ObjectId, Mixed, Decimal128 } = mongoose;
-const db = require('../../db');
+const db = require("../../db");
 
-const reservationsSchema = new Schema({
-  bookingGuest: {type: Object, required: true},
-  'room_id': {type: Mixed, default: ""},
-  'roomType_id': {type: ObjectId, required: true},
-  checkIn: {type: Date, required: true},
-  checkOut: {type: Date, required: true},
-  guestList: {type: Array, default: []},
-  totalCost: {type: Decimal128, default: 0.00}
-}, {
-  versionKey: false
-});
+const reservationsSchema = new Schema(
+  {
+    bookingGuest: { type: Object, required: true },
+    room_id: { type: Mixed, default: "" },
+    roomType_id: { type: ObjectId, required: true },
+    checkIn: { type: Date, required: true },
+    checkOut: { type: Date, required: true },
+    guestList: { type: Array, default: [] },
+    totalCost: { type: Decimal128, default: 0.0 },
+  },
+  {
+    versionKey: false,
+  }
+);
 
-const Reservation = mongoose.model('Reservation', reservationsSchema);
+reservationsSchema.statics.searchReservations = function (query = {}) {
+  const pipeline = [
+    { $match: query },
+    {
+      $lookup: {
+        from: "rooms",
+        localField: "room_id",
+        foreignField: "_id",
+        as: "room",
+      },
+    },
+    {
+      $lookup: {
+        from: "roomtypes",
+        localField: "roomType_id",
+        foreignField: "_id",
+        as: "roomTypeObj",
+      },
+    },
+    {
+      $set: {
+        roomType: { $arrayElemAt: ["$roomTypeObj", 0] },
+        roomNumber: { $ifNull: [{ $arrayElemAt: ["$room", 0] }, ""] },
+      },
+    },
+    {
+      $set: {
+        roomNumber: "$roomNumber.roomNumber",
+        roomType: "$roomType.roomType",
+      },
+    },
+    {
+      $project: {
+        room: 0,
+        roomTypeObj: 0,
+      },
+    },
+  ];
+
+  return this.aggregate(pipeline).sort({checkIn: -1});
+};
+
+const Reservation = mongoose.model("Reservation", reservationsSchema);
 
 // Quick and dirty tests to make sure I can add and query the DB
 // Reservation.find().limit(10).exec().then( res => console.log(res));
