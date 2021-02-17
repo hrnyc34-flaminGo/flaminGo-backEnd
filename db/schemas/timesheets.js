@@ -16,7 +16,7 @@ db.createCollection('timesheets', {
       ],
       properties: {
         'employee_id': {
-          bsonType: 'objectId',
+          bsonType: ['objectId', 'string'],
         },
         'weekStart': {
           bsonType: 'string',

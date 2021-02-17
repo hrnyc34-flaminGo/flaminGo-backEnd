@@ -1,3 +1,4 @@
+const db = require('../../db/index');
 const Reservation = require('../../db/models/reservations');
 const reformat = require('../helpers/reformat');
 const makeQuery = require('../helpers/makeQuery');
@@ -57,8 +58,16 @@ module.exports = {
   },
 
   post: (req, res) => {},
-  checkIn: (req, res) => {
+  checkIn: async (req, res) => {
+    let {reservation_id} = req.params;
+    let { room_id = '' } = req.body;
+    // Start a new session and transaction
+    const session = await db.startSession();
+    session.startTransaction();
+    // Add reservation_id to room
+    // Add room_id to reservation
 
+    res.status(200).send();
   },
   delete: (req, res) => {},
 };

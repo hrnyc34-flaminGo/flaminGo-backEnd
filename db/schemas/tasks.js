@@ -31,8 +31,11 @@ db.createCollection('tasks', {
         'employeeCreated': {
           bsonType: 'string'
         },
+        'employeeCreated_id': {
+          bsonType: 'string'
+        },
         'createdAt': {
-          bsonType: 'date'
+          bsonType: ['date', 'string']
         },
         'dueBy': {
           bsonType: ['date', 'string']
@@ -44,6 +47,15 @@ db.createCollection('tasks', {
           bsonType: ['date', 'string']
         },
         'employeeCompleted': {
+          bsonType: 'string'
+        },
+        'employeeCompleted_id': {
+          bsonType: 'string'
+        },
+        'employeeAssigned': {
+          bsonType: 'string'
+        },
+        'employeeAssigned_id': {
           bsonType: 'string'
         }
       }

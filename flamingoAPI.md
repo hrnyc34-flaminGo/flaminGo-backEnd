@@ -695,7 +695,7 @@ Response
 ```JSON
 [
   {
-    "_id": "60108729ffefc9bae107564e",
+    "_id": "auth0|602c301102061a0069805815",
     "firstName": "John",
     "lastName": "Smith",
     "address1": "123 Hackreactor Rd",
@@ -739,7 +739,7 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
+  "_id": "auth0|602c301102061a0069805815",
   "firstName": "John",
   "lastName": "Smith",
   "address1": "123 Hackreactor Rd",
@@ -786,7 +786,7 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
+  "_id": "auth0|602c301102061a0069805815",
   "firstName": "John",
   "lastName": "Smith",
   "address1": "123 Hackreactor Rd",
@@ -864,7 +864,7 @@ Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "60108729ffefc9bae1075651",
+  "employee_id": "auth0|602c301102061a0069805815",
   "monday": 8,
   "tuesday": 7,
   "wednesday": 8,
@@ -904,7 +904,7 @@ Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "60108729ffefc9bae1075651",
+  "employee_id": "auth0|602c301102061a0069805815",
   "monday": 8,
   "tuesday": 7,
   "wednesday": 8,
