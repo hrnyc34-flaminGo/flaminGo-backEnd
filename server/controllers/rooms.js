@@ -87,6 +87,7 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
+          console.log(err);
         });
     }
   },
@@ -101,16 +102,6 @@ module.exports = {
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
         updateInfo['isOccupied'] = false;
-        // updateInfo['reservations_id'] = result.reservations_id || '';
-
-        // ADD and Update reservations HERE (
-        // if reservation
-        // reservation_id
-        ////// let reservationInfo = new ObjectId(result._id);
-        ////// updateInfo['reservations_id'] = reservationInfo ;
-        // currentGuest
-        ////// updateInfo['currentGuest'] = result.guestList
-        ////// updateInfo['isOccupied'] = true )
 
         // ADD tasks HERE (isClean, isUsable, tasks[])
 
