@@ -1,6 +1,6 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const roomsMethod = require('../../db/models/rooms.js');
+const { roomsMethod } = require('../../db/models/rooms.js');
 const roomTypeMethod = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 
