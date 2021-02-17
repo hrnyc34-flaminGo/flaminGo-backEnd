@@ -7,7 +7,6 @@ db.createCollection('tasks', {
         'taskTitle',
         'department',
         'createdAt',
-        'isCleaning',
         'isComplete',
         'createdEmployee'
       ],

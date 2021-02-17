@@ -512,7 +512,7 @@ Response
     "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
     "createdAt": "2021-02-13T13:44:00.000Z",
     "dueBy": "2021-02-14T10:00:00.000Z",
-    "isCompleted": true,
+    "isComplete": true,
     "completedAt": "2021-02-13T16:15:00.000Z",
   },
   {
@@ -560,7 +560,7 @@ Parameters
   "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
   "createdAt": "2021-02-13T13:44:00.000Z",
   "dueBy": "2021-02-14T10:00:00.000Z",
-  "isCompleted": false,
+  "isComplete": false,
   "completedAt": "",
 }
 ```

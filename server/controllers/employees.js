@@ -51,7 +51,6 @@ module.exports = {
   },
 
   removeOne: (req, res) => {
-    console.log(employee_id)
     Employee.findByIdAndDelete(employee_id).exec()
       .then(result => {
         res.sendStatus(200);

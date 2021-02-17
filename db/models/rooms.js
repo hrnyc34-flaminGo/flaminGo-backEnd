@@ -18,55 +18,106 @@ const roomsSchema = new Schema({
   versionKey: false
 });
 
-const Rooms = mongoose.model('Rooms', roomsSchema);
+module.exports = {
+  Rooms: mongoose.model('Rooms', roomsSchema),
 
-let roomsMethod = {
-  readAll: () => {
-    return Rooms.find().exec();
-  },
-  readOne: ( id ) => {
-    return Rooms.findOne({ _id: id}).exec();
-  },
-  create: (one) => {
-    return Rooms.create(
-      {
-        reservations_id: one.  reservations_id,
-        floorNumber: one.floorNumber,
-        roomNumber: one.roomNumber,
-        roomType: one.roomType,
-        price: one.price,
-        amenities: one.amenities,
-        isClean: one.isClean,
-        isOccupied: one.isOccupied,
-        isUsable: one.isUsable,
-        currentGuests: one.currentGuests,
-        tasks: one.tasks
-      }
-    );
-  },
-  update: (one) => {
-    return Rooms.updateMany(
-      { _id: one._id },
-      {
-        reservations_id: one.reservations_id,
-        floorNumber: one.floorNumber,
-        roomNumber: one.roomNumber,
-        roomType: one.roomType,
-        price: one.price,
-        amenities: one.amenities,
-        isClean: one.isClean,
-        isOccupied: one.isOccupied,
-        isUsable: one.isUsable,
-        currentGuests: one.currentGuests,
-        tasks: one.tasks
-      },
-      { upsert: true }
-    );
-  },
-  deleteOne: (type) => {
-    return Rooms.deleteOne({ roomType: type });
-  },
+  roomsMethod: {
+    readAll: () => {
+      return Rooms.find().exec();
+    },
+    readOne: ( id ) => {
+      return Rooms.findOne({ _id: id}).exec();
+    },
+    create: (one) => {
+      return Rooms.create(
+        {
+          reservations_id: one.reservations_id,
+          floorNumber: one.floorNumber,
+          roomNumber: one.roomNumber,
+          roomType: one.roomType,
+          price: one.price,
+          amenities: one.amenities,
+          isClean: one.isClean,
+          isOccupied: one.isOccupied,
+          isUsable: one.isUsable,
+          currentGuests: one.currentGuests,
+          tasks: one.tasks
+        }
+      );
+    },
+    update: (one) => {
+      return Rooms.updateMany(
+        { _id: one._id },
+        {
+          reservations_id: one.reservations_id,
+          floorNumber: one.floorNumber,
+          roomNumber: one.roomNumber,
+          roomType: one.roomType,
+          price: one.price,
+          amenities: one.amenities,
+          isClean: one.isClean,
+          isOccupied: one.isOccupied,
+          isUsable: one.isUsable,
+          currentGuests: one.currentGuests,
+          tasks: one.tasks
+        },
+        { upsert: true }
+      );
+    },
+    deleteOne: (type) => {
+      return Rooms.deleteOne({ roomType: type });
+    },
+  }
 };
+// const Rooms = mongoose.model('Rooms', roomsSchema);
 
-module.exports = Rooms;
-module.exports = roomsMethod;
+// let roomsMethod = {
+//   readAll: () => {
+//     return Rooms.find().exec();
+//   },
+//   readOne: ( id ) => {
+//     return Rooms.findOne({ _id: id}).exec();
+//   },
+//   create: (one) => {
+//     return Rooms.create(
+//       {
+//         reservations_id: one.reservations_id,
+//         floorNumber: one.floorNumber,
+//         roomNumber: one.roomNumber,
+//         roomType: one.roomType,
+//         price: one.price,
+//         amenities: one.amenities,
+//         isClean: one.isClean,
+//         isOccupied: one.isOccupied,
+//         isUsable: one.isUsable,
+//         currentGuests: one.currentGuests,
+//         tasks: one.tasks
+//       }
+//     );
+//   },
+//   update: (one) => {
+//     return Rooms.updateMany(
+//       { _id: one._id },
+//       {
+//         reservations_id: one.reservations_id,
+//         floorNumber: one.floorNumber,
+//         roomNumber: one.roomNumber,
+//         roomType: one.roomType,
+//         price: one.price,
+//         amenities: one.amenities,
+//         isClean: one.isClean,
+//         isOccupied: one.isOccupied,
+//         isUsable: one.isUsable,
+//         currentGuests: one.currentGuests,
+//         tasks: one.tasks
+//       },
+//       { upsert: true }
+//     );
+//   },
+//   deleteOne: (type) => {
+//     return Rooms.deleteOne({ roomType: type });
+//   },
+// };
+
+// module.exports = Rooms;
+// module.exports = roomsMethod;
