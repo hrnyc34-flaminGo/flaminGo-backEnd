@@ -784,7 +784,8 @@ Body Parameter
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| name | string | body | String of the employee's full name |
+| firstName | string | body |[Optional] String of the employee's first name |
+| lastName | string | body | [Optional]String of the employee's last name |
 | address1 | string | body | String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | String of the employee's city |
