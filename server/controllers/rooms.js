@@ -91,38 +91,50 @@ module.exports = {
     }
   },
   put: (req, res) => {
-    const { room_id } = req.params;
-    let roomIdInfo = new ObjectId(room_id);
-    let updateInfo = req.body;
+    // const { room_id } = req.params;
+    // let roomIdInfo = new ObjectId(room_id);
+    // let updateInfo = req.body;
 
-    roomTypeMethod.readOne(updateInfo.roomType)
-      .then(result => {
-        updateInfo['_id'] = roomIdInfo;
-        updateInfo['price'] = result.price;
-        updateInfo['amenities'] = result.amenities;
-        updateInfo['isOccupied'] = false;
-        // updateInfo['reservations_id'] = result.reservations_id || '';
+    // roomTypeMethod.readOne(updateInfo.roomType)
+    //   .then(result => {
+    //     updateInfo['_id'] = roomIdInfo;
+    //     updateInfo['price'] = result.price;
+    //     updateInfo['amenities'] = result.amenities;
+    //     updateInfo['isOccupied'] = false;
+    //     // updateInfo['reservations_id'] = result.reservations_id || '';
 
-        // ADD and Update reservations HERE (
-        // if reservation
-        // reservation_id
-        ////// let reservationInfo = new ObjectId(result._id);
-        ////// updateInfo['reservations_id'] = reservationInfo ;
-        // currentGuest
-        ////// updateInfo['currentGuest'] = result.guestList
-        ////// updateInfo['isOccupied'] = true )
+    //     // ADD and Update reservations HERE (
+    //     // if reservation
+    //     // reservation_id
+    //     ////// let reservationInfo = new ObjectId(result._id);
+    //     ////// updateInfo['reservations_id'] = reservationInfo ;
+    //     // currentGuest
+    //     ////// updateInfo['currentGuest'] = result.guestList
+    //     ////// updateInfo['isOccupied'] = true )
 
-        // ADD tasks HERE (isClean, isUsable, tasks[])
+    //     // ADD tasks HERE (isClean, isUsable, tasks[])
 
-        roomsMethod.update(updateInfo)
-          .then(result => {
-            res.sendStatus(201);
-          });
-      })
-      .catch(err => {
-        res.sendStatus(500);
-      });
+    //     roomsMethod.update(updateInfo)
+    //       .then(result => {
+    //         res.sendStatus(201);
+    //       });
+    //   })
+    //   .catch(err => {
+    //     res.sendStatus(500);
+    //   });
 
+    // RETURNING DUMMY DATA FOR THIS ROUTE ***********************
+    res.send({
+      "_id": "507c7f79bcf86cd7994f6c0e",
+      "roomNumber": "110",
+      "floorNumber": 1,
+      "roomType": "Double Queen",
+      "amenities": [
+        "Non-Smoking",
+        "Pool Side",
+        "Mini-Fridge"
+      ]
+    }).status(201);
   },
   delete: (req, res) => {
   }
