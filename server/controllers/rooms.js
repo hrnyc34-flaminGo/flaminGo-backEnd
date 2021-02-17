@@ -1,6 +1,6 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { roomsMethod } = require('../../db/models/rooms.js');
+const roomsMethod = require('../../db/models/rooms.js');
 const roomTypeMethod = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 
@@ -51,11 +51,9 @@ module.exports = {
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
-          console.log('result:', result)
           let roomTypeIdInfo = new ObjectId(result._id);
 
           updateInfo['roomType_id'] = roomTypeIdInfo;
-          updateInfo['reservations_id'] = '';
           updateInfo['price'] = result.price;
           updateInfo['amenities'] = result.amenities;
           updateInfo['isClean'] = false;
@@ -63,7 +61,6 @@ module.exports = {
           updateInfo['isUsable'] = false;
           updateInfo['currentGuests'] = [];
           updateInfo['tasks'] = [];
-          console.log('updateInfo:', updateInfo);
 
           roomsMethod.create(updateInfo)
             .then(result => {
@@ -72,7 +69,6 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
-          console.log('POST/rooms', err);
         });
 
     } else if (req.url === '/amenities') {
@@ -82,7 +78,6 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
-          console.log('POST/rooms/amenities', err);
         });
 
     } else if (req.url === '/types') {
@@ -92,7 +87,7 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
-          console.log('POST/rooms/types', err);
+          console.log(err);
         });
     }
   },
@@ -106,6 +101,7 @@ module.exports = {
         updateInfo['_id'] = roomIdInfo;
         updateInfo['price'] = result.price;
         updateInfo['amenities'] = result.amenities;
+        updateInfo['isOccupied'] = false;
 
         // ADD tasks HERE (isClean, isUsable, tasks[])
 
@@ -116,10 +112,10 @@ module.exports = {
       })
       .catch(err => {
         res.sendStatus(500);
-        console.log('PUT_/rooms', err);
       });
 
   },
   delete: (req, res) => {
   }
 };
+
