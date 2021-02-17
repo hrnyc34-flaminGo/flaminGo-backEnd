@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, ObjectId, Mixed, Decimal128 } = mongoose;
-const db = require("../../db");
+const db = require('../../db');
 
 const reservationsSchema = new Schema(
   {
     _id: {type: ObjectId, required: true},
     idString: {type: String, required: true},
     bookingGuest: { type: Object, required: true },
-    room_id: { type: Mixed, default: "" },
+    room_id: { type: Mixed, default: '' },
     roomType_id: { type: ObjectId, required: true },
     checkIn: { type: Date, required: true },
     checkOut: { type: Date, required: true },
@@ -24,30 +24,30 @@ reservationsSchema.statics.searchReservations = function (query = {}) {
     { $match: query },
     {
       $lookup: {
-        from: "rooms",
-        localField: "room_id",
-        foreignField: "_id",
-        as: "room",
+        from: 'rooms',
+        localField: 'room_id',
+        foreignField: '_id',
+        as: 'room',
       },
     },
     {
       $lookup: {
-        from: "roomtypes",
-        localField: "roomType_id",
-        foreignField: "_id",
-        as: "roomTypeObj",
+        from: 'roomtypes',
+        localField: 'roomType_id',
+        foreignField: '_id',
+        as: 'roomTypeObj',
       },
     },
     {
       $set: {
-        roomType: { $arrayElemAt: ["$roomTypeObj", 0] },
-        roomNumber: { $ifNull: [{ $arrayElemAt: ["$room", 0] }, ""] },
+        roomType: { $arrayElemAt: ['$roomTypeObj', 0] },
+        roomNumber: { $ifNull: [{ $arrayElemAt: ['$room', 0] }, ''] },
       },
     },
     {
       $set: {
-        roomNumber: "$roomNumber.roomNumber",
-        roomType: "$roomType.roomType",
+        roomNumber: '$roomNumber.roomNumber',
+        roomType: '$roomType.roomType',
       },
     },
     {
@@ -61,7 +61,7 @@ reservationsSchema.statics.searchReservations = function (query = {}) {
   return this.aggregate(pipeline).sort({checkIn: -1});
 };
 
-const Reservation = mongoose.model("Reservation", reservationsSchema);
+const Reservation = mongoose.model('Reservation', reservationsSchema);
 
 // Quick and dirty tests to make sure I can add and query the DB
 // Reservation.find().limit(10).exec().then( res => console.log(res));
