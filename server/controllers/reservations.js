@@ -62,12 +62,12 @@ module.exports = {
         {
           "name": "Single Queen",
           "qty": 10,
-          "price": 150.00
+          "price": '150.00'
         },
         {
           "name": "Double Queen",
           "qty": 7,
-          "price": 225.00
+          "price": '225.00'
         }
       ]
     }).status(200);
@@ -83,6 +83,27 @@ module.exports = {
   },
   checkOut: (req, res) => {
      // need to return dummy data
-     res.sendStatus(200);
+     res.send({
+      "_id": "60108729ffefc9bae107564c",
+      "bookingGuest": {
+          "firstName": "Adam",
+          "lastName": "Pollock",
+          "phone": "540-771-6242",
+          "email": "AdamDPollock@teleworm.us"
+      },
+      "roomNumber": "110",
+      "roomType": "Single Queen",
+      "totalCost": "1050.00",
+      "checkIn": "2021-05-03T13:44:00.000Z",
+      "checkOut": "2021-05-10T13:44:00.000Z",
+      "guestList": [
+        {
+          "firstName": "Guest",
+          "lastName": "One",
+          "phone": "123-456-7890",
+          "email": "guestOne@madeup.com"
+        }
+      ]
+    }).status(200);
   },
 };
