@@ -2,6 +2,7 @@ const Reservation = require('../../db/models/reservations');
 const reformat = require('../helpers/reformat');
 const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
+const { RoomTypes} = require('../../db/models/roomTypes');
 
 //todo: This could maybe get moved to a helper file.
 const formatReservation = (reservation) => {
@@ -57,51 +58,79 @@ module.exports = {
   },
   getAvailibility: (req, res) => {
     res.send({
-      "date": "2021-11-10",
-      "results": [
+      'date': '2021-11-10',
+      'results': [
         {
-          "name": "Single Queen",
-          "qty": 10,
-          "price": '150.00'
+          'name': 'Single Queen',
+          'qty': 10,
+          'price': '150.00'
         },
         {
-          "name": "Double Queen",
-          "qty": 7,
-          "price": '225.00'
+          'name': 'Double Queen',
+          'qty': 7,
+          'price': '225.00'
         }
       ]
     }).status(200);
   },
 
   post: (req, res) => {
-    // returning dummy data
-    res.sendStatus(201);
+    let { roomType, checkIn, checkOut, guestList, bookingGuest } = req.body;
+    let nights = new Date (checkOut) - new Date(checkIn);
+    nights = nights / (1000 * 3600 * 24);
+    // Get roomtype id
+    RoomTypes.findOne({roomType})
+      .then((roomType) => {
+        // Calculate total cost
+        let price = roomType.price;
+        let totalCost = price * nights;
+        // create id and set idString
+        let _id = new ObjectId();
+        let idString = _id.toString();
+        let newRes = new Reservation({
+          _id,
+          idString,
+          bookingGuest,
+          guestList,
+          checkIn,
+          checkOut,
+          totalCost,
+          roomType_id: roomType._id
+        });
+        return newRes.save();
+      })
+      .then((result) => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        res.sendStatus(500);
+      });
   },
   checkIn: (req, res) => {
-     // need to return dummy data
-     res.sendStatus(201);
+    // need to return dummy data
+    res.sendStatus(201);
   },
   checkOut: (req, res) => {
-     // need to return dummy data
-     res.send({
-      "_id": "60108729ffefc9bae107564c",
-      "bookingGuest": {
-          "firstName": "Adam",
-          "lastName": "Pollock",
-          "phone": "540-771-6242",
-          "email": "AdamDPollock@teleworm.us"
+    // need to return dummy data
+    res.send({
+      '_id': '60108729ffefc9bae107564c',
+      'bookingGuest': {
+        'firstName': 'Adam',
+        'lastName': 'Pollock',
+        'phone': '540-771-6242',
+        'email': 'AdamDPollock@teleworm.us'
       },
-      "roomNumber": "110",
-      "roomType": "Single Queen",
-      "totalCost": "1050.00",
-      "checkIn": "2021-05-03T13:44:00.000Z",
-      "checkOut": "2021-05-10T13:44:00.000Z",
-      "guestList": [
+      'roomNumber': '110',
+      'roomType': 'Single Queen',
+      'totalCost': '1050.00',
+      'checkIn': '2021-05-03T13:44:00.000Z',
+      'checkOut': '2021-05-10T13:44:00.000Z',
+      'guestList': [
         {
-          "firstName": "Guest",
-          "lastName": "One",
-          "phone": "123-456-7890",
-          "email": "guestOne@madeup.com"
+          'firstName': 'Guest',
+          'lastName': 'One',
+          'phone': '123-456-7890',
+          'email': 'guestOne@madeup.com'
         }
       ]
     }).status(200);
