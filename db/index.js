@@ -1,6 +1,6 @@
 const mongoose = require( 'mongoose' );
 const database = 'flaminGo';
-
+console.log(process.env.MONGO_URL);
 if ( process.env.MONGO_URL ) {
   mongoose.connect( process.env.MONGO_URL );
 } else {
@@ -11,6 +11,6 @@ mongoose.Promise = Promise;
 const db = mongoose.connection;
 
 db.on( 'error', console.error.bind( console, 'connection error:') );
-db.once( 'open', () =>{ console.log( `connected to mongoDB : "${ database }"!` ); });
+db.once( 'open', () =>{ console.log( `connected to "${ process.env.MONGO_URL }"!` ); });
 
 module.exports = db;
