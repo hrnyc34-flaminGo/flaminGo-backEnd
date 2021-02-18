@@ -28,7 +28,7 @@ module.exports = {
         { roomType: one.roomType },
         {
           roomType: one.roomType,
-          price: newPrice,
+          price: one.price,
           amenities: one.amenities,
         },
         { upsert: true }
