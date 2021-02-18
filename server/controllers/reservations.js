@@ -146,6 +146,11 @@ module.exports = {
       let room = await Rooms.findOne({_id: room_id});
       if (!room) { throw Error('No room found, bad room id in reservation'); }
 
+      // check this reservation matches room reservation
+      if (room.reservation_id.toString() !== reservation_id) {
+        throw Error('Reservation is not currently checked in');
+      }
+
       // get roomType
       let roomTypeObj = await RoomTypes.findOne({_id: room.roomType_id});
       let roomType = roomTypeObj.roomType;
@@ -183,7 +188,7 @@ module.exports = {
       res.status(200).json(body);
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.status(404).send(error.message);
     }
   },
 };
