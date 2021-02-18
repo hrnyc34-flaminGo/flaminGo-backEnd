@@ -1,7 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const roomsMethod = require('../../db/models/rooms.js');
-const roomTypeMethod = require('../../db/models/roomTypes.js');
+const { roomsMethod } = require('../../db/models/rooms.js');
+const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 
 module.exports = {
@@ -113,8 +113,8 @@ module.exports = {
       .catch(err => {
         res.sendStatus(500);
       });
-
   },
   delete: (req, res) => {
   }
 };
+

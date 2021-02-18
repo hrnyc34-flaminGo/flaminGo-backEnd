@@ -2,12 +2,6 @@
 
 ## Table of Contents
 
-- [Login](#login)
-
-  - [Authenticate User](#authenticate-user)
-  
-  - [Validate Token](#validate-token)
-
 - [Rooms](#rooms)
 
   - [List Rooms](#list-rooms)
@@ -28,7 +22,7 @@
   
   - [List Reservations](#list-reservations)
   
-  - [Add New REservation](#add-new-reservation)
+  - [Add New Reservation](#add-new-reservation)
   
   - [Check-In A Reservation](#check-in-a-reservation)
   
@@ -59,49 +53,6 @@
   
   - [Edit A Timesheet](#edit-a-timesheet)
   
-## Login
-
-### Authenticate User
-`POST /employees/authenticate-user`  Sends User Information
-
-Response
-
-`Status: 200 OK`
-
-Bad Request Response
-`Status: 400 BAD_REQUEST`
-
-Internal Server Error Response
-`Status: 500 INTERNAL_SERVER_ERROR`
-
-Parameters
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | body | String of username |
-| password | string | body | String of hashed password |
-
-```JSON
-{TBD}
-```
-
-### Validate Token
-`GET /employees/validate-token`
-
-Response
-
-`Status: 200 OK`
-
-Unauthorized Response
-`Status: 401 UNAUTHORIZED`
-
-Parameters :
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| username | string | ? | String of username |
-
-```JSON
-{ "user": {req.user(TBD)} }
-```
 
 ## Rooms
 ### List Rooms
@@ -129,6 +80,8 @@ Response
     "_id": "507c7f79bcf86cd7994f6c0e",
     "roomNumber": "110",
     "floorNumber": 1,
+    "roomType_id": "602b118a541461fcab3686ac",
+    "reservation_id": "602b3b5e94bd6e1e4f85decf",
     "roomType": "Double Queen",
     "amenities": [
       "Non-Smoking",
@@ -137,10 +90,22 @@ Response
     ],
     "isClean":true,
     "isOccupied": true,
+    "isUsable": true,
+    "price": "150.00",
+    "bookingGuest": {
+        "firstName": "Muriel",
+        "lastName": "Albers",
+        "phone": "340-771-6242",
+        "email": "MurielAlbers@teleworm.us"
+    },
     "currentGuests": [
-      "Bob Palmer",
-      "Alice Palmer",
-      "Bobby Jr Palmer"
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+    },
+    ...
     ],
     "tasks": [
       {
@@ -175,7 +140,6 @@ Parameters
 | roomnumber | string | body | String of room number |
 | floornumber | number | body | [Optional] Floor number |
 | roomType | string | body | Room type of new room |
-| amenities | array | body | [Optional] Array with room amenities |
 
 Response
 
@@ -183,17 +147,50 @@ Response
 
 ```JSON
 {
-  "_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "floorNumber": 1,
-  "roomType": "Double Queen",
-  "price": 150.00,
-  "amenities": [
-    "Non-Smoking",
-    "Pool Side",
-    "Mini-Fridge"
-  ]
-}
+    "_id": "507c7f79bcf86cd7994f6c0e",
+    "roomNumber": "110",
+    "floorNumber": 1,
+    "roomType_id": "602b118a541461fcab3686ac",
+    "reservation_id": "602b3b5e94bd6e1e4f85decf",
+    "roomType": "Double Queen",
+    "amenities": [
+      "Non-Smoking",
+      "Pool Side",
+      "Mini-Fridge"
+    ],
+    "isClean":true,
+    "isOccupied": true,
+    "isUsable": true,
+    "price": "150.00",
+    "bookingGuest": {
+        "firstName": "Muriel",
+        "lastName": "Albers",
+        "phone": "340-771-6242",
+        "email": "MurielAlbers@teleworm.us"
+    },
+    "currentGuests": [
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+    },
+    ...
+    ],
+    "tasks": [
+      {
+        "_id":"5febcfb988e5d76e417427c6",
+        "taskTitle": "Daily cleaning",
+        "department":"Housekeeping"
+      },
+      {
+        "_id":"5febcfc488e5d76e417427c7",
+        "taskTitle": "Shower needs new caulk",
+        "department":"Maintenance"
+      },
+      ...
+    ]
+  }
 ```
 
 ### Edit A Room
@@ -207,7 +204,6 @@ Parameters
 | roomnumber | string | body | [Optional] String of room number |  |
 | floornumber | number | body | [Optional] Floor number |  |
 | roomType | string | body | [Optional] Room type of new room |
-| amenities | array | body | [Optional] Array with room amenities (Will completely override the old array of amenities) |
 
 Response
 
@@ -219,6 +215,13 @@ Response
   "roomNumber": "110",
   "floorNumber": 1,
   "roomType": "Double Queen",
+  "roomType_id": "507c7f79bcf86cd7994f6c0e",
+  "price": "150.00",
+  "isClean":true,
+  "isOccupied": true,
+  "isUsable": true,
+  "task":[],
+  "currentGuest": [],
   "amenities": [
     "Non-Smoking",
     "Pool Side",
@@ -243,6 +246,7 @@ Response
   "_id": "507c7f79bcf86cd7994f6c0e",
   "roomNumber": "110",
   "floorNumber": 1,
+  "roomType_id": "507c7f79bcf86cd7994f6c0e",
   "roomType": "Double Queen",
   "amenities": [
     "Non-Smoking",
@@ -312,22 +316,42 @@ Response
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single Queen",
-    "price": 150.00
+    "price": "150.00",
+    "amenities": [
+      "TV",
+      "Ocean View",
+      "Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Single King",
-    "price": 200.00
+    "price": "200.00",
+    "amenities": [
+      "Mini-Fridge",
+      "Pool Side",
+      "Non-Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Suite",
-    "price": 400.00
+    "price": "400.00",
+    "amenities": [
+      "Kitchen",
+      "Hot Tub",
+      "Sauna",
+      "Non-Smoking"
+    ]
   },
   {
     "_id": "5ff8c7b6aa12892093205486",
     "roomType": "Double Twin",
-    "price": 100.00
+    "price": "100.00",
+    "amenities": [
+      "Pet Friendly",
+      "Non-Smoking"
+    ]
   },
   ...
 ]
@@ -341,7 +365,7 @@ Response
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| :date | string | path | Date of inquirery as a string in the format "YYYY-MM-DD" |
+| :date | string | path | Date of inquiry as a string in the format "YYYY-MM-DD" |
 
 Response:
 
@@ -353,13 +377,21 @@ Response:
   "results": [
     {
       "name": "Single Queen",
+      "amenities": [
+        "TV"
+      ],
       "qty": 10,
-      "price": 150.00
+      "price": "150.00"
     },
     {
       "name": "Double Queen",
+      "amenities": [
+        "Ocean View",
+        "TV",
+        "Non-Smoking"
+      ],
       "qty": 7,
-      "price": 225.00
+      "price": "225.00"
     },
     ...
   ]
@@ -367,7 +399,7 @@ Response:
 ```
 
 ### List Reservations
-`GET /reservations` Will return a list of reservations matching the search criteria.  By default it will return any reservations that are checking in/out today.
+`GET /reservations` Will return a list of reservations sorted by the check-in date
 
 Parameters
 
@@ -389,10 +421,12 @@ Response
 [
   {
     "_id": "5ffa25a6a13f985fdeda9e70",
+    "room_id": "602b14fd541461fcab3686b5",
     "bookingGuest": "John Smith",
+    "room_id": "",
     "roomNumber": "",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-10-22",
     "checkOut": "2021-10-28",
     "guestList": [
@@ -403,9 +437,10 @@ Response
   {
     "_id": "60108729ffefc9bae107564c",
     "bookingGuest": "Soo Yung",
+    "room_id": "60108729ffefc9bae10756bc",
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
+    "totalCost": "150.00",
     "checkIn": "2021-05-03",
     "checkOut": "2021-05-10",
     "guestList": [
@@ -423,11 +458,11 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| bookingGuest_id | string | body | String representation of guest's mongo _id field |
-| guestList | array | body | List of names for all guests staying on this reservation |
+| bookingGuest | string | body | Guest object. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings Ex: `{firstName: "Bob", lastName: "French", phone: "123-456-7890", email: "bobFrench@email.com"}`|
+| guestList | array | body | Array of guest objects. Guests can have 4 properties: firstName, lastName, phone, email. All values should be strings |
 | checkIn | string | body | String representation of date in YYYY-MM-DD format |
 | checkOut | string | body | String representation of date in YYYY-MM-DD format |
-| bookedRoom | string | body | Name of the room type being booked |
+| roomType | string | body | Room type being booked.  Should use the official list of room types. |
 
 Response
 
@@ -464,14 +499,25 @@ Response
 ```JSON
 {
     "_id": "60108729ffefc9bae107564c",
-    "bookingGuest": "Soo Yung",
+    "bookingGuest": {
+        "firstName": "Adam",
+        "lastName": "Pollock",
+        "phone": "540-771-6242",
+        "email": "AdamDPollock@teleworm.us"
+    },
     "roomNumber": "110",
     "roomType": "Single Queen",
-    "totalCost": 150.00,
-    "checkIn": "2021-05-03",
-    "checkOut": "2021-05-10",
+    "totalCost": "1050.00",
+    "checkIn": "2021-05-03T13:44:00.000Z",
+    "checkOut": "2021-05-10T13:44:00.000Z",
     "guestList": [
-      "Soo Yung"
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+      },
+    ...
     ]
   }
 ```
@@ -485,11 +531,10 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| room_id | string | query | [Optional] String representation of guest's mongo _id field |
-| roomNumber | string | query | [Optional] String of room number |
 | isComplete | boolean | query | [Optional] Default: false |
+| room_id | string | query | [Optional] String representation of guest's mongo _id field |
 | location | string | query | [Optional] String to search for location |
-| dueBy | string | query | [Optional] String representation of date in YYYY-MM-DD format |
+| dueBy | string | query | [Optional] String representation of date in ISO format |
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
 
@@ -503,22 +548,25 @@ Response
   {
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
-    "roomNumber": "110",
-    "location": "",
-    "employeeCompleted": "John Smith",
-    "employeeCreated": "Jane Doe",
-    "department": "Housekeeping",
+    "location": "110",
     "taskTitle": "Clean dirty spot",
     "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
+    "department": "Housekeeping",
     "createdAt": "2021-02-13T13:44:00.000Z",
     "dueBy": "2021-02-14T10:00:00.000Z",
-    "isCompleted": true,
     "completedAt": "2021-02-13T16:15:00.000Z",
+    "isComplete": true,
+    "isCleaning": false,
+    "employeeCreated": "Jane Doe",
+    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
+    "employeeCompleted": "John Smith",
+    "employeeCompleted_id": "auth0|603r1cb963504c0071df24a7",
+    "employeeAssigned": "Joe Slo",
+    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8",
   },
   {
-    "task_id": 1,
+    "task_id": "60435729ffefc9bae132533d",
     "room_id": "",
-    "roomNumber": "",
     "location": "Pool",
     ...
   },
@@ -530,57 +578,126 @@ Response
 ### Add New Task
 `POST /tasks` Add a new task
 
-Response
-`Status: 201 CREATED`
-
 Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
+| location | string | body | Room number if this is a room or name of location |
 | taskTitle | string | body | Title for the Description |
 | taskDescription | string | body | [Optional] Description of the new task |
-| room_id | string | body | [Optional] String representation of mongo _id field |
-| location | string | body | Room number if this is a room or name of location |
 | department | string | body | Selection for which Department this task is for (Maintenance or Housekeeping) |
+| employeeCreated | string | body | Employee first and last name who created the task
+| employeeCreated_Id | string | body | Employee AuthO id who created the task
+| employeeAssigned | string | body | [Optional] Employee first and last name who is assigned to the task
+| employeeAssigned_id | string | body | [Optional] Employee AuthO id who is assigned to the task
 | dueBy | string | body | [Optional] String of timestamp in ISO format |
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
 
+Response
+`Status: 201 CREATED`
 
 ```JSON
-{
-  "task_id": "60108729ffefc9bae107564d",
-  "room_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "location": "",
-  "employeeCompleted": "",
-  "employeeCreated": "Jane Doe",
-  "department": "Housekeeping",
-  "taskTitle": "Clean dirty spot",
-  "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-  "createdAt": "2021-02-13T13:44:00.000Z",
-  "dueBy": "2021-02-14T10:00:00.000Z",
-  "isCompleted": false,
-  "completedAt": "",
-}
+  {
+    "task_id": "60108729ffefc9bae107564d",
+    "room_id": "507c7f79bcf86cd7994f6c0e",
+    "location": "110",
+    "taskTitle": "Clean dirty spot",
+    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
+    "department": "Housekeeping",
+    "createdAt": "2021-02-13T13:44:00.000Z",
+    "dueBy": "2021-02-14T10:00:00.000Z",
+    "completedAt": "",
+    "isComplete": false,
+    "isCleaning": false,
+    "employeeCreated": "Jane Doe",
+    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
+    "employeeCompleted": "",
+    "employeeCompleted_id": "",
+    "employeeAssigned": "Joe Slo",
+    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
+  }
+```
+or
+```JSON
+  {
+    "task_id": "60108729ffefc9bae107564d",
+    "location": "Pool",
+    "taskTitle": "Clean Pool",
+    "taskDescription": "Do some pool cleaning.",
+    "department": "Housekeeping",
+    "createdAt": "2021-02-13T13:44:00.000Z",
+    "dueBy": "2021-02-14T10:00:00.000Z",
+    "completedAt": "",
+    "isComplete": false,
+    "isCleaning": false,
+    "employeeCreated": "Jane Doe",
+    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
+    "employeeCompleted": "",
+    "employeeCompleted_id": "",
+    "employeeAssigned": "Joe Slo",
+    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
+  }
 ```
 
 ### Edit Task
-`PUT /tasks/:task_id` Will update the task with matching _id with any fields supplied in the body
-
-Response
-
-`Status: 200 OK`
+`PUT /tasks/:task_id` Will change the task to complete
 
 Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
-| taskTitle | string | body | [Optional] Title for the task |
-| taskDescription | string | body | [Optional] Description of the new task |
-| location | string | body | [Optional] Room number or name of location |
-| department | string | body | [Optional] Selection for which Department this task is for |
+| employeeCompleted | string | body | Employee first and last name who completed task |
+| employeeCompleted_id | string | body | Employee AuthO id
+| isComplete | boolean | body | Task completion status. Set to true. |
+
+Response
+
+`Status: 200 OK`
+
+```JSON
+  {
+    "task_id": "60108729ffefc9bae107564d",
+    "room_id": "507c7f79bcf86cd7994f6c0e",
+    "location": "110",
+    "taskTitle": "Clean dirty spot",
+    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
+    "department": "Housekeeping",
+    "createdAt": "2021-02-13T13:44:00.000Z",
+    "dueBy": "2021-02-14T10:00:00.000Z",
+    "completedAt": "2021-02-13T16:15:00.000Z",
+    "isComplete": true,
+    "isCleaning": true,
+    "employeeCreated": "Jane Doe",
+    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
+    "employeeCompleted": "John Smith",
+    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
+    "employeeAssigned": "Joe Slo",
+    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
+  }
+```
+or
+```JSON
+  {
+    "task_id": "60108729ffefc9bae107564d",
+    "location": "Pool",
+    "taskTitle": "Clean Pool",
+    "taskDescription": "Do some pool cleaning.",
+    "department": "Housekeeping",
+    "createdAt": "2021-02-13T13:44:00.000Z",
+    "dueBy": "2021-02-14T10:00:00.000Z",
+    "completedAt": "2021-02-13T16:15:00.000Z",
+    "isComplete": true,
+    "isCleaning": false,
+    "employeeCreated": "Jane Doe",
+    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
+    "employeeCompleted": "John Smith",
+    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
+    "employeeAssigned": "Joe Slo",
+    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
+  }
+```
 
 ## Employees
 
@@ -592,7 +709,6 @@ Parameters
 | searchName | string | query | [Optional] String to match searching for employee name |
 | isActive | boolean | query | [Optional] Default: true |
 
-
 Response
 
 `Status: 200 OK`
@@ -600,28 +716,26 @@ Response
 ```JSON
 [
   {
-    "_id": "60108729ffefc9bae107564e",
-    "firstName": "John",
-    "lastName": "Smith",
-    "address1": "123 Hackreactor Rd",
+    "id": "auth0|999999999999999999999999",
+    "name": "Theo Telonis",
+    "email": "theo123@gmail.com",
+    "address1": "456 Main St.",
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10002,
-    "country": "United States",
+    "zipcode": 10012,
+    "country": "USA",
     "phone": "123-456-7890",
-    "email": "jsmith@gmail.com",
-    "wage": 15.00,
+    "wage": 12654,
     "startDate": "2021-02-13",
-    "position": "Front Desk",
+    "position": "systemAdministration",
     "weekHours": 30,
     "isActive": true
   },
   {
-    "_id": 2,
-    "firstName": "Jane",
-    "lastName": "Doe",
-    "address1": "456 Generic PL"
+    "id": "auth0|000000000000000000000000",
+    "name": "Josh Adams",
+    "email": "josh123@gmail.com",
     ...
   },
   ...
@@ -636,7 +750,7 @@ Path Variable
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 
 Response
 
@@ -644,20 +758,19 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
-  "firstName": "John",
-  "lastName": "Smith",
-  "address1": "123 Hackreactor Rd",
-  "address2": "Apt 2",
+  "id": "auth0|999999999999999999999999",
+  "name": "Theo Telonis",
+  "email": "theo123@gmail.com",
+  "address1": "456 Main St.",
+  "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
-  "country": "United States",
+  "zipcode": 10012,
+  "country": "USA",
   "phone": "123-456-7890",
-  "email": "jsmith@gmail.com",
-  "wage": 15.00,
+  "wage": 12654,
   "startDate": "2021-02-13",
-  "position": "Front Desk",
+  "position": "systemAdministration",
   "weekHours": 30,
   "isActive": true
 }
@@ -671,15 +784,15 @@ Body Parameter
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| firstName | string | body | String of the employee's first name |
-| lastName | string | body | String of the employee's last name |
+| firstName | string | body |[Optional] String of the employee's first name |
+| lastName | string | body | [Optional]String of the employee's last name |
 | address1 | string | body | String of the employee's address |
 | address2 | string | body | [Optional] String of the employee's address 2 |
 | city | string | body | String of the employee's city |
-| state | string | body | String of the employee's address state |
-| zipcode | string | body | String of the employee's zipcode |
+| state | string | body | [Optional] String of the employee's address state |
+| zipcode | string | body | [Optional] String of the employee's zipcode |
 | country | string | body | String of the employee's address country |
-| phone | string | body | String of the employee's phone number |
+| phone | string | body | [Optional] String of the employee's phone number |
 | email | string | body | String of the employee's email address |
 | wage | number | body | Number of the employee's hourly wage |
 | startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
@@ -691,21 +804,20 @@ Response
 
 ```JSON
 {
-  "_id": "60108729ffefc9bae107564e",
-  "firstName": "John",
-  "lastName": "Smith",
-  "address1": "123 Hackreactor Rd",
-  "address2": "Apt 2",
+  "id": "auth0|999999999999999999999999",
+  "name": "Theo Telonis",
+  "email": "theo123@gmail.com",
+  "address1": "456 Main St.",
+  "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10002,
-  "country": "United States",
+  "zipcode": 10012,
+  "country": "USA",
   "phone": "123-456-7890",
-  "email": "jsmith@gmail.com",
-  "wage": 15.00,
+  "wage": 12654,
   "startDate": "2021-02-13",
-  "position": "Front Desk",
-  "weekHours": 0,
+  "position": "systemAdministration",
+  "weekHours": 30,
   "isActive": true
 }
 ```
@@ -717,7 +829,7 @@ Body Parameter
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 | firstName | string | body |[Optional] String of the employee's first name |
 | lastName | string | body | [Optional]String of the employee's last name |
 | address1 | string | body | [Optional] String of the employee's address |
@@ -730,7 +842,6 @@ Body Parameter
 | email | string | body | String of the employee's email address |
 | wage | number | body | [Optional] Number of the employee's hourly wage |
 | startDate | string | body | [Optional] String of the employee's start date in the format "YYYY-MM-DD" |
-| username | string | body | [Optional] String of the employee's username |
 | position | string | body | [Optional] String of the employee's position (reference official list) |
 
 Response
@@ -744,116 +855,22 @@ Path Variable
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of mongo _id |
+| employee_id | string | path | Employee AuthO id |
 
 Response
 
 `Status: 200 OK`
-
-<!-- 
-** After some thought last night I don't think we need to be able to add/edit employee positions.  We can just hard code the values in the front end as constants that can be referenced for dropdown menus. - Colin 
-**
-
-### List Employee Positions
-`GET /employees/positions` Will get list of employee types.
-
-Response
-
-`Status: 200 OK`
-
-```JSON
-[
-  "Front Desk",
-  "Housekeeping",
-  "Maintenance",
-  "Management",
-  "System Administration"
-]
-```
-
-### Add Employee Position
-`POST /employees/positions` Will add a new employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| type | string | body | String of new employee type |
-
-
-Response
-
-`Status: 201 CREATED`
-
-```JSON
-{
-  "_id":"60108729ffefc9bae107564f",
-  "position": "Front Desk",
-}
-``` 
-
-### Edit Employee Type
-`PUT /employees/positions/:position_id` Will edit an existing employee position.
-
-Parameters
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| position_id | string | path | String representation of employee's unique mongo _id |
-| position | string | body | Position name to replace previous name |
-
-Response
-
-`Status: 204 OK`
--->
 
 ## Timesheets
 
-<!-- 
-** I dont think we need this one for MVP, we just need a list of timesheets for a specific employee - Colin **
-
-
-### List Timesheets
-`GET /timesheets` Will return a list of timesheets for all hotel employees.
-
-Response
-
-`Status: 200 OK`.
-
-```JSON
-[
-    {
-      "timesheet_id": "60108729ffefc9bae1075652",
-      "employee_id": "60108729ffefc9bae1075651",
-      "monday": 8,
-      "tuesday": 7,
-      "wednesday": 8,
-      "thursday": 5,
-      "friday": 9,
-      "saturday": 0,
-      "sunday": 0,
-      "weekStart": "2021-02-08",
-      "weekEnd": "2021-02-14"
-    },
-    {
-      "timesheet_id": "60108729ffefc9bae1075653",
-      "employee_id": "60108729ffefc9bae1075654",
-      ...
-    },
-    ...
-]
-
-```
--->
-
 ### Get Employee's Timesheet
-`GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique id.  Results are sorted with the most recent first
+`GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique AuthO id. Results are sorted with the most recent first
 
 Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| employee_id | string | path | String representation of employee's unique mongo _id |
+| employee_id | string | path | Employee AuthO id |
 | count | number | query | The number or results to return. Default is 0 which returns all results |
 
 Response
@@ -863,7 +880,7 @@ Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "60108729ffefc9bae1075651",
+  "employee_id": "auth0|602c1cb963504c0071df24a6",
   "monday": 8,
   "tuesday": 7,
   "wednesday": 8,
@@ -875,7 +892,6 @@ Response
   "weekEnd": "2021-02-14",
   "weekHours": 37
 }
-
 ```
 
 
@@ -887,7 +903,7 @@ Response
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
 | timesheet_id | string | body | String representation of mongo _id field |
-| employee_id | string | body | String representation of mongo employee_id field |
+| employee_id | string | body | Employee AuthO id |
 | monday | number | body | Total hours the employee worked on Monday |
 | tuesday | number | body | Total hours the employee worked on Tuesday |
 | wednesday | number | body | Total hours the employee worked on Wednesday |
@@ -903,7 +919,7 @@ Response
 ```JSON
 {
   "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "60108729ffefc9bae1075651",
+  "employee_id": "auth0|602c1cb963504c0071df24a6",
   "monday": 8,
   "tuesday": 7,
   "wednesday": 8,
