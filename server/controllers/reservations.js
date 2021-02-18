@@ -36,23 +36,46 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-  getAvailibility: (req, res) => {
+  getAvailibility: async (req, res) => {
     // Search for rooms available on the date
-    res.send({
-      'date': '2021-11-10',
-      'results': [
-        {
-          'name': 'Single Queen',
-          'qty': 10,
-          'price': '150.00'
-        },
-        {
-          'name': 'Double Queen',
-          'qty': 7,
-          'price': '225.00'
+    let { date } = req.params;
+    try {
+      // Get booked rooms by type on input day
+      let bookedRooms = await helpers.reservations.sumReservationsForDate(date);
+      // Get total number of rooms by type
+      let hotelRooms = await helpers.reservations.sumByRoomType();
+
+      // reformat to match API output
+      hotelRooms = hotelRooms.reduce(( acc, el ) => {
+        let roomType = {};
+        roomType[el._id.toString()] = {
+          // _id: el._id.toString(),
+          qty: el.qty,
+          price: helpers.reformat.decimal128ToMoneyString(el.roomType[0].price),
+          name: el.roomType[0].roomType,
+          amenities: el.roomType[0].amenities
+        };
+        return Object.assign(acc, roomType);
+      }, {});
+      // Subtract booked rooms from total hotel rooms
+      for (const roomType of bookedRooms) {
+        let id = roomType._id.toString();
+        if (hotelRooms.hasOwnProperty(id)) {
+          let qty = hotelRooms[id].qty;
+          qty = Math.max(qty - roomType.qty, 0);
+          hotelRooms[id].qty = qty;
         }
-      ]
-    }).status(200);
+      }
+      // Convert to array
+      let results = [];
+      for (const key in hotelRooms) {
+        results.push(hotelRooms[key]);
+      }
+      res.status(200).json({ date, results });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
   },
 
   post: (req, res) => {

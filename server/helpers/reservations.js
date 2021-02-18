@@ -1,4 +1,6 @@
 const reformat = require('./reformat');
+const Reservation = require('../../db/models/reservations');
+const { Rooms } = require('../../db/models/rooms');
 
 
 const formatReservation = (reservation) => {
@@ -21,4 +23,68 @@ const formatReservation = (reservation) => {
   };
 };
 
-module.exports = { formatReservation };
+// Given a day in YYYY-MM-DD format returns promise of how many of each
+// roomtype is reserved for that day
+const sumReservationsForDate = (dateStr) => {
+  let pipeline = [
+    {
+      '$match': {
+        '$expr': {
+          '$and': [
+            {
+              '$lte': [
+                '$checkIn', new Date(dateStr)
+              ]
+            }, {
+              '$gte': [
+                '$checkOut', new Date(dateStr)
+              ]
+            }
+          ]
+        }
+      }
+    }, {
+      '$group': {
+        '_id': '$roomType_id',
+        'qty': {
+          '$sum': 1
+        }
+      }
+    }, {
+      '$lookup': {
+        'from': 'roomtypes',
+        'localField': '_id',
+        'foreignField': '_id',
+        'as': 'roomType'
+      }
+    }
+  ];
+  return Reservation.aggregate(pipeline);
+};
+
+const sumByRoomType = () => {
+  let pipeline = [
+    {
+      '$group': {
+        '_id': '$roomType_id',
+        'qty': {
+          '$sum': 1
+        }
+      }
+    }, {
+      '$lookup': {
+        'from': 'roomtypes',
+        'localField': '_id',
+        'foreignField': '_id',
+        'as': 'roomType'
+      }
+    }
+  ];
+  return Rooms.aggregate(pipeline);
+};
+
+module.exports = {
+  formatReservation,
+  sumReservationsForDate,
+  sumByRoomType
+};
