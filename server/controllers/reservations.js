@@ -111,7 +111,7 @@ module.exports = {
     let { room_id } = req.body;
     let { reservation_id } = req.params;
     try {
-      let room = await await Reservation.findOne({_id: reservation_id});
+      let room = await await Rooms.findOne({_id: room_id});
       let reservation = await Reservation.findOne({_id: reservation_id});
       // Modify room document
       room.reservation_id = ObjectId(reservation_id);
@@ -136,7 +136,6 @@ module.exports = {
     let { reservation_id } = req.params;
     try {
       let reservation = await Reservation.findOne({_id: reservation_id}).exec();
-      debugger;
       let { room_id } = reservation;
       if (!room_id) { throw Error('Reservation not checked in.'); }
 
@@ -167,7 +166,6 @@ module.exports = {
         roomNumber,
         roomType
       };
-      debugger;
 
       res.status(200).json(body);
     } catch (error) {
