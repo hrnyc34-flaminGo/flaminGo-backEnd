@@ -70,6 +70,8 @@ Parameters
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
 
+**important : reservation_id will return "" or null if there is no reservation**
+
 Response
 
 `Status: 200 OK`
@@ -77,56 +79,69 @@ Response
 ```JSON
 [
   {
-    "_id": "507c7f79bcf86cd7994f6c0e",
-    "roomNumber": "110",
-    "floorNumber": 1,
+    "_id": "602b14fd541461fcab3686b5",
     "roomType_id": "602b118a541461fcab3686ac",
     "reservation_id": "602b3b5e94bd6e1e4f85decf",
-    "roomType": "Double Queen",
+    "roomType": "Ocean View King Suite",
+    "price": "400.00",
     "amenities": [
-      "Non-Smoking",
-      "Pool Side",
-      "Mini-Fridge"
+        "Ocean View",
+        "TV",
+        "Non-Smoking"
     ],
-    "isClean":true,
-    "isOccupied": true,
+    "roomNumber": "110",
+    "floorNumber": 1,
+    "isClean": true,
+    "isOccupied": false,
     "isUsable": true,
-    "price": "150.00",
-    "bookingGuest": {
-        "firstName": "Muriel",
-        "lastName": "Albers",
-        "phone": "340-771-6242",
-        "email": "MurielAlbers@teleworm.us"
-    },
+    "tasks": [
+      {
+        "_id": "602b282c94bd6e1e4f85dea2",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Clean Room",
+        "taskDescription": "Daily Cleaning",
+        "department": "Housekeeping",
+        "createdAt": "2021-02-15T11:00:00.000Z",
+        "dueBy": "2021-02-15T20:00:00.000Z",
+        "isComplete": false,
+        "isCleaning": true,
+        "completedAt": "",
+        "employeeCompleted": "",
+        "employeeCreated": "system",
+        "employeeAssigned": "Spencer Brook",
+        "employeeAssigned_id": "auth0|602c301102061a0069805815",
+        "employeeCompleted_id": "",
+        "employeeCreated_id": ""
+      },
+      {
+        "_id": "602b29a394bd6e1e4f85deac",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        ...
+      }
+    ],
     "currentGuests": [
       {
         "firstName": "Guest",
         "lastName": "One",
         "phone": "123-456-7890",
         "email": "guestOne@madeup.com"
-    },
-    ...
-    ],
-    "tasks": [
-      {
-        "_id":"5febcfb988e5d76e417427c6",
-        "taskTitle": "Daily cleaning",
-        "department":"Housekeeping"
       },
       {
-        "_id":"5febcfc488e5d76e417427c7",
-        "taskTitle": "Shower needs new caulk",
-        "department":"Maintenance"
-      },
+        "firstName": "Guest",
       ...
+      }
     ]
-  }, 
-  {
-    "_id": "507c7f79bcf86cd7494f6a9b",
-    "roomNumber": "111",
-    ...
   },
+  {
+    "_id": "602b1b4d94bd6e1e4f85de79",
+    "roomType_id": "602b100e541461fcab3686a7",
+    "reservation_id": "",
+    "roomType": "Single Queen",
+    "price": "100.00",
   ...
+  }
 ]
 ```
 
@@ -145,54 +160,6 @@ Response
 
 `Status: 201 CREATED`
 
-```JSON
-{
-    "_id": "507c7f79bcf86cd7994f6c0e",
-    "roomNumber": "110",
-    "floorNumber": 1,
-    "roomType_id": "602b118a541461fcab3686ac",
-    "reservation_id": "602b3b5e94bd6e1e4f85decf",
-    "roomType": "Double Queen",
-    "amenities": [
-      "Non-Smoking",
-      "Pool Side",
-      "Mini-Fridge"
-    ],
-    "isClean":true,
-    "isOccupied": true,
-    "isUsable": true,
-    "price": "150.00",
-    "bookingGuest": {
-        "firstName": "Muriel",
-        "lastName": "Albers",
-        "phone": "340-771-6242",
-        "email": "MurielAlbers@teleworm.us"
-    },
-    "currentGuests": [
-      {
-        "firstName": "Guest",
-        "lastName": "One",
-        "phone": "123-456-7890",
-        "email": "guestOne@madeup.com"
-    },
-    ...
-    ],
-    "tasks": [
-      {
-        "_id":"5febcfb988e5d76e417427c6",
-        "taskTitle": "Daily cleaning",
-        "department":"Housekeeping"
-      },
-      {
-        "_id":"5febcfc488e5d76e417427c7",
-        "taskTitle": "Shower needs new caulk",
-        "department":"Maintenance"
-      },
-      ...
-    ]
-  }
-```
-
 ### Edit A Room
 `PUT /rooms/:room_id` Edit a specific room
 
@@ -209,27 +176,6 @@ Response
 
 `Status: 201 CREATED`
 
-```JSON
-{
-  "_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "floorNumber": 1,
-  "roomType": "Double Queen",
-  "roomType_id": "507c7f79bcf86cd7994f6c0e",
-  "price": "150.00",
-  "isClean":true,
-  "isOccupied": true,
-  "isUsable": true,
-  "task":[],
-  "currentGuest": [],
-  "amenities": [
-    "Non-Smoking",
-    "Pool Side",
-    "Mini-Fridge"
-  ]
-}
-```
-
 ### Get Specific Room
 `GET /rooms/:room_id` Retrieves a specific room by its id
 
@@ -243,37 +189,61 @@ Response
 
 ```JSON
 {
-  "_id": "507c7f79bcf86cd7994f6c0e",
-  "roomNumber": "110",
-  "floorNumber": 1,
-  "roomType_id": "507c7f79bcf86cd7994f6c0e",
-  "roomType": "Double Queen",
-  "amenities": [
-    "Non-Smoking",
-    "Pool Side",
-    "Mini-Fridge"
-  ],
-  "isClean":true,
-  "isOccupied": true,
-  "currentGuests": [
-    "Bob Palmer",
-    "Alice Palmer",
-    "Bobby Jr Palmer"
-  ],
-  "tasks": [
-    {
-      "_id":"5febcfb988e5d76e417427c6",
-      "taskDescription": "Daily cleaning",
-      "department":"Housekeeping"
-    },
-    {
-      "_id":"5febcfc488e5d76e417427c7",
-      "taskDescription": "Shower needs new caulk",
-      "department":"Maintenance"
-    },
-    ...
-  ]
-},
+    "_id": "602b14fd541461fcab3686b5",
+    "roomType_id": "602b118a541461fcab3686ac",
+    "reservation_id": "602b3b5e94bd6e1e4f85decf",
+    "roomType": "Ocean View King Suite",
+    "price": "400.00",
+    "amenities": [
+        "Ocean View",
+        "TV",
+        "Non-Smoking"
+    ],
+    "roomNumber": "110",
+    "floorNumber": 1,
+    "isClean": true,
+    "isOccupied": false,
+    "isUsable": true,
+    "tasks": [
+      {
+        "_id": "602b282c94bd6e1e4f85dea2",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Clean Room",
+        "taskDescription": "Daily Cleaning",
+        "department": "Housekeeping",
+        "createdAt": "2021-02-15T11:00:00.000Z",
+        "dueBy": "2021-02-15T20:00:00.000Z",
+        "isComplete": false,
+        "isCleaning": true,
+        "completedAt": "",
+        "employeeCompleted": "",
+        "employeeCreated": "system",
+        "employeeAssigned": "Spencer Brook",
+        "employeeAssigned_id": "auth0|602c301102061a0069805815",
+        "employeeCompleted_id": "",
+        "employeeCreated_id": ""
+      },
+      {
+        "_id": "602b29a394bd6e1e4f85deac",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        ...
+      }
+    ],
+    "currentGuests": [
+      {
+        "firstName": "Guest",
+        "lastName": "One",
+        "phone": "123-456-7890",
+        "email": "guestOne@madeup.com"
+      },
+      {
+        "firstName": "Guest",
+      ...
+      }
+    ]
+  }
 ```
 ### List Amenities
 `GET /rooms/amenities` Retrieves a list of all room amenities.

@@ -1,6 +1,6 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const { roomsMethod } = require('../../db/models/rooms.js');
+const { roomsMethod, Rooms } = require('../../db/models/rooms.js');
 const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 const { decimal128ToMoneyString } = require('../helpers/reformat');
@@ -8,8 +8,15 @@ const { decimal128ToMoneyString } = require('../helpers/reformat');
 module.exports = {
   get: (req, res) => {
     if (req.url === '/') {
-      roomsMethod.readAll()
+
+      Rooms.getRooms()
         .then(result => {
+          console.log('result:', result);
+          // TODO: getting rid of data not using from other fields
+          var newRooms = result.map((room) => {
+            let newPrice = decimal128ToMoneyString(room.price);
+            room.price = newPrice;
+          });
           res.status(200).json(result);
         })
         .catch(err => {
@@ -20,9 +27,11 @@ module.exports = {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
-      roomsMethod.readOne(roomIdInfo)
+      Rooms.getRooms({ _id: roomIdInfo })
         .then(result => {
-          res.status(200).json(result);
+          let newPrice = decimal128ToMoneyString(result[0].price);
+          result[0].price = newPrice;
+          res.status(200).json(result[0]);
         })
         .catch(err => {
           res.sendStatus(500);
@@ -41,9 +50,9 @@ module.exports = {
       roomTypeMethod.readAll()
         .then(roomTypes => {
           let body = roomTypes.map((type) => {
-            let {_id, price, roomType} = type;
+            let { _id, price, roomType } = type;
             let newPrice = decimal128ToMoneyString(price);
-            return {_id, price: newPrice, roomType};
+            return { _id, price: newPrice, roomType };
           });
           res.status(200).json(body);
         })
@@ -58,20 +67,14 @@ module.exports = {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
           let roomTypeIdInfo = new ObjectId(result._id);
-
           updateInfo['roomType_id'] = roomTypeIdInfo;
-          updateInfo['price'] = result.price;
-          updateInfo['amenities'] = result.amenities;
-          updateInfo['isClean'] = false;
-          updateInfo['isOccupied'] = false;
-          updateInfo['isUsable'] = false;
-          updateInfo['currentGuests'] = [];
-          updateInfo['tasks'] = [];
+          delete updateInfo.roomType;
 
           roomsMethod.create(updateInfo)
             .then(result => {
               res.sendStatus(201);
-            });
+            })
+            .catch(err => res.sendStatus(404));
         })
         .catch(err => {
           res.sendStatus(500);
@@ -99,18 +102,14 @@ module.exports = {
   },
   put: (req, res) => {
     const { room_id } = req.params;
-    let roomIdInfo = new ObjectId(room_id);
     let updateInfo = req.body;
-
+    let roomIdInfo = new ObjectId(room_id);
+    updateInfo['_id'] = roomIdInfo;
     roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
-        updateInfo['_id'] = roomIdInfo;
-        updateInfo['price'] = result.price;
-        updateInfo['amenities'] = result.amenities;
-        updateInfo['isOccupied'] = false;
-
-        // ADD tasks HERE (isClean, isUsable, tasks[])
-
+        updateInfo['roomType_id'] = new ObjectId(result._id);
+        // debugger;
+        // TODO: empty "" => null , find the way to handle it
         roomsMethod.update(updateInfo)
           .then(result => {
             res.sendStatus(201);
@@ -123,4 +122,3 @@ module.exports = {
   delete: (req, res) => {
   }
 };
-

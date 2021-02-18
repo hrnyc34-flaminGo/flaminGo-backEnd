@@ -12,6 +12,7 @@ const Amenities = mongoose.model('Amenities', amenitiesSchema);
 
 let amenitiesMethod = {
   readAll: () => {
+    console.log('readAll working');
     return Amenities.find().exec();
   },
   readOne: ( id )=>{
