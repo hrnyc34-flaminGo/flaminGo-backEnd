@@ -113,13 +113,21 @@ module.exports = {
     try {
       let room = await Rooms.findOne({_id: room_id});
       let reservation = await Reservation.findOne({_id: reservation_id});
-      room.reservation_id = reservation_id;
-      debugger;
-      let result = await room.save();
-      debugger;
+      // Modify room document
+      room.reservation_id = ObjectId(reservation_id);
+      room.isOccupied = true;
+      room.currentGuests = reservation.guestList;
+
+      // Modify reservation document
+      reservation.room_id = room._id;
+      reservation.roomNumber = room.roomNumber;
+
+      // Save modified documents
+      await room.save();
+      await reservation.save();
+
       res.sendStatus(201);
     } catch (error) {
-      debugger;
       console.log(error);
       res.sendStatus(500);
     }
