@@ -22,7 +22,7 @@ module.exports = {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
-      Rooms.getRooms({_id: roomIdInfo})
+      Rooms.getRooms({ _id: roomIdInfo })
         .then(result => {
           // need to fix decimalNum problem here
           res.status(200).json(result[0]);
@@ -63,7 +63,6 @@ module.exports = {
           let roomTypeIdInfo = new ObjectId(result._id);
           updateInfo['roomType_id'] = roomTypeIdInfo;
           delete updateInfo.roomType;
-          console.log('updateInfo:', updateInfo);
 
           roomsMethod.create(updateInfo)
             .then(result => {
@@ -100,11 +99,15 @@ module.exports = {
     let updateInfo = req.body;
     let roomIdInfo = new ObjectId(room_id);
     updateInfo['_id'] = roomIdInfo;
-    console.log('updateInfo:', updateInfo);
-
-    roomsMethod.update(updateInfo)
+    roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
-        res.sendStatus(201);
+        console.log('result:', result);
+        updateInfo['roomType_id'] = new ObjectId( result._id );
+
+        roomsMethod.update(updateInfo)
+          .then(result => {
+            res.sendStatus(201);
+          });
       })
       .catch(err => {
         res.sendStatus(500);

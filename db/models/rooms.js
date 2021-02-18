@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema, Types, Mixed} = mongoose;
+const { Schema, Types, Mixed } = mongoose;
 const db = require('../../db');
 const RoomTypes = require('./roomTypes.js');
 
@@ -15,10 +15,9 @@ const roomsSchema = new Schema({
   versionKey: false
 });
 
-roomsSchema.statics.getRooms = function(query = {}) {
+roomsSchema.statics.getRooms = function (query = {}) {
   const pipeline = [
-    { $match: query },
-    {
+    { $match: query }, {
       $lookup: {
         from: 'roomtypes',
         localField: 'roomType_id',
@@ -28,10 +27,50 @@ roomsSchema.statics.getRooms = function(query = {}) {
     }, {
       $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$add', 0] }, '$$ROOT'] } }
     }, {
-      $project: { add: 0 }
-    }];
+      $lookup: {
+        from: 'tasks',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'tasks'
+      }
+    }, {
+      $lookup: {
+        from: 'reservations',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'currentGuest'
+      }
+    }, {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [{
+            $arrayElemAt: ['$currentGuest', 0]
+          }, '$$ROOT']
+        }
+      }
+    }, {
+      $project: {
+        room_id: 0,
+        checkIn: 0,
+        checkOut: 0,
+        totalCost: 0,
+        bookingGuest: 0,
+        idString: 0,
+        add: 0,
+        currentGuest: 0
+      }
+    }, {
+      $addFields: {
+        currentGuests: '$guestList'
+      }
+    }, {
+      $project: {
+        guestList: 0
+      }
+    }
+  ];
 
-  return this.aggregate(pipeline).sort({roomNumber: 1}).exec();
+  return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
 };
 
 
@@ -56,6 +95,7 @@ module.exports = {
       );
     },
     update: (one) => {
+      // let emptyReservation = one.reservation_id === null && '';
       return module.exports.Rooms.updateMany(
         { _id: one._id },
         {
