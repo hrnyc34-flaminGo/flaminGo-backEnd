@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema, Types, Mixed} = mongoose;
+const { Schema, Types, Mixed } = mongoose;
 const db = require('../../db');
 const RoomTypes = require('./roomTypes.js');
 
@@ -8,22 +8,16 @@ const roomsSchema = new Schema({
   roomType_id: { type: Types.ObjectId, ref: 'RoomTypes' },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
-  roomType: { type: String },
-  price: { type: Number },
-  amenities: [],
   isClean: { type: Boolean, default: true },
   isOccupied: { type: Boolean, default: false },
   isUsable: { type: Boolean, default: true },
-  currentGuests: [],
-  tasks: []
 }, {
   versionKey: false
 });
-
-roomsSchema.statics.getAllRooms = function(query = {}) {
+// TODO: getting rid of data not using from other fields
+roomsSchema.statics.getRooms = function (query = {}) {
   const pipeline = [
-    { $match: query },
-    {
+    { $match: query }, {
       $lookup: {
         from: 'roomtypes',
         localField: 'roomType_id',
@@ -33,34 +27,69 @@ roomsSchema.statics.getAllRooms = function(query = {}) {
     }, {
       $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$add', 0] }, '$$ROOT'] } }
     }, {
-      $project: { add: 0 }
-    }];
+      $lookup: {
+        from: 'tasks',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'tasks'
+      }
+    }, {
+      $lookup: {
+        from: 'reservations',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'currentGuest'
+      }
+    }, {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [{
+            $arrayElemAt: ['$currentGuest', 0]
+          }, '$$ROOT']
+        }
+      }
+    }, {
+      $project: {
+        room_id: 0,
+        checkIn: 0,
+        checkOut: 0,
+        totalCost: 0,
+        bookingGuest: 0,
+        idString: 0,
+        add: 0,
+        currentGuest: 0
+      }
+    }, {
+      $addFields: {
+        currentGuests: '$guestList'
+      }
+    }, {
+      $project: {
+        guestList: 0
+      }
+    }
+  ];
 
-  return this.aggregate(pipeline).sort({roomNumber: 1}).exec();
+  return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
 };
-
 
 module.exports = {
   Rooms: mongoose.model('Rooms', roomsSchema),
 
   roomsMethod: {
-    readOne: (id) => {
-      return module.exports.Rooms.findOne({ _id: id }).exec();
+    readOne: (query = { _id: id }) => {
+      return module.exports.Rooms.findOne({ query }).exec();
     },
     create: (one) => {
       return module.exports.Rooms.create(
         {
           reservation_id: one.reservations_id,
+          roomType_id: one.roomType_id,
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
-          roomType: one.roomType,
-          price: one.price,
-          amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
           isUsable: one.isUsable,
-          currentGuests: one.currentGuests,
-          tasks: one.tasks
         }
       );
     },
@@ -69,16 +98,12 @@ module.exports = {
         { _id: one._id },
         {
           reservation_id: one.reservations_id,
+          roomType_id: one.roomType_id,
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
-          roomType: one.roomType,
-          price: one.price,
-          amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
           isUsable: one.isUsable,
-          currentGuests: one.currentGuests,
-          tasks: one.tasks
         },
         { upsert: true }
       );
