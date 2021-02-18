@@ -15,10 +15,10 @@ const cors = require('cors');
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:7777'
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(express.urlencoded({ extended: true }));
