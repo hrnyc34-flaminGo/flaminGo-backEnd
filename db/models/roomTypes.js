@@ -35,5 +35,4 @@ let roomTypeMethod = {
   }
 };
 
-module.exports = RoomTypes;
-module.exports = roomTypeMethod;
+module.exports = { RoomTypes, roomTypeMethod };
