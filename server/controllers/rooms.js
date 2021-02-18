@@ -11,7 +11,13 @@ module.exports = {
 
       Rooms.getRooms()
         .then(result => {
-          // need to fix decimalNum problem here
+          console.log('result:', result);
+          // TODO: getting rid of data not using from other fields
+          var newRooms = result.map((room) => {
+            console.log('One room:', room);
+            let newPrice = decimal128ToMoneyString(room.price);
+            room.price = newPrice;
+          });
           res.status(200).json(result);
         })
         .catch(err => {
@@ -24,7 +30,8 @@ module.exports = {
 
       Rooms.getRooms({ _id: roomIdInfo })
         .then(result => {
-          // need to fix decimalNum problem here
+          let newPrice = decimal128ToMoneyString(result[0].price);
+          result[0].price = newPrice;
           res.status(200).json(result[0]);
         })
         .catch(err => {
@@ -102,8 +109,8 @@ module.exports = {
     roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
         console.log('result:', result);
-        updateInfo['roomType_id'] = new ObjectId( result._id );
-
+        updateInfo['roomType_id'] = new ObjectId(result._id);
+        // TODO: empty "" => null , find the way to handle it
         roomsMethod.update(updateInfo)
           .then(result => {
             res.sendStatus(201);

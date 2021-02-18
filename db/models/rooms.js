@@ -14,7 +14,7 @@ const roomsSchema = new Schema({
 }, {
   versionKey: false
 });
-
+// TODO: getting rid of data not using from other fields
 roomsSchema.statics.getRooms = function (query = {}) {
   const pipeline = [
     { $match: query }, {
@@ -72,7 +72,6 @@ roomsSchema.statics.getRooms = function (query = {}) {
 
   return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
 };
-
 
 module.exports = {
   Rooms: mongoose.model('Rooms', roomsSchema),
