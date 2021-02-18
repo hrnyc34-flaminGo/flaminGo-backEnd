@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
-const { Schema, Mixed } = mongoose;
+const { Schema, Mixed, Decimal128, ObjectId } = mongoose;
 const db = require('../../db');
+// const { decimal128ToMoneyString } = require('../../server/helpers/reformat.js');
 
 const roomsSchema = new Schema({
   reservations_id: { type: Mixed, default: '' },
-  roomType_id: { type: Schema.Types.ObjectId, ref: 'roomtypes', required: true },
+  roomType_id: { type: ObjectId, ref: 'RoomTypes', required: true },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
   roomType: { type: String },
-  price: { type: Number },
+  price: { type: Decimal128, default: 0.0 },
   amenities: [],
   isClean: { type: Boolean, default: false },
   isOccupied: { type: Boolean, default: false },
@@ -30,13 +31,14 @@ module.exports = {
       return module.exports.Rooms.findOne({ _id: id}).exec();
     },
     create: (one) => {
+      // let newPrice = decimal128ToMoneyString( one.price );
       return module.exports.Rooms.create(
         {
           reservations_id: one.reservations_id,
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
           roomType: one.roomType,
-          price: one.price,
+          price: newPrice,
           amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
@@ -47,6 +49,8 @@ module.exports = {
       );
     },
     update: (one) => {
+      let newPrice = decimal128ToMoneyString( one.price );
+
       return module.exports.Rooms.updateMany(
         { _id: one._id },
         {
@@ -54,7 +58,7 @@ module.exports = {
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
           roomType: one.roomType,
-          price: one.price,
+          price: newPrice,
           amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
