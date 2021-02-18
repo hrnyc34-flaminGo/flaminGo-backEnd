@@ -94,7 +94,6 @@ module.exports = {
       );
     },
     update: (one) => {
-      // let emptyReservation = one.reservation_id === null && '';
       return module.exports.Rooms.updateMany(
         { _id: one._id },
         {
