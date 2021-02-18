@@ -5,6 +5,7 @@ const { ObjectId } = require('mongoose').Types;
 const { RoomTypes } = require('../../db/models/roomTypes');
 const { Rooms } = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
+const taskHelpers = require('../helpers/taskHelpers.js');
 
 //todo: This could maybe get moved to a helper file.
 const formatReservation = (reservation) => {
@@ -151,16 +152,14 @@ module.exports = {
       // Update room
       room.reservation_id = '';
       room.isOccupied = false;
-      // todo: Modify isClean based on tasks
+
       // Search for open cleaning task
       let tasks = await Task.find({ room_id, isCleaning: true, isComplete: false }).exec();
-      // If there is an open cleaning task do nothing
+
       // If there are no open cleaning tasks
-      // debugger;
       if (tasks.length === 0) {
-        // mark room dirty
         room.isClean = false;
-        // create a cleaning task
+        let newTask = await taskHelpers.newCleaningTask(null, room._id);
       }
 
       await room.save();
