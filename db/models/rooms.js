@@ -8,19 +8,14 @@ const roomsSchema = new Schema({
   roomType_id: { type: Types.ObjectId, ref: 'RoomTypes' },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
-  roomType: { type: String },
-  price: { type: Number },
-  amenities: [],
   isClean: { type: Boolean, default: true },
   isOccupied: { type: Boolean, default: false },
   isUsable: { type: Boolean, default: true },
-  currentGuests: [],
-  tasks: []
 }, {
   versionKey: false
 });
 
-roomsSchema.statics.getAllRooms = function(query = {}) {
+roomsSchema.statics.getRooms = function(query = {}) {
   const pipeline = [
     { $match: query },
     {
@@ -44,23 +39,19 @@ module.exports = {
   Rooms: mongoose.model('Rooms', roomsSchema),
 
   roomsMethod: {
-    readOne: (id) => {
-      return module.exports.Rooms.findOne({ _id: id }).exec();
+    readOne: (query = { _id: id }) => {
+      return module.exports.Rooms.findOne({ query }).exec();
     },
     create: (one) => {
       return module.exports.Rooms.create(
         {
           reservation_id: one.reservations_id,
+          roomType_id: one.roomType_id,
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
-          roomType: one.roomType,
-          price: one.price,
-          amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
           isUsable: one.isUsable,
-          currentGuests: one.currentGuests,
-          tasks: one.tasks
         }
       );
     },
@@ -69,16 +60,12 @@ module.exports = {
         { _id: one._id },
         {
           reservation_id: one.reservations_id,
+          roomType_id: one.roomType_id,
           floorNumber: one.floorNumber,
           roomNumber: one.roomNumber,
-          roomType: one.roomType,
-          price: one.price,
-          amenities: one.amenities,
           isClean: one.isClean,
           isOccupied: one.isOccupied,
           isUsable: one.isUsable,
-          currentGuests: one.currentGuests,
-          tasks: one.tasks
         },
         { upsert: true }
       );

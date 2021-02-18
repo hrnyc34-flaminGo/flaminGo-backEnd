@@ -9,7 +9,7 @@ module.exports = {
   get: (req, res) => {
     if (req.url === '/') {
 
-      Rooms.getAllRooms()
+      Rooms.getRooms()
         .then(result => {
           // need to fix decimalNum problem here
           res.status(200).json(result);
@@ -22,9 +22,10 @@ module.exports = {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
-      roomsMethod.readOne(roomIdInfo)
+      Rooms.getRooms({_id: roomIdInfo})
         .then(result => {
-          res.status(200).json(result);
+          // need to fix decimalNum problem here
+          res.status(200).json(result[0]);
         })
         .catch(err => {
           res.sendStatus(500);
@@ -62,6 +63,7 @@ module.exports = {
           let roomTypeIdInfo = new ObjectId(result._id);
           updateInfo['roomType_id'] = roomTypeIdInfo;
           delete updateInfo.roomType;
+          console.log('updateInfo:', updateInfo);
 
           roomsMethod.create(updateInfo)
             .then(result => {
@@ -95,10 +97,10 @@ module.exports = {
   },
   put: (req, res) => {
     const { room_id } = req.params;
-    let roomIdInfo = new ObjectId(room_id);
     let updateInfo = req.body;
-
-    // ADD tasks HERE (isClean, isUsable, tasks[])
+    let roomIdInfo = new ObjectId(room_id);
+    updateInfo['_id'] = roomIdInfo;
+    console.log('updateInfo:', updateInfo);
 
     roomsMethod.update(updateInfo)
       .then(result => {
