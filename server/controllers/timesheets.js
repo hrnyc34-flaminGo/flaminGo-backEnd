@@ -1,4 +1,6 @@
 const Timesheet = require('../../db/models/Timesheet.js');
+const { AUTH0_DOMAIN, MGMT_API_TOKEN } = process.env;
+const axios = require('axios');
 
 const getTimesheetsByEmployee = (employee_id, count) =>
   Timesheet.find({employee_id}).sort({weekStart: 'desc'}).limit(Number(count)).exec();
@@ -17,7 +19,7 @@ module.exports = {
       });
   },
   addOrEdit: (req, res) => {
-    const {timesheet_id, employee_id, monday, tuesday, wednesday, thursday, friday, saturday, sunday} = req.body;
+    const {employee_id, monday, tuesday, wednesday, thursday, friday, saturday, sunday} = req.body;
 
     const curr = new Date; // get current date
     const start = curr.getDate() - curr.getDay() + 1; // first day is Monday
@@ -47,7 +49,7 @@ module.exports = {
       .then(result => {
         //Update weekHours parameter for Employee based on employee_id
         axios.patch(`https://${AUTH0_DOMAIN}/api/v2/users/${employee_id}`, {
-          data: {user_metadata: {weekHours}}
+          user_metadata: {weekHours},
         }, {
           headers: {
             Authorization: `Bearer ${MGMT_API_TOKEN}`,
@@ -57,11 +59,12 @@ module.exports = {
             console.log(`Employee Weekly Hours Updated: ${weekHours}`);
           })
           .catch(err => {
-            console.error('Failed to update Employee Weekly Hours after updating Timesheet.');
+            console.error(err, 'Failed to update Employee Weekly Hours after updating Timesheet.');
           });
         res.status(201).json(result);
       })
       .catch(err => {
+        console.log(err);
         res.sendStatus(500);
       });
   },
