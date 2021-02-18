@@ -25,35 +25,35 @@ db.createCollection('timesheets', {
           bsonType: 'string',
         },
         'monday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'tuesday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'wednesday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'thursday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'friday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'saturday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'sunday': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
           minimum: 0,
         },
         'weekHours': {
-          bsonType: 'decimal',
+          bsonType: ['decimal', 'int', 'double'],
         }
       }
     }

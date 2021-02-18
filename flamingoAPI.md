@@ -452,7 +452,7 @@ Response
 ```
 
 ### Add New Reservation
-`POST /reservations/` Add a new reservation to the database
+`POST /reservations` Add a new reservation to the database
 
 Parameters
 
