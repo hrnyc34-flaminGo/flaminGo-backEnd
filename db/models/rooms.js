@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-const { Schema, Mixed } = mongoose;
+const { Schema, Mixed, Types } = mongoose;
 const db = require('../../db');
+const RoomTypes = require('./roomTypes.js');
 
 const roomsSchema = new Schema({
   reservations_id: { type: Mixed, default: '' },
-  roomType_id: { type: Schema.Types.ObjectId, ref: 'roomtypes', required: true },
+  roomType_id: { type: Types.ObjectId, ref: 'RoomTypes' },
   roomNumber: { type: String, unique: true },
   floorNumber: { type: Number },
   roomType: { type: String },
@@ -26,8 +27,8 @@ module.exports = {
     readAll: () => {
       return module.exports.Rooms.find().exec();
     },
-    readOne: ( id ) => {
-      return module.exports.Rooms.findOne({ _id: id}).exec();
+    readOne: (id) => {
+      return module.exports.Rooms.findOne({ _id: id }).exec();
     },
     create: (one) => {
       return module.exports.Rooms.create(
