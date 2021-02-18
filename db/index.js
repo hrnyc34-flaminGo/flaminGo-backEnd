@@ -1,6 +1,6 @@
 const mongoose = require( 'mongoose' );
 const database = 'flaminGo';
-
+console.log(process.env.MONGO_URL);
 if ( process.env.MONGO_URL ) {
   mongoose.connect( process.env.MONGO_URL );
 } else {
