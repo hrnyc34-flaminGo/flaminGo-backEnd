@@ -1,3 +1,4 @@
+db/sampleData/dump
 ## NPM ##
 node_modules/
 
@@ -6,6 +7,7 @@ node_modules/
 .cache/
 *.log
 package-lock.json
+.env
 
 # OS generated files
 .DS_Store
