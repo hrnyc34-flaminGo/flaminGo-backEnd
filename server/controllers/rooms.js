@@ -1,7 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
-const roomsMethod = require('../../db/models/rooms.js');
-const roomTypeMethod = require('../../db/models/roomTypes.js');
+const { roomsMethod } = require('../../db/models/rooms.js');
+const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 
 module.exports = {
@@ -92,9 +92,9 @@ module.exports = {
     }
   },
   put: (req, res) => {
-    // const { room_id } = req.params;
-    // let roomIdInfo = new ObjectId(room_id);
-    // let updateInfo = req.body;
+    const { room_id } = req.params;
+    let roomIdInfo = new ObjectId(room_id);
+    let updateInfo = req.body;
 
     roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
@@ -103,30 +103,16 @@ module.exports = {
         updateInfo['amenities'] = result.amenities;
         updateInfo['isOccupied'] = false;
 
-        //     // ADD tasks HERE (isClean, isUsable, tasks[])
+        // ADD tasks HERE (isClean, isUsable, tasks[])
 
-        //     roomsMethod.update(updateInfo)
-        //       .then(result => {
-        //         res.sendStatus(201);
-        //       });
-        //   })
-        //   .catch(err => {
-        //     res.sendStatus(500);
-        //   });
-
-        // RETURNING DUMMY DATA FOR THIS ROUTE ***********************
-        res.send({
-          "_id": "507c7f79bcf86cd7994f6c0e",
-          "roomNumber": "110",
-          "floorNumber": 1,
-          "roomType": "Double Queen",
-          "amenities": [
-            "Non-Smoking",
-            "Pool Side",
-            "Mini-Fridge"
-          ]
-        }).status(201);
+        roomsMethod.update(updateInfo)
+          .then(result => {
+            res.sendStatus(201);
+          });
       })
+      .catch(err => {
+        res.sendStatus(500);
+      });
   },
   delete: (req, res) => {
   }
