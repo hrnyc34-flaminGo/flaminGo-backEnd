@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema, Decimal128 } = mongoose;
 const db = require('../../db');
-const { decimal128ToMoneyString } = require('../../server/helpers/reformat.js');
+// const { decimal128ToMoneyString } = require('../../server/helpers/reformat.js');
 
 const roomTypesSchema = new Schema({
   roomType: { type: String, unique: true },
@@ -22,13 +22,13 @@ module.exports = {
       return module.exports.RoomTypes.findOne({ roomType: type }).exec();
     },
     update: (one) => {
-      let newPrice = decimal128ToMoneyString(one.price);
+      // let newPrice = decimal128ToMoneyString(one.price);
 
       return module.exports.RoomTypes.updateMany(
         { roomType: one.roomType },
         {
           roomType: one.roomType,
-          price: newPrice,
+          price: one.price,
           amenities: one.amenities,
         },
         { upsert: true }
