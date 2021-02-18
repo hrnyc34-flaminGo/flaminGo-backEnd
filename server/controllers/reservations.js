@@ -1,32 +1,9 @@
 const Reservation = require('../../db/models/reservations');
-const reformat = require('../helpers/reformat');
-const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
 const { RoomTypes } = require('../../db/models/roomTypes');
 const { Rooms } = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
-const taskHelpers = require('../helpers/taskHelpers.js');
-
-//todo: This could maybe get moved to a helper file.
-const formatReservation = (reservation) => {
-  let bookingGuest = reformat.guestToName(reservation.bookingGuest);
-  let guestList = reformat.guestListToNameList(reservation.guestList);
-  let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
-  let checkIn = reformat.toDashDate(reservation.checkIn);
-  let checkOut = reformat.toDashDate(reservation.checkOut);
-  let { _id, room_id, roomNumber = '', roomType } = reservation;
-  return {
-    bookingGuest,
-    guestList,
-    totalCost,
-    _id,
-    room_id,
-    roomNumber,
-    roomType,
-    checkIn,
-    checkOut,
-  };
-};
+const helpers = require('../helpers/index.js');
 
 module.exports = {
   get: (req, res) => {
@@ -41,17 +18,17 @@ module.exports = {
     const query = {};
     Object.assign(
       query,
-      makeQuery.searchText(firstName, lastName),
-      makeQuery.checkInDate(checkIn),
-      makeQuery.checkOutDate(checkOut),
+      helpers.makeQuery.searchText(firstName, lastName),
+      helpers.makeQuery.checkInDate(checkIn),
+      helpers.makeQuery.checkOutDate(checkOut),
       reservation_id.length < 24
-        ? makeQuery.regex('idString', reservation_id)
+        ? helpers.makeQuery.regex('idString', reservation_id)
         : { _id: ObjectId(reservation_id) }
     );
 
     Reservation.searchReservations(query)
       .then((result) => {
-        let body = result.map(formatReservation);
+        let body = result.map(helpers.reservations.formatReservation);
         res.status(200).send(body);
       })
       .catch((err) => {
@@ -60,6 +37,7 @@ module.exports = {
       });
   },
   getAvailibility: (req, res) => {
+    // Search for rooms available on the date
     res.send({
       'date': '2021-11-10',
       'results': [
@@ -159,7 +137,7 @@ module.exports = {
       // If there are no open cleaning tasks
       if (tasks.length === 0) {
         room.isClean = false;
-        let newTask = await taskHelpers.newCleaningTask(null, room._id);
+        let newTask = await helpers.tasks.newCleaningTask(null, room._id);
       }
 
       await room.save();
@@ -167,7 +145,7 @@ module.exports = {
       // return data
       let {_id, bookingGuest, checkIn, checkOut, guestList} = reservation;
       let {roomNumber} = room;
-      let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
+      let totalCost = helpers.reformat.decimal128ToMoneyString(reservation.totalCost);
       let body = {
         _id,
         bookingGuest,
