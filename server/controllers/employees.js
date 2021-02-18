@@ -113,7 +113,6 @@ module.exports = {
       zipcode,
       country,
       phone,
-      email,
       wage,
       startDate,
       position,
@@ -122,8 +121,15 @@ module.exports = {
 
     const userMetadataLength = Object.values(userMetadata).filter((v) => v).length;
 
+    let name;
+    if (firstName && lastName) {
+      name = `${firstName} ${lastName}`;
+    }
+
     axios.patch(`https://${AUTH0_DOMAIN}/api/v2/users/${employee_id}`, {
-      name: `${firstName} ${lastName}`,
+      connection: 'Username-Password-Authentication',
+      email,
+      name,
       ...(userMetadataLength && { user_metadata: userMetadata }),
     }, {
       headers: {
