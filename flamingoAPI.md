@@ -70,6 +70,8 @@ Parameters
 
 *NOTE: Each additional parameter is treated as an AND operation narrowing the search*
 
+**important : reservation_id will return "" or null if there is no reservation**
+
 Response
 
 `Status: 200 OK`
@@ -135,6 +137,7 @@ Response
   {
     "_id": "602b1b4d94bd6e1e4f85de79",
     "roomType_id": "602b100e541461fcab3686a7",
+    "reservation_id": "",
     "roomType": "Single Queen",
     "price": "100.00",
   ...

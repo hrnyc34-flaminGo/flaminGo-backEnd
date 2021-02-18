@@ -107,8 +107,8 @@ module.exports = {
     updateInfo['_id'] = roomIdInfo;
     roomTypeMethod.readOne(updateInfo.roomType)
       .then(result => {
-        console.log('result:', result);
         updateInfo['roomType_id'] = new ObjectId(result._id);
+        // debugger;
         // TODO: empty "" => null , find the way to handle it
         roomsMethod.update(updateInfo)
           .then(result => {
