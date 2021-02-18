@@ -14,7 +14,6 @@ module.exports = {
           console.log('result:', result);
           // TODO: getting rid of data not using from other fields
           var newRooms = result.map((room) => {
-            console.log('One room:', room);
             let newPrice = decimal128ToMoneyString(room.price);
             room.price = newPrice;
           });
