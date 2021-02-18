@@ -3,6 +3,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const { roomsMethod } = require('../../db/models/rooms.js');
 const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
+const { decimal128ToMoneyString } = require('../helpers/reformat');
 
 module.exports = {
   get: (req, res) => {
@@ -38,8 +39,13 @@ module.exports = {
 
     } else if (req.url === '/types') {
       roomTypeMethod.readAll()
-        .then(result => {
-          res.status(200).json(result);
+        .then(roomTypes => {
+          let body = roomTypes.map((type) => {
+            let {_id, price, roomType} = type;
+            let newPrice = decimal128ToMoneyString(price);
+            return {_id, price: newPrice, roomType};
+          });
+          res.status(200).json(body);
         })
         .catch(err => {
           res.sendStatus(500);
