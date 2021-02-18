@@ -2,7 +2,8 @@ const Reservation = require('../../db/models/reservations');
 const reformat = require('../helpers/reformat');
 const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
-const { RoomTypes} = require('../../db/models/roomTypes');
+const { RoomTypes } = require('../../db/models/roomTypes');
+const { Rooms } = require('../../db/models/rooms');
 
 //todo: This could maybe get moved to a helper file.
 const formatReservation = (reservation) => {
@@ -106,9 +107,22 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-  checkIn: (req, res) => {
-    // need to return dummy data
-    res.sendStatus(201);
+  checkIn: async (req, res) => {
+    let { room_id } = req.body;
+    let { reservation_id } = req.params;
+    try {
+      let room = await Rooms.findOne({_id: room_id});
+      let reservation = await Reservation.findOne({_id: reservation_id});
+      room.reservation_id = reservation_id;
+      debugger;
+      let result = await room.save();
+      debugger;
+      res.sendStatus(201);
+    } catch (error) {
+      debugger;
+      console.log(error);
+      res.sendStatus(500);
+    }
   },
   checkOut: (req, res) => {
     // need to return dummy data
