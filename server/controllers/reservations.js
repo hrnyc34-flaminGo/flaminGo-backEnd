@@ -111,7 +111,7 @@ module.exports = {
     let { room_id } = req.body;
     let { reservation_id } = req.params;
     try {
-      let room = await Rooms.findOne({_id: room_id});
+      let room = await await Reservation.findOne({_id: reservation_id});
       let reservation = await Reservation.findOne({_id: reservation_id});
       // Modify room document
       room.reservation_id = ObjectId(reservation_id);
@@ -132,29 +132,47 @@ module.exports = {
       res.sendStatus(500);
     }
   },
-  checkOut: (req, res) => {
-    // need to return dummy data
-    res.send({
-      '_id': '60108729ffefc9bae107564c',
-      'bookingGuest': {
-        'firstName': 'Adam',
-        'lastName': 'Pollock',
-        'phone': '540-771-6242',
-        'email': 'AdamDPollock@teleworm.us'
-      },
-      'roomNumber': '110',
-      'roomType': 'Single Queen',
-      'totalCost': '1050.00',
-      'checkIn': '2021-05-03T13:44:00.000Z',
-      'checkOut': '2021-05-10T13:44:00.000Z',
-      'guestList': [
-        {
-          'firstName': 'Guest',
-          'lastName': 'One',
-          'phone': '123-456-7890',
-          'email': 'guestOne@madeup.com'
-        }
-      ]
-    }).status(200);
+  checkOut: async (req, res) => {
+    let { reservation_id } = req.params;
+    try {
+      let reservation = await Reservation.findOne({_id: reservation_id}).exec();
+      debugger;
+      let { room_id } = reservation;
+      if (!room_id) { throw Error('Reservation not checked in.'); }
+
+      // get room
+      let room = await Rooms.findOne({_id: room_id});
+      if (!room) { throw Error('No room found, bad room id in reservation'); }
+
+      // get roomType
+      let roomTypeObj = await RoomTypes.findOne({_id: room.roomType_id});
+      let roomType = roomTypeObj.roomType;
+
+      // Update room
+      room.reservation_id = '';
+      room.isOccupied = false;
+      await room.save();
+
+      // return data
+      let {_id, bookingGuest, checkIn, checkOut, guestList} = reservation;
+      let {roomNumber} = room;
+      let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
+      let body = {
+        _id,
+        bookingGuest,
+        checkIn,
+        checkOut,
+        guestList,
+        totalCost,
+        roomNumber,
+        roomType
+      };
+      debugger;
+
+      res.status(200).json(body);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
   },
 };
