@@ -9,15 +9,9 @@ module.exports = {
   get: (req, res) => {
     if (req.url === '/') {
 
-      Rooms.getRooms()
+      Rooms.getAllRooms()
         .then(result => {
-          console.log('result:', result);
-          // TODO: getting rid of data not using from other fields
-          var newRooms = result.map((room) => {
-            console.log('One room:', room);
-            let newPrice = decimal128ToMoneyString(room.price);
-            room.price = newPrice;
-          });
+          // need to fix decimalNum problem here
           res.status(200).json(result);
         })
         .catch(err => {
@@ -28,11 +22,9 @@ module.exports = {
       const { room_id } = req.params;
       let roomIdInfo = new ObjectId(room_id);
 
-      Rooms.getRooms({ _id: roomIdInfo })
+      roomsMethod.readOne(roomIdInfo)
         .then(result => {
-          let newPrice = decimal128ToMoneyString(result[0].price);
-          result[0].price = newPrice;
-          res.status(200).json(result[0]);
+          res.status(200).json(result);
         })
         .catch(err => {
           res.sendStatus(500);
@@ -103,18 +95,14 @@ module.exports = {
   },
   put: (req, res) => {
     const { room_id } = req.params;
-    let updateInfo = req.body;
     let roomIdInfo = new ObjectId(room_id);
-    updateInfo['_id'] = roomIdInfo;
-    roomTypeMethod.readOne(updateInfo.roomType)
+    let updateInfo = req.body;
+
+    // ADD tasks HERE (isClean, isUsable, tasks[])
+
+    roomsMethod.update(updateInfo)
       .then(result => {
-        console.log('result:', result);
-        updateInfo['roomType_id'] = new ObjectId(result._id);
-        // TODO: empty "" => null , find the way to handle it
-        roomsMethod.update(updateInfo)
-          .then(result => {
-            res.sendStatus(201);
-          });
+        res.sendStatus(201);
       })
       .catch(err => {
         res.sendStatus(500);
