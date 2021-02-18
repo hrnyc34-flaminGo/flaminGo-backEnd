@@ -1,8 +1,9 @@
 const ObjectId = require('mongoose').Types.ObjectId;
 
 const { roomsMethod } = require('../../db/models/rooms.js');
-const roomTypeMethod = require('../../db/models/roomTypes.js');
+const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
+const { decimal128ToMoneyString } = require('../helpers/reformat');
 
 module.exports = {
   get: (req, res) => {
@@ -38,8 +39,13 @@ module.exports = {
 
     } else if (req.url === '/types') {
       roomTypeMethod.readAll()
-        .then(result => {
-          res.status(200).json(result);
+        .then(roomTypes => {
+          let body = roomTypes.map((type) => {
+            let {_id, price, roomType} = type;
+            let newPrice = decimal128ToMoneyString(price);
+            return {_id, price: newPrice, roomType};
+          });
+          res.status(200).json(body);
         })
         .catch(err => {
           res.sendStatus(500);
@@ -87,55 +93,34 @@ module.exports = {
         })
         .catch(err => {
           res.sendStatus(500);
+          console.log(err);
         });
     }
   },
   put: (req, res) => {
-    // const { room_id } = req.params;
-    // let roomIdInfo = new ObjectId(room_id);
-    // let updateInfo = req.body;
+    const { room_id } = req.params;
+    let roomIdInfo = new ObjectId(room_id);
+    let updateInfo = req.body;
 
-    // roomTypeMethod.readOne(updateInfo.roomType)
-    //   .then(result => {
-    //     updateInfo['_id'] = roomIdInfo;
-    //     updateInfo['price'] = result.price;
-    //     updateInfo['amenities'] = result.amenities;
-    //     updateInfo['isOccupied'] = false;
-    //     // updateInfo['reservations_id'] = result.reservations_id || '';
+    roomTypeMethod.readOne(updateInfo.roomType)
+      .then(result => {
+        updateInfo['_id'] = roomIdInfo;
+        updateInfo['price'] = result.price;
+        updateInfo['amenities'] = result.amenities;
+        updateInfo['isOccupied'] = false;
 
-    //     // ADD and Update reservations HERE (
-    //     // if reservation
-    //     // reservation_id
-    //     ////// let reservationInfo = new ObjectId(result._id);
-    //     ////// updateInfo['reservations_id'] = reservationInfo ;
-    //     // currentGuest
-    //     ////// updateInfo['currentGuest'] = result.guestList
-    //     ////// updateInfo['isOccupied'] = true )
+        // ADD tasks HERE (isClean, isUsable, tasks[])
 
-    //     // ADD tasks HERE (isClean, isUsable, tasks[])
-
-    //     roomsMethod.update(updateInfo)
-    //       .then(result => {
-    //         res.sendStatus(201);
-    //       });
-    //   })
-    //   .catch(err => {
-    //     res.sendStatus(500);
-    //   });
-
-    // RETURNING DUMMY DATA FOR THIS ROUTE ***********************
-    res.send({
-      "_id": "507c7f79bcf86cd7994f6c0e",
-      "roomNumber": "110",
-      "floorNumber": 1,
-      "roomType": "Double Queen",
-      "amenities": [
-        "Non-Smoking",
-        "Pool Side",
-        "Mini-Fridge"
-      ]
-    }).status(201);
+        roomsMethod.update(updateInfo)
+          .then(result => {
+            res.sendStatus(201);
+          });
+      })
+      .catch(err => {
+        res.sendStatus(500);
+      });
   },
   delete: (req, res) => {
   }
 };
+
