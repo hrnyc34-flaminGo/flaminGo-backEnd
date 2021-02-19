@@ -120,5 +120,8 @@ module.exports = {
       });
   },
   delete: (req, res) => {
+  },
+  getList: (req, res) => {
+    res.status(200).send();
   }
 };
