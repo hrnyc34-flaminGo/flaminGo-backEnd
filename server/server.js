@@ -10,18 +10,18 @@ const { checkJwt } = require('./middleware/authentication');
 const morgan = require('morgan');
 
 // Authorization
-// const cors = require('cors');
+const cors = require('cors');
 
-const allowCrossDomain = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Origin, X-Requested-With, Content-Type, Accept');
+// const allowCrossDomain = (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Origin, X-Requested-With, Content-Type, Accept');
 
-  if ('OPTIONS' === req.method) {
-    return res.send(200);
-  }
-  next();
-};
+//   if ('OPTIONS' === req.method) {
+//     return res.send(200);
+//   }
+//   next();
+// };
 
 const app = express();
 
@@ -29,8 +29,8 @@ const app = express();
 //   origin: 'http://localhost:3000'
 // };
 
-// app.use(cors());
-app.use(allowCrossDomain);
+app.use(cors());
+//app.use(allowCrossDomain);
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(express.urlencoded({ extended: true }));
