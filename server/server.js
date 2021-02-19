@@ -31,7 +31,7 @@ const app = express();
 
 //app.use(allowCrossDomain);
 app.use(express.json());
-app.use(cors());
+app.options('*', cors());
 app.use(morgan('tiny'));
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist')));
