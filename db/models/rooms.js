@@ -99,8 +99,21 @@ roomsSchema.statics.searchRooms = function (input = {}) {
     {
       '$lookup': {
         'from': 'tasks',
-        'localField': '_id',
-        'foreignField': 'room_id',
+        'let': {
+          'id': '$_id'
+        },
+        'pipeline': [
+          {
+            '$match': {
+              'isComplete': false,
+              '$expr': {
+                '$eq': [
+                  '$room_id', '$$id'
+                ]
+              }
+            }
+          }
+        ],
         'as': 'tasks'
       }
     }, {
