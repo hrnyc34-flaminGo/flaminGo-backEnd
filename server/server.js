@@ -12,12 +12,24 @@ const morgan = require('morgan');
 // Authorization
 const cors = require('cors');
 
+const allowCrossDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if ('OPTIONS' === req.method) {
+    return res.send(200);
+  }
+  next();
+};
+
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:7777'
+  origin: 'http://localhost:3000'
 };
 
+app.use(allowCrossDomain);
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
