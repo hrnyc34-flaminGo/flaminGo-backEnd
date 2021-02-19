@@ -513,9 +513,11 @@ Response
 
 `Status: 200 OK`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
 [
   {
+    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
     "location": "110",
@@ -535,6 +537,7 @@ Response
     "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8",
   },
   {
+    "_id": "60435729ffefc9bae132533d",
     "task_id": "60435729ffefc9bae132533d",
     "room_id": "",
     "location": "Pool",
@@ -567,8 +570,10 @@ Parameters
 Response
 `Status: 201 CREATED`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
   {
+    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
     "location": "110",
@@ -591,6 +596,7 @@ Response
 or
 ```JSON
   {
+    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "location": "Pool",
     "taskTitle": "Clean Pool",
@@ -626,8 +632,10 @@ Response
 
 `Status: 200 OK`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
   {
+    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
     "location": "110",

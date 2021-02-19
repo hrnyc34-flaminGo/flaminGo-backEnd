@@ -5,14 +5,20 @@ module.exports = {
   get: (req, res) => {
     const {room_id, location, dueBy} = req.query;
     const isComplete = req.query.isComplete ? req.query.isComplete : false;
-    const query = {isComplete, ...(room_id && {room_id}), ...(location && {location}), ...(dueBy && {dueBy})}
+    const query = {isComplete, ...(room_id && {room_id}), ...(location && {location}), ...(dueBy && {dueBy})};
     Task.find(query).sort({createdAt: 'desc'}).exec()
       .then(result => {
-        res.status(200).json(result);
+        const updatedResult = result.map(task => {
+          let taskObj = task.toObject();
+          let task_id = taskObj._id;
+          taskObj.task_id = task_id;
+          return taskObj;
+        });
+        res.status(200).json(updatedResult);
       })
       .catch(err => {
         res.sendStatus(500);
-      })
+      });
   },
 
   post: (req, res) => {
