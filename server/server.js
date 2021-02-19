@@ -34,7 +34,7 @@ app.use(allowCrossDomain);
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist')));
+// app.use(express.static(path.join(__dirname, '../../flaminGo-frontEnd/client/dist')));
 // app.use(checkJwt);
 
 app.use('/employees', employeesRouter);
