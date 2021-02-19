@@ -4,7 +4,7 @@ const { allPermissions } = require ('../middleware/authentication');
 
 // router.use(allPermissions);
 
-router.get('/', controller.rooms.get);
+router.get('/', controller.rooms.getList);
 router.get('/:room_id', controller.rooms.get);
 router.get('/amenities', controller.rooms.get);
 router.get('/types', controller.rooms.get);
