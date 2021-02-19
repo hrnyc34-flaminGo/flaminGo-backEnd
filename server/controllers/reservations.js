@@ -1,32 +1,9 @@
 const Reservation = require('../../db/models/reservations');
-const reformat = require('../helpers/reformat');
-const makeQuery = require('../helpers/makeQuery');
 const { ObjectId } = require('mongoose').Types;
 const { RoomTypes } = require('../../db/models/roomTypes');
 const { Rooms } = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
-const taskHelpers = require('../helpers/taskHelpers.js');
-
-//todo: This could maybe get moved to a helper file.
-const formatReservation = (reservation) => {
-  let bookingGuest = reformat.guestToName(reservation.bookingGuest);
-  let guestList = reformat.guestListToNameList(reservation.guestList);
-  let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
-  let checkIn = reformat.toDashDate(reservation.checkIn);
-  let checkOut = reformat.toDashDate(reservation.checkOut);
-  let { _id, room_id, roomNumber = '', roomType } = reservation;
-  return {
-    bookingGuest,
-    guestList,
-    totalCost,
-    _id,
-    room_id,
-    roomNumber,
-    roomType,
-    checkIn,
-    checkOut,
-  };
-};
+const helpers = require('../helpers/index.js');
 
 module.exports = {
   get: (req, res) => {
@@ -41,17 +18,17 @@ module.exports = {
     const query = {};
     Object.assign(
       query,
-      makeQuery.searchText(firstName, lastName),
-      makeQuery.checkInDate(checkIn),
-      makeQuery.checkOutDate(checkOut),
+      helpers.makeQuery.searchText(firstName, lastName),
+      helpers.makeQuery.checkInDate(checkIn),
+      helpers.makeQuery.checkOutDate(checkOut),
       reservation_id.length < 24
-        ? makeQuery.regex('idString', reservation_id)
+        ? helpers.makeQuery.regex('idString', reservation_id)
         : { _id: ObjectId(reservation_id) }
     );
 
     Reservation.searchReservations(query)
       .then((result) => {
-        let body = result.map(formatReservation);
+        let body = result.map(helpers.reservations.formatReservation);
         res.status(200).send(body);
       })
       .catch((err) => {
@@ -59,22 +36,46 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-  getAvailibility: (req, res) => {
-    res.send({
-      'date': '2021-11-10',
-      'results': [
-        {
-          'name': 'Single Queen',
-          'qty': 10,
-          'price': '150.00'
-        },
-        {
-          'name': 'Double Queen',
-          'qty': 7,
-          'price': '225.00'
+  getAvailibility: async (req, res) => {
+    // Search for rooms available on the date
+    let { date } = req.params;
+    try {
+      // Get booked rooms by type on input day
+      let bookedRooms = await helpers.reservations.sumReservationsForDate(date);
+      // Get total number of rooms by type
+      let hotelRooms = await helpers.reservations.sumByRoomType();
+
+      // reformat to match API output
+      hotelRooms = hotelRooms.reduce(( acc, el ) => {
+        let roomType = {};
+        roomType[el._id.toString()] = {
+          // _id: el._id.toString(),
+          qty: el.qty,
+          price: helpers.reformat.decimal128ToMoneyString(el.roomType[0].price),
+          name: el.roomType[0].roomType,
+          amenities: el.roomType[0].amenities
+        };
+        return Object.assign(acc, roomType);
+      }, {});
+      // Subtract booked rooms from total hotel rooms
+      for (const roomType of bookedRooms) {
+        let id = roomType._id.toString();
+        if (hotelRooms.hasOwnProperty(id)) {
+          let qty = hotelRooms[id].qty;
+          qty = Math.max(qty - roomType.qty, 0);
+          hotelRooms[id].qty = qty;
         }
-      ]
-    }).status(200);
+      }
+      // Convert to array
+      let results = [];
+      for (const key in hotelRooms) {
+        results.push(hotelRooms[key]);
+      }
+      res.status(200).json({ date, results });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
   },
 
   post: (req, res) => {
@@ -145,6 +146,11 @@ module.exports = {
       let room = await Rooms.findOne({_id: room_id});
       if (!room) { throw Error('No room found, bad room id in reservation'); }
 
+      // check this reservation matches room reservation
+      if (room.reservation_id.toString() !== reservation_id) {
+        throw Error('Reservation is not currently checked in');
+      }
+
       // get roomType
       let roomTypeObj = await RoomTypes.findOne({_id: room.roomType_id});
       let roomType = roomTypeObj.roomType;
@@ -159,7 +165,7 @@ module.exports = {
       // If there are no open cleaning tasks
       if (tasks.length === 0) {
         room.isClean = false;
-        let newTask = await taskHelpers.newCleaningTask(null, room._id);
+        let newTask = await helpers.tasks.newCleaningTask(null, room._id);
       }
 
       await room.save();
@@ -167,7 +173,7 @@ module.exports = {
       // return data
       let {_id, bookingGuest, checkIn, checkOut, guestList} = reservation;
       let {roomNumber} = room;
-      let totalCost = reformat.decimal128ToMoneyString(reservation.totalCost);
+      let totalCost = helpers.reformat.decimal128ToMoneyString(reservation.totalCost);
       let body = {
         _id,
         bookingGuest,
@@ -182,7 +188,7 @@ module.exports = {
       res.status(200).json(body);
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.status(404).send(error.message);
     }
   },
 };
