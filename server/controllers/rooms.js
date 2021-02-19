@@ -4,6 +4,7 @@ const { roomsMethod, Rooms } = require('../../db/models/rooms.js');
 const { roomTypeMethod } = require('../../db/models/roomTypes.js');
 const amenitiesMethod = require('../../db/models/amenities.js');
 const { decimal128ToMoneyString } = require('../helpers/reformat');
+const helpers = require('../helpers/index.js');
 
 module.exports = {
   get: (req, res) => {
@@ -122,6 +123,16 @@ module.exports = {
   delete: (req, res) => {
   },
   getList: (req, res) => {
-    res.status(200).send();
+    const query = req.query;
+    if (query.isClean) { query.isClean = helpers.reformat.strToBool(query.isClean); }
+    if (query.isOccupied) { query.isOccupied = helpers.reformat.strToBool(query.isOccupied); }
+    if (query.floorNumber) { query.floorNumber = parseInt(query.floorNumber); }
+    // query.floorNumber = parseInt(query.floorNumber);
+    Rooms.searchRooms(query)
+    // Rooms.find(query)
+      .then((results) => {
+
+        res.status(200).json(results);
+      });
   }
 };
