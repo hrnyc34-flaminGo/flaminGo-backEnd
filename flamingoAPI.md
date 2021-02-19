@@ -62,8 +62,8 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| roomnumber | string | query | [Optional] Room number |
-| floornumber | number | query | [Optional] Floor number |
+| roomNumber | string | query | [Optional] Room number |
+| floorNumber | number | query | [Optional] Floor number |
 | roomType | string | query | [Optional] Room type |
 | isClean | boolean | query | [Optional] Current cleanliness status of room |
 | isOccupied | boolean | query | [Optional] Current occupancy status of room |
@@ -152,8 +152,8 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| roomnumber | string | body | String of room number |
-| floornumber | number | body | [Optional] Floor number |
+| roomNumber | string | body | String of room number |
+| floorNumber | number | body | [Optional] Floor number |
 | roomType | string | body | Room type of new room |
 
 Response
@@ -168,8 +168,8 @@ Parameters
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
 | :room_id | string | path | String representation of mongo _id |
-| roomnumber | string | body | [Optional] String of room number |  |
-| floornumber | number | body | [Optional] Floor number |  |
+| roomNumber | string | body | [Optional] String of room number |  |
+| floorNumber | number | body | [Optional] Floor number |  |
 | roomType | string | body | [Optional] Room type of new room |
 
 Response
