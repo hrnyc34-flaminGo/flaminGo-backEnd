@@ -7,11 +7,11 @@ const { decimal128ToMoneyString } = require('../helpers/reformat');
 
 module.exports = {
   get: (req, res) => {
+
     if (req.url === '/') {
 
       Rooms.getRooms()
         .then(result => {
-          console.log('result:', result);
           // TODO: getting rid of data not using from other fields
           var newRooms = result.map((room) => {
             let newPrice = decimal128ToMoneyString(room.price);
