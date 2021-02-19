@@ -10,7 +10,7 @@ const { checkJwt } = require('./middleware/authentication');
 const morgan = require('morgan');
 
 // Authorization
-const cors = require('cors');
+// const cors = require('cors');
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -29,7 +29,7 @@ const app = express();
 //   origin: 'http://localhost:3000'
 // };
 
-app.use(cors());
+// app.use(cors());
 app.use(allowCrossDomain);
 app.use(express.json());
 app.use(morgan('tiny'));
