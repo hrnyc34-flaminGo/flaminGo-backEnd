@@ -124,15 +124,18 @@ module.exports = {
   },
   getList: (req, res) => {
     const query = req.query;
+    // reformat query, aggregation pipeline doesn't perform type casting
     if (query.isClean) { query.isClean = helpers.reformat.strToBool(query.isClean); }
     if (query.isOccupied) { query.isOccupied = helpers.reformat.strToBool(query.isOccupied); }
     if (query.floorNumber) { query.floorNumber = parseInt(query.floorNumber); }
-    // query.floorNumber = parseInt(query.floorNumber);
+    // Perform search
     Rooms.searchRooms(query)
-    // Rooms.find(query)
       .then((results) => {
-
         res.status(200).json(results);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.sendStatus(500);
       });
   }
 };
