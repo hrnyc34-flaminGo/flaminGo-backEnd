@@ -513,6 +513,7 @@ Response
 
 `Status: 200 OK`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
 [
   {
@@ -569,6 +570,7 @@ Parameters
 Response
 `Status: 201 CREATED`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
   {
     "_id": "60108729ffefc9bae107564d",
@@ -630,6 +632,7 @@ Response
 
 `Status: 200 OK`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
   {
     "_id": "60108729ffefc9bae107564d",
