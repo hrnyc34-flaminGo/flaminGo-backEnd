@@ -60,7 +60,7 @@ module.exports = {
             .catch(err => {
               console.log('Unable to update room isClean status');
               res.sendStatus(204);
-            })
+            });
         } else {
           res.sendStatus(204);
         }

@@ -59,7 +59,7 @@ module.exports = {
             console.log(`Employee Weekly Hours Updated: ${weekHours}`);
           })
           .catch(err => {
-            console.error(err, 'Failed to update Employee Weekly Hours after updating Timesheet.');
+            console.error(`Failed to update Employee Weekly Hours after updating Timesheet with Error: ${err}`);
           });
         res.sendStatus(204);
       })
