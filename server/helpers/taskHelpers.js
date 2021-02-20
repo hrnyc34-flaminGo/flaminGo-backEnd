@@ -43,7 +43,7 @@ const newCleaningTask = (location, room_id) => {
       }
       // Create the new cleaning task
       task = new Task(task);
-      return task.save().exec();
+      return task.save();
     });
 };
 
