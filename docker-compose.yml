@@ -7,10 +7,11 @@ services:
       - '3000:3000'
     env_file: ./.env
     depends_on:
-      - mongo
+      - mongodb
 
-  mongo:
-    build: ./db
-    env_file: .env
-    ports:
+  mongodb:
+    image: mongo
+    ports: 
       - '27017:27017'
+    env_file: .env
+
