@@ -545,7 +545,6 @@ Response
   },
   ...
 ]
-
 ```
 
 ### Add New Task
@@ -570,52 +569,6 @@ Parameters
 Response
 `Status: 201 CREATED`
 
-*NOTE: _id and task_id are the same id*
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-
 ### Edit Task
 `PUT /tasks/:task_id` Will change the task to complete
 
@@ -630,52 +583,8 @@ Parameters
 
 Response
 
-`Status: 200 OK`
+`Status: 204 No Content`
 
-*NOTE: _id and task_id are the same id*
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
-    "isComplete": true,
-    "isCleaning": true,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
-    "isComplete": true,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
 
 ## Employees
 
