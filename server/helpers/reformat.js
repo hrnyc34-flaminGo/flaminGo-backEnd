@@ -15,9 +15,14 @@ const toDashDate = (timeString) => {
   return date.toISOString().slice(0, 10);
 };
 
+const strToBool = (str) => {
+  return str === 'true' ? true : false;
+};
+
 module.exports = {
   guestToName,
   guestListToNameList,
   decimal128ToMoneyString,
   toDashDate,
+  strToBool
 };

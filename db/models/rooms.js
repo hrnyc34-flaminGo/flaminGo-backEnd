@@ -73,6 +73,87 @@ roomsSchema.statics.getRooms = function (query = {}) {
   return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
 };
 
+roomsSchema.statics.searchRooms = function (input = {}) {
+  let {roomType = {}, ...query} = input;
+  if (typeof roomType === 'string') {
+    roomType = {
+      'roomTypeObj': {
+        '$elemMatch': {
+          'roomType': roomType
+        }
+      }
+    };
+  }
+  let pipeline = [
+    {
+      '$match': query
+    }, {
+      '$lookup': {
+        'from': 'roomtypes',
+        'localField': 'roomType_id',
+        'foreignField': '_id',
+        'as': 'roomTypeObj'
+      }
+    },
+    {'$match': roomType},
+    {
+      '$lookup': {
+        'from': 'tasks',
+        'let': {
+          'id': '$_id'
+        },
+        'pipeline': [
+          {
+            '$match': {
+              'isComplete': false,
+              '$expr': {
+                '$eq': [
+                  '$room_id', '$$id'
+                ]
+              }
+            }
+          }
+        ],
+        'as': 'tasks'
+      }
+    }, {
+      '$lookup': {
+        'from': 'reservations',
+        'localField': 'reservation_id',
+        'foreignField': '_id',
+        'as': 'reservation'
+      }
+    }, {
+      '$set': {
+        'roomTypeObj': {
+          '$arrayElemAt': [
+            '$roomTypeObj', 0
+          ]
+        },
+        'reservation': {
+          '$arrayElemAt': [
+            '$reservation', 0
+          ]
+        }
+      }
+    }, {
+      '$set': {
+        'roomType': '$roomTypeObj.roomType',
+        'price': { '$toString': '$roomTypeObj.price'},
+        'amenities': '$roomTypeObj.amenities',
+        'currentGuests': '$reservation.guestList'
+      }
+    }, {
+      '$project': {
+        'roomTypeObj': 0,
+        'reservation': 0
+      }
+    }
+  ];
+
+  return this.aggregate(pipeline).sort({roomNumber: 1}).exec();
+};
+
 module.exports = {
   Rooms: mongoose.model('Rooms', roomsSchema),
 

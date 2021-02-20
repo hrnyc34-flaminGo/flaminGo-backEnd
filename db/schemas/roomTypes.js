@@ -7,6 +7,9 @@ db.createCollection('roomtypes', {
         'price'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'roomType': {
           bsonType: 'string',
         },
