@@ -25,17 +25,17 @@ module.exports = {
         const room_id = result[0]._id;
         Task.create({ ...query, room_id })
           .then(result => {
-            res.status(201).json(result);
+            res.sendStatus(201);
           })
           .catch(err => {
             res.sendStatus(500);
-          })
+          });
       })
       //if location is not a room, room_id is not added
       .catch(() => {
         Task.create(query)
           .then(result => {
-            res.status(201).json(result);
+            res.sendStatus(201);
           })
           .catch(err => {
             res.sendStatus(500);
@@ -59,10 +59,10 @@ module.exports = {
             })
             .catch(err => {
               console.log('Unable to update room isClean status');
-              res.status(201).json(result);
+              res.sendStatus(204);
             })
         } else {
-          res.status(201).json(result);
+          res.sendStatus(204);
         }
       })
       .catch(err => {

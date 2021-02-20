@@ -513,7 +513,6 @@ Response
 
 `Status: 200 OK`
 
-*NOTE: _id and task_id are the same id*
 ```JSON
 [
   {
@@ -764,7 +763,6 @@ Response
 
 ```JSON
 {
-  "timesheet_id": "60108729ffefc9bae1075652",
   "employee_id": "auth0|602c1cb963504c0071df24a6",
   "monday": 8,
   "tuesday": 7,
@@ -783,7 +781,7 @@ Response
 ### Edit A Timesheet
 `PUT /timesheets` Will update the timesheet
 
-`Status: 200 OK`
+Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -799,21 +797,4 @@ Response
 
 Response
 
-`Status: 200 OK`
-
-```JSON
-{
-  "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "auth0|602c1cb963504c0071df24a6",
-  "monday": 8,
-  "tuesday": 7,
-  "wednesday": 8,
-  "thursday": 5,
-  "friday": 9,
-  "saturday": 0,
-  "sunday": 0,
-  "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14",
-  "weekHours": 37
-}
-```
+`Status: 204 OK`
