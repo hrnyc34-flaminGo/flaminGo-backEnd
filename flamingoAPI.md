@@ -251,7 +251,7 @@ Response
 ```
 
 <!-- ### Delete A Room
-`GET /rooms/:room_id` Retrieves a specific room by its id
+`GET /rooms/:room_id` Delete a room
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -259,10 +259,9 @@ Response
 
 Response
 
-`Status: `
+`Status: 204 NO CONTENT`
 
-```JSON
-``` -->
+ -->
 
 
 ### List Amenities
