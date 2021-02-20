@@ -517,7 +517,6 @@ Response
 ```JSON
 [
   {
-    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
     "location": "110",
@@ -537,7 +536,6 @@ Response
     "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8",
   },
   {
-    "_id": "60435729ffefc9bae132533d",
     "task_id": "60435729ffefc9bae132533d",
     "room_id": "",
     "location": "Pool",
