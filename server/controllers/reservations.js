@@ -7,6 +7,7 @@ const helpers = require('../helpers/index.js');
 
 module.exports = {
   get: (req, res) => {
+    // Get query body and set defaults for any missing parameters
     let {
       firstName = '',
       lastName = '',
@@ -15,12 +16,14 @@ module.exports = {
       reservation_id = '',
     } = req.query;
 
+    // Build mongo find query
     const query = {};
     Object.assign(
       query,
       helpers.makeQuery.searchText(firstName, lastName),
       helpers.makeQuery.checkInDate(checkIn),
       helpers.makeQuery.checkOutDate(checkOut),
+      // if reservation_id is less than 24 us regex instead of full _id match
       reservation_id.length < 24
         ? helpers.makeQuery.regex('idString', reservation_id)
         : { _id: ObjectId(reservation_id) }
@@ -49,7 +52,6 @@ module.exports = {
       hotelRooms = hotelRooms.reduce(( acc, el ) => {
         let roomType = {};
         roomType[el._id.toString()] = {
-          // _id: el._id.toString(),
           qty: el.qty,
           price: helpers.reformat.decimal128ToMoneyString(el.roomType[0].price),
           name: el.roomType[0].roomType,
