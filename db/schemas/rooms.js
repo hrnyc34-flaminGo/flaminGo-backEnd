@@ -13,6 +13,9 @@ db.createCollection('rooms', {
         'isUsable'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'reservation_id': {
           bsonType: ['objectId', 'string']
         },

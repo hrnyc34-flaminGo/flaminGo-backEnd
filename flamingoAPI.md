@@ -13,8 +13,12 @@
   - [Get Specific Room](#get-specific-room)
   
   - [List Amenities](#list-amenities)
+
+  - [Add New Amenity](#add-new-amenity)
   
   - [List Room Types](#list-room-types)
+
+  - [Add New Room Type](#add-new-room-type)
 
 - [Reservations](#reservations)
 
@@ -245,8 +249,23 @@ Response
     ]
   }
 ```
+
+<!-- ### Delete A Room
+`GET /rooms/:room_id` Delete a room
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| room_id | string | path | String matching the mongo _id field |
+
+Response
+
+`Status: 204 NO CONTENT`
+
+ -->
+
+
 ### List Amenities
-`GET /rooms/amenities` Retrieves a list of all room amenities.
+`GET /rooms/amenities` Retrieves a list of all room amenities
 
 Response
 
@@ -273,6 +292,17 @@ Response
   ...
 ]
 ```
+
+### Add New Amenity
+`POST /amenities` Create a new amenity
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| amenity | string | body | Name of the new amenity |
+
+Response
+
+`Status 201 CREATED`
 
 ### List Room Types
 `GET /rooms/types` Retrieves a list of all room types
@@ -327,6 +357,19 @@ Response
 ]
 
 ```
+
+### Add New Room Type
+`POST /rooms/types` Creates a new room type
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| roomType | string | body | Name of the new room type |
+| price | string | body | Price per night |
+| amenities | array | body | List of amenities |
+
+Response
+
+`Status: 201 CREATED`
 
 ## Reservations
 
@@ -513,9 +556,11 @@ Response
 
 `Status: 200 OK`
 
+*NOTE: _id and task_id are the same id*
 ```JSON
 [
   {
+    "_id": "60108729ffefc9bae107564d",
     "task_id": "60108729ffefc9bae107564d",
     "room_id": "507c7f79bcf86cd7994f6c0e",
     "location": "110",
@@ -535,6 +580,7 @@ Response
     "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8",
   },
   {
+    "_id": "60435729ffefc9bae132533d",
     "task_id": "60435729ffefc9bae132533d",
     "room_id": "",
     "location": "Pool",
@@ -575,7 +621,7 @@ Parameters
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
 | employeeCompleted | string | body | Employee first and last name who completed task |
-| employeeCompleted_id | string | body | Employee AuthO id
+| employeeCompleted_id | string | body | Employee AuthO id |
 | isComplete | boolean | body | Task completion status. Set to true. |
 
 Response
@@ -607,7 +653,7 @@ Response
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10012,
+    "zipcode": "10012",
     "country": "USA",
     "phone": "123-456-7890",
     "wage": 12654,
@@ -649,7 +695,7 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
   "wage": 12654,
@@ -695,7 +741,7 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
   "wage": 12654,

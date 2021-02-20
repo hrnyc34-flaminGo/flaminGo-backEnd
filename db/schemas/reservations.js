@@ -12,6 +12,9 @@ db.createCollection('reservations', {
         'guestList'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'idString': {
           bsonType: 'string',
         },
