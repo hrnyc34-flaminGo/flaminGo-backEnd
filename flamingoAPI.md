@@ -374,11 +374,12 @@ Response
 ## Reservations
 
 ### Inquire Room Availability
-`GET /reservations/availability/:date` Will return the quantity of available rooms on the supplied date, broken down by room type.
+`GET /reservations/availability` Will return the quantity of available rooms on the supplied date, broken down by room type.
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| :date | string | path | Date of inquiry as a string in the format "YYYY-MM-DD" |
+| checkIn | string | body | Date of check-in as a string in the format "YYYY-MM-DD" |
+| checkOut | string | body | Date of check-out as a string in the format "YYYY-MM-DD" |
 
 Response:
 
@@ -386,7 +387,7 @@ Response:
 
 ```JSON
 {
-  "date": "2021-11-10",
+  "dates": ["2021-11-10", "2021-11-20"],
   "results": [
     {
       "name": "Single Queen",

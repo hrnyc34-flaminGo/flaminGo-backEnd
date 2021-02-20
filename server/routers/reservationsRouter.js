@@ -19,7 +19,14 @@ router.get(
   controller.reservations.get
 );
 
-router.get('/availability/:date', controller.reservations.getAvailability);
+router.get('/availability',
+  [
+    body('checkIn').isISO8601(),
+    body('checkOut').isISO8601(),
+  ],
+  validate,
+  controller.reservations.getAvailability
+);
 
 router.post(
   '/',
