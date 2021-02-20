@@ -1,14 +1,17 @@
-// Accepts date string in format "YYYY-MM-DD" returns expression
-// to use in match to find reservation checkIn date
-const checkInDate = (checkInString) => {
-  if (checkInString.length === 10) {
+/**
+ *  Accepts date string in format "YYYY-MM-DD" returns expression
+ * to use in $match stage of aggregation pipeline to match documents
+ * where the date of fieldName matches the input string.
+ **/
+const matchDateStr = (dateString, fieldName) => {
+  if (dateString.length === 10) {
     return {
       $expr: {
         $eq: [
-          checkInString,
+          dateString,
           {
             $dateToString: {
-              date: '$checkIn',
+              date: `$${fieldName}`,
               format: '%Y-%m-%d'
             }
           }
@@ -19,28 +22,9 @@ const checkInDate = (checkInString) => {
   return {};
 };
 
-// Accepts date string in format "YYYY-MM-DD" returns expression
-// to use in match to find reservation checkOut date
-const checkOutDate = (checkOutString) => {
-  if (checkOutString.length === 10) {
-    return {
-      $expr: {
-        $eq: [
-          checkOutString,
-          {
-            $dateToString: {
-              date: '$checkOut',
-              format: '%Y-%m-%d'
-            }
-          }
-        ]
-      }
-    };
-  }
-  return {};
-};
-
-// returns a text search with all the strings passed in
+/**
+ * Returns a text search expression with all the strings passed in
+ **/
 const searchText = (...strings) => {
   let search = strings.join(' ').trim();
   if (search.length > 0) {
@@ -51,24 +35,26 @@ const searchText = (...strings) => {
   return {};
 };
 
-// returns an object to make regex searches on a field
-const regex = (fieldName, search) => {
-  if (search.length > 0) {
+/**
+ * Returns a regexMatch search expression to use on  on fieldName
+ **/
+const regexMatch = (fieldName, regexStr, regexOptions = 'i') => {
+  if (regexStr.length > 0) {
     return {
       $expr: {
         $regexMatch: {
           input: `$${fieldName}`,
-          regex: new RegExp(search, 'i')
+          regex: new RegExp(regexStr, regexOptions)
         }
       }
     };
   }
+  // If no string was passed in return an empty object
   return {};
 };
 
 module.exports = {
-  checkInDate,
-  checkOutDate,
+  matchDateStr,
   searchText,
-  regex,
+  regexMatch,
 };

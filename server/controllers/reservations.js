@@ -5,8 +5,10 @@ const { Rooms } = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
 const helpers = require('../helpers/index.js');
 
+
 module.exports = {
   get: (req, res) => {
+    // Get request query and set defaults for any missing parameters
     let {
       firstName = '',
       lastName = '',
@@ -15,28 +17,30 @@ module.exports = {
       reservation_id = '',
     } = req.query;
 
+    // Build mongo find query
     const query = {};
     Object.assign(
       query,
       helpers.makeQuery.searchText(firstName, lastName),
-      helpers.makeQuery.checkInDate(checkIn),
-      helpers.makeQuery.checkOutDate(checkOut),
+      helpers.makeQuery.matchDateStr(checkIn, 'checkIn'),
+      helpers.makeQuery.matchDateStr(checkOut, 'checkOut'),
+      // if reservation_id is less than 24 us regex instead of full _id match
       reservation_id.length < 24
-        ? helpers.makeQuery.regex('idString', reservation_id)
+        ? helpers.makeQuery.regexMatch('idString', reservation_id)
         : { _id: ObjectId(reservation_id) }
     );
 
     Reservation.searchReservations(query)
       .then((result) => {
         let body = result.map(helpers.reservations.formatReservation);
-        res.status(200).send(body);
+        res.status(200).json(body);
       })
       .catch((err) => {
         console.log(err);
         res.sendStatus(500);
       });
   },
-  getAvailibility: async (req, res) => {
+  getAvailability: async (req, res) => {
     // Search for rooms available on the date
     let { date } = req.params;
     try {
@@ -49,7 +53,6 @@ module.exports = {
       hotelRooms = hotelRooms.reduce(( acc, el ) => {
         let roomType = {};
         roomType[el._id.toString()] = {
-          // _id: el._id.toString(),
           qty: el.qty,
           price: helpers.reformat.decimal128ToMoneyString(el.roomType[0].price),
           name: el.roomType[0].roomType,
@@ -66,7 +69,7 @@ module.exports = {
           hotelRooms[id].qty = qty;
         }
       }
-      // Convert to array
+      // Convert object to array
       let results = [];
       for (const key in hotelRooms) {
         results.push(hotelRooms[key]);
@@ -82,7 +85,7 @@ module.exports = {
     let { roomType, checkIn, checkOut, guestList, bookingGuest } = req.body;
     let nights = new Date (checkOut) - new Date(checkIn);
     nights = nights / (1000 * 3600 * 24);
-    // Get roomtype id
+    // Get room type id
     RoomTypes.findOne({roomType})
       .then((roomType) => {
         // Calculate total cost
@@ -170,7 +173,7 @@ module.exports = {
 
       await room.save();
 
-      // return data
+      // return reservation data
       let {_id, bookingGuest, checkIn, checkOut, guestList} = reservation;
       let {roomNumber} = room;
       let totalCost = helpers.reformat.decimal128ToMoneyString(reservation.totalCost);
