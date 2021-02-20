@@ -81,6 +81,7 @@ module.exports = {
       return module.exports.Rooms.findOne({ query }).exec();
     },
     create: (one) => {
+      console.log('one got hereeeeeeee:', one.roomNumber, one.floorNumber, one.roomType_i );
       return module.exports.Rooms.create(
         {
           reservation_id: one.reservations_id,

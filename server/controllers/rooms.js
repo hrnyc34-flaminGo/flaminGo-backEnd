@@ -7,7 +7,6 @@ const { decimal128ToMoneyString } = require('../helpers/reformat');
 
 module.exports = {
   get: (req, res) => {
-
     if (req.url === '/') {
 
       Rooms.getRooms()
@@ -63,12 +62,15 @@ module.exports = {
   },
   post: (req, res) => {
     let updateInfo = req.body;
+
     if (req.url === '/') {
       roomTypeMethod.readOne(updateInfo.roomType)
         .then(result => {
           let roomTypeIdInfo = new ObjectId(result._id);
           updateInfo['roomType_id'] = roomTypeIdInfo;
           delete updateInfo.roomType;
+
+          console.log('updateInfo:', updateInfo);
 
           roomsMethod.create(updateInfo)
             .then(result => {
