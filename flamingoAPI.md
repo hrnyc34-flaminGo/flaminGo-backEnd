@@ -13,8 +13,12 @@
   - [Get Specific Room](#get-specific-room)
   
   - [List Amenities](#list-amenities)
+
+  - [Add New Amenity](#add-new-amenity)
   
   - [List Room Types](#list-room-types)
+
+  - [Add New Room Type](#add-new-room-type)
 
 - [Reservations](#reservations)
 
@@ -245,8 +249,23 @@ Response
     ]
   }
 ```
+
+<!-- ### Delete A Room
+`GET /rooms/:room_id` Delete a room
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| room_id | string | path | String matching the mongo _id field |
+
+Response
+
+`Status: 204 NO CONTENT`
+
+ -->
+
+
 ### List Amenities
-`GET /rooms/amenities` Retrieves a list of all room amenities.
+`GET /rooms/amenities` Retrieves a list of all room amenities
 
 Response
 
@@ -273,6 +292,17 @@ Response
   ...
 ]
 ```
+
+### Add New Amenity
+`POST /amenities` Create a new amenity
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| amenity | string | body | Name of the new amenity |
+
+Response
+
+`Status 201 CREATED`
 
 ### List Room Types
 `GET /rooms/types` Retrieves a list of all room types
@@ -327,6 +357,19 @@ Response
 ]
 
 ```
+
+### Add New Room Type
+`POST /rooms/types` Creates a new room type
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| roomType | string | body | Name of the new room type |
+| price | string | body | Price per night |
+| amenities | array | body | List of amenities |
+
+Response
+
+`Status: 201 CREATED`
 
 ## Reservations
 
@@ -545,7 +588,6 @@ Response
   },
   ...
 ]
-
 ```
 
 ### Add New Task
@@ -570,52 +612,6 @@ Parameters
 Response
 `Status: 201 CREATED`
 
-*NOTE: _id and task_id are the same id*
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-
 ### Edit Task
 `PUT /tasks/:task_id` Will change the task to complete
 
@@ -625,57 +621,13 @@ Parameters
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
 | employeeCompleted | string | body | Employee first and last name who completed task |
-| employeeCompleted_id | string | body | Employee AuthO id
+| employeeCompleted_id | string | body | Employee AuthO id |
 | isComplete | boolean | body | Task completion status. Set to true. |
 
 Response
 
-`Status: 200 OK`
+`Status: 204 No Content`
 
-*NOTE: _id and task_id are the same id*
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
-    "isComplete": true,
-    "isCleaning": true,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
-    "isComplete": true,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
 
 ## Employees
 
@@ -701,7 +653,7 @@ Response
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10012,
+    "zipcode": "10012",
     "country": "USA",
     "phone": "123-456-7890",
     "wage": 12654,
@@ -743,7 +695,7 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
   "wage": 12654,
@@ -789,7 +741,7 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
   "wage": 12654,
@@ -857,7 +809,6 @@ Response
 
 ```JSON
 {
-  "timesheet_id": "60108729ffefc9bae1075652",
   "employee_id": "auth0|602c1cb963504c0071df24a6",
   "monday": 8,
   "tuesday": 7,
@@ -876,7 +827,7 @@ Response
 ### Edit A Timesheet
 `PUT /timesheets` Will update the timesheet
 
-`Status: 200 OK`
+Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -892,21 +843,4 @@ Response
 
 Response
 
-`Status: 200 OK`
-
-```JSON
-{
-  "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "auth0|602c1cb963504c0071df24a6",
-  "monday": 8,
-  "tuesday": 7,
-  "wednesday": 8,
-  "thursday": 5,
-  "friday": 9,
-  "saturday": 0,
-  "sunday": 0,
-  "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14",
-  "weekHours": 37
-}
-```
+`Status: 204 OK`

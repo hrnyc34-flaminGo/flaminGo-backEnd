@@ -14,6 +14,9 @@ db.createCollection('employees', {
         'email'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'firstName': {
           bsonType: 'string',
         },

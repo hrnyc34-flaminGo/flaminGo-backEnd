@@ -7,6 +7,4 @@ router.post('/', controller.reservations.post);
 router.put('/checkIn/:reservation_id', controller.reservations.checkIn);
 router.put('/checkOut/:reservation_id', controller.reservations.checkOut);
 
-// router.delete('/', controller.reservations.delete);
-
 module.exports = router;

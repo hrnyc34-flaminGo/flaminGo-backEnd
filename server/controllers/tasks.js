@@ -6,15 +6,9 @@ module.exports = {
     const {room_id, location, dueBy} = req.query;
     const isComplete = req.query.isComplete ? req.query.isComplete : false;
     const query = {isComplete, ...(room_id && {room_id}), ...(location && {location}), ...(dueBy && {dueBy})};
-    Task.find(query).sort({createdAt: 'desc'}).exec()
+    Task.searchTasks(query)
       .then(result => {
-        const updatedResult = result.map(task => {
-          let taskObj = task.toObject();
-          let task_id = taskObj._id;
-          taskObj.task_id = task_id;
-          return taskObj;
-        });
-        res.status(200).json(updatedResult);
+        res.status(200).json(result);
       })
       .catch(err => {
         res.sendStatus(500);
@@ -31,7 +25,7 @@ module.exports = {
         const room_id = result[0]._id;
         Task.create({ ...query, room_id })
           .then(result => {
-            res.status(201).json(result);
+            res.sendStatus(201);
           })
           .catch(err => {
             res.sendStatus(500);
@@ -41,7 +35,7 @@ module.exports = {
       .catch(() => {
         Task.create(query)
           .then(result => {
-            res.status(201).json(result);
+            res.sendStatus(201);
           })
           .catch(err => {
             res.sendStatus(500);
@@ -65,10 +59,10 @@ module.exports = {
             })
             .catch(err => {
               console.log('Unable to update room isClean status');
-              res.status(201).json(result);
+              res.sendStatus(204);
             });
         } else {
-          res.status(201).json(result);
+          res.sendStatus(204);
         }
       })
       .catch(err => {
