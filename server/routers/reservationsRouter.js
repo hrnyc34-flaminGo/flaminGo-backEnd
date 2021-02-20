@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('../controllers');
 //const { reservationsRouterPermissions } = require('../middleware/authentication');
 const { query, body, param } = require('express-validator');
-const { validate } = require('../middleware/validation');
+const { validate, validateCheckIn } = require('../middleware/validation');
 
 // router.use(reservationsRouterPermissions);
 
@@ -21,8 +21,8 @@ router.get(
 
 router.get('/availability',
   [
-    body('checkIn').isISO8601(),
-    body('checkOut').isISO8601(),
+    query('checkIn').isISO8601().custom(validateCheckIn),
+    query('checkOut').isISO8601(),
   ],
   validate,
   controller.reservations.getAvailability

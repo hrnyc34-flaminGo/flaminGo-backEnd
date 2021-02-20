@@ -42,10 +42,10 @@ module.exports = {
   },
   getAvailability: async (req, res) => {
     // Search for rooms available on the date
-    let { date } = req.params;
+    let { checkIn, checkOut } = req.query;
     try {
       // Get booked rooms by type on input day
-      let bookedRooms = await helpers.reservations.sumReservationsForDate(date);
+      let bookedRooms = await helpers.reservations.sumReservationsForDate(checkIn, checkOut);
       // Get total number of rooms by type
       let hotelRooms = await helpers.reservations.sumByRoomType();
 
@@ -69,12 +69,16 @@ module.exports = {
           hotelRooms[id].qty = qty;
         }
       }
+      // todo: Calculate nights to return reservation price
       // Convert object to array
       let results = [];
       for (const key in hotelRooms) {
-        results.push(hotelRooms[key]);
+        if (hotelRooms[key].qty > 0) {
+          // todo: Mutliply price by nights and set price
+          results.push(hotelRooms[key]);
+        }
       }
-      res.status(200).json({ date, results });
+      res.status(200).json({ dates: [checkIn, checkOut], results });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

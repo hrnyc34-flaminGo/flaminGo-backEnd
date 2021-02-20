@@ -29,10 +29,12 @@ const formatReservation = (reservation) => {
 };
 
 /**
- * Given a date string in YYYY-MM-DD format returns promise of how many of each
- * room type are reserved for the given date
+ * Given check-in and check-out dates as strings in YYYY-MM-DD format returns
+ * promise that resolves to an array of all occupied room types for the supplied
+ * dates as well as a qty of rooms of that room type which are reserved for the
+ * given dates
 */
-const sumReservationsForDate = (dateStr) => {
+const sumReservationsForDate = (checkIn, checkOut) => {
   let pipeline = [
     {
       '$match': {
@@ -40,11 +42,24 @@ const sumReservationsForDate = (dateStr) => {
           '$and': [
             {
               '$lte': [
-                '$checkIn', new Date(dateStr)
+                '$checkIn', new Date(checkIn)
               ]
             }, {
               '$gte': [
-                '$checkOut', new Date(dateStr)
+                '$checkOut', new Date(checkIn)
+              ]
+            }
+          ]
+        },
+        '$expr': {
+          '$and': [
+            {
+              '$lte': [
+                '$checkIn', new Date(checkOut)
+              ]
+            }, {
+              '$gte': [
+                '$checkOut', new Date(checkOut)
               ]
             }
           ]
@@ -93,6 +108,10 @@ const sumByRoomType = () => {
     }
   ];
   return Rooms.aggregate(pipeline);
+};
+
+const calculateNights = (checkIn, checkOut) => {
+  // todo: function used more than once refactor to be helper function
 };
 
 module.exports = {

@@ -378,8 +378,8 @@ Response
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| checkIn | string | body | Date of check-in as a string in the format "YYYY-MM-DD" |
-| checkOut | string | body | Date of check-out as a string in the format "YYYY-MM-DD" |
+| checkIn | string | query | Date of check-in as a string in the format "YYYY-MM-DD" |
+| checkOut | string | query | Date of check-out as a string in the format "YYYY-MM-DD" |
 
 Response:
 
@@ -395,7 +395,7 @@ Response:
         "TV"
       ],
       "qty": 10,
-      "price": "150.00"
+      "price": "1500.00"
     },
     {
       "name": "Double Queen",
@@ -405,7 +405,7 @@ Response:
         "Non-Smoking"
       ],
       "qty": 7,
-      "price": "225.00"
+      "price": "2250.00"
     },
     ...
   ]
