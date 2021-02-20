@@ -6,16 +6,11 @@ services:
     ports:
       - '3000:3000'
     env_file: ./.env
-  #   depends_on:
-  #     - mongo
+    depends_on:
+      - mongo
 
-  # mongo:
-  #   image: mongo
-    # env_file: .env
-    # volumes:
-    #   - 'data-volume:/data/db'
-    # ports:
-    #   - '27017:27017'
-
-# volumes:
-#   data-volume:
+  mongo:
+    build: ./db
+    env_file: .env
+    ports:
+      - '27017:27017'
