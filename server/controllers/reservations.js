@@ -5,9 +5,10 @@ const { Rooms } = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
 const helpers = require('../helpers/index.js');
 
+
 module.exports = {
   get: (req, res) => {
-    // Get query body and set defaults for any missing parameters
+    // Get request query and set defaults for any missing parameters
     let {
       firstName = '',
       lastName = '',
@@ -39,7 +40,7 @@ module.exports = {
         res.sendStatus(500);
       });
   },
-  getAvailibility: async (req, res) => {
+  getAvailability: async (req, res) => {
     // Search for rooms available on the date
     let { date } = req.params;
     try {
