@@ -24,6 +24,34 @@ const taskSchema = new Schema({
   versionKey: false
 });
 
+taskSchema.statics.searchTasks = function (query = {}) {
+  const pipeline = [
+    { $match: query }, {
+      '$project': {
+        '_id': 0,
+        'task_id': '$_id',
+        'location': true,
+        'taskTitle': true,
+        'taskDescription': true,
+        'department': true,
+        'createdAt': true,
+        'dueBy': true,
+        'isComplete': true,
+        'isCleaning': true,
+        'completedAt': true,
+        'employeeCreated': true,
+        'employeeCreated_id': true,
+        'employeeAssigned': true,
+        'employeeAssigned_id': true,
+        'employeeCompleted': true,
+        'employeeCompleted_id': true
+      }
+    }
+  ];
+
+  return this.aggregate(pipeline).sort({createdAt: 'desc'}).exec();
+};
+
 const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;
