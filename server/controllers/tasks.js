@@ -35,7 +35,7 @@ module.exports = {
           })
           .catch(err => {
             res.sendStatus(500);
-          })
+          });
       })
       //if location is not a room, room_id is not added
       .catch(() => {
@@ -45,8 +45,8 @@ module.exports = {
           })
           .catch(err => {
             res.sendStatus(500);
-          })
-      })
+          });
+      });
   },
 
   put: (req, res) => {
@@ -66,13 +66,13 @@ module.exports = {
             .catch(err => {
               console.log('Unable to update room isClean status');
               res.status(201).json(result);
-            })
+            });
         } else {
           res.status(201).json(result);
         }
       })
       .catch(err => {
         res.status(500);
-      })
+      });
   }
 };

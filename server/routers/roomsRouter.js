@@ -1,8 +1,5 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-const { allPermissions } = require ('../middleware/authentication');
-
-// router.use(allPermissions);
 
 router.get('/', controller.rooms.getList);
 router.get('/:room_id', controller.rooms.get);
