@@ -54,7 +54,6 @@ const regexMatch = (fieldName, regexStr, regexOptions = 'i') => {
 };
 
 module.exports = {
-  checkInDate,
   matchDateStr,
   searchText,
   regexMatch,
