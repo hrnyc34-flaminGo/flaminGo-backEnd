@@ -10,6 +10,9 @@ db.createCollection('tasks', {
         'isComplete',
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'room_id': {
           bsonType: ['objectId', 'string'],
         },

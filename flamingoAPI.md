@@ -13,8 +13,12 @@
   - [Get Specific Room](#get-specific-room)
   
   - [List Amenities](#list-amenities)
+
+  - [Add New Amenity](#add-new-amenity)
   
   - [List Room Types](#list-room-types)
+
+  - [Add New Room Type](#add-new-room-type)
 
 - [Reservations](#reservations)
 
@@ -62,8 +66,8 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| roomnumber | string | query | [Optional] Room number |
-| floornumber | number | query | [Optional] Floor number |
+| roomNumber | string | query | [Optional] Room number |
+| floorNumber | number | query | [Optional] Floor number |
 | roomType | string | query | [Optional] Room type |
 | isClean | boolean | query | [Optional] Current cleanliness status of room |
 | isOccupied | boolean | query | [Optional] Current occupancy status of room |
@@ -152,8 +156,8 @@ Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
-| roomnumber | string | body | String of room number |
-| floornumber | number | body | [Optional] Floor number |
+| roomNumber | string | body | String of room number |
+| floorNumber | number | body | [Optional] Floor number |
 | roomType | string | body | Room type of new room |
 
 Response
@@ -168,8 +172,8 @@ Parameters
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
 | :room_id | string | path | String representation of mongo _id |
-| roomnumber | string | body | [Optional] String of room number |  |
-| floornumber | number | body | [Optional] Floor number |  |
+| roomNumber | string | body | [Optional] String of room number |  |
+| floorNumber | number | body | [Optional] Floor number |  |
 | roomType | string | body | [Optional] Room type of new room |
 
 Response
@@ -245,8 +249,24 @@ Response
     ]
   }
 ```
+
+<!-- ### Delete A Room
+`GET /rooms/:room_id` Retrieves a specific room by its id
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| room_id | string | path | String matching the mongo _id field |
+
+Response
+
+`Status: `
+
+```JSON
+``` -->
+
+
 ### List Amenities
-`GET /rooms/amenities` Retrieves a list of all room amenities.
+`GET /rooms/amenities` Retrieves a list of all room amenities
 
 Response
 
@@ -273,6 +293,17 @@ Response
   ...
 ]
 ```
+
+### Add New Amenity
+`POST /amenities` Create a new amenity
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| amenity | string | body | Name of the new amenity |
+
+Response
+
+`Status 201 CREATED`
 
 ### List Room Types
 `GET /rooms/types` Retrieves a list of all room types
@@ -327,6 +358,19 @@ Response
 ]
 
 ```
+
+### Add New Room Type
+`POST /rooms/types` Creates a new room type
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| roomType | string | body | Name of the new room type |
+| price | string | body | Price per night |
+| amenities | array | body | List of amenities |
+
+Response
+
+`Status: 201 CREATED`
 
 ## Reservations
 
@@ -625,7 +669,7 @@ Parameters
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
 | employeeCompleted | string | body | Employee first and last name who completed task |
-| employeeCompleted_id | string | body | Employee AuthO id
+| employeeCompleted_id | string | body | Employee AuthO id |
 | isComplete | boolean | body | Task completion status. Set to true. |
 
 Response
@@ -743,10 +787,10 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
-  "wage": 12654,
+  "wage": "12654.00",
   "startDate": "2021-02-13",
   "position": "systemAdministration",
   "weekHours": 30,
@@ -789,10 +833,10 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
-  "wage": 12654,
+  "wage": "12654",
   "startDate": "2021-02-13",
   "position": "systemAdministration",
   "weekHours": 30,
