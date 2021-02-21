@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema, Decimal128 } = mongoose;
 const db = require('../../db');
-// const { decimal128ToMoneyString } = require('../../server/helpers/reformat.js');
 
 const roomTypesSchema = new Schema({
   roomType: { type: String, unique: true },
@@ -11,31 +10,30 @@ const roomTypesSchema = new Schema({
   versionKey: false
 });
 
-module.exports = {
+roomTypesSchema.statics.readAll = function() {
+  return this.find({}).exec();
+},
 
-  RoomTypes: mongoose.model('RoomTypes', roomTypesSchema),
-  roomTypeMethod: {
-    readAll: () => {
-      return module.exports.RoomTypes.find().exec();
-    },
-    readOne: (type) => {
-      return module.exports.RoomTypes.findOne({ roomType: type }).exec();
-    },
-    update: (one) => {
-      // let newPrice = decimal128ToMoneyString(one.price);
+roomTypesSchema.statics.readOne = function( type ) {
+  return this.findOne({ roomType: type }).exec();
+},
 
-      return module.exports.RoomTypes.updateMany(
-        { roomType: one.roomType },
-        {
-          roomType: one.roomType,
-          price: one.price,
-          amenities: one.amenities,
-        },
-        { upsert: true }
-      );
+roomTypesSchema.statics.update = function( one ) {
+  return this.updateMany(
+    { roomType: one.roomType },
+    {
+      roomType: one.roomType,
+      price: one.price,
+      amenities: one.amenities,
     },
-    deleteOne: (type) => {
-      return module.exports.RoomTypes.deleteOne({ roomType: type });
-    }
-  }
+    { upsert: true }
+  );
+},
+
+roomTypesSchema.statics.deleteOne = function( type ) {
+  return this.deleteOne({ roomType: type });
 };
+
+const RoomTypes = mongoose.model( 'RoomTypes', roomTypesSchema );
+
+module.exports = RoomTypes;
