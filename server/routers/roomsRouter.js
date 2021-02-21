@@ -7,8 +7,8 @@ router.get('/types', controller.rooms.getTypes);
 router.get('/amenities', controller.rooms.getAmenity);
 
 router.post('/', controller.rooms.addNewRoom);
-router.post('/types', controller.rooms.AddRoomType);
-router.post('/amenities', controller.rooms.AddAmenity);
+router.post('/types', controller.rooms.addRoomType);
+router.post('/amenities', controller.rooms.addAmenity);
 
 router.put('/:room_id', controller.rooms.updateRoomInfo);
 

@@ -89,7 +89,7 @@ module.exports = {
 
   },
 
-  AddRoomType: (req, res) => {
+  addRoomType: (req, res) => {
     RoomTypes.update( req.body )
       .then( result => {
         res.sendStatus( 201 );
@@ -100,7 +100,7 @@ module.exports = {
       });
   },
 
-  AddAmenity: (req, res) => {
+  addAmenity: (req, res) => {
     Amenities.create( req.body )
       .then( result => {
         res.sendStatus( 201 );
