@@ -110,12 +110,20 @@ const sumByRoomType = () => {
   return Rooms.aggregate(pipeline);
 };
 
+/**
+ * Given two strings that resolve to valid dates will return the number
+ * of nights between the dates.
+ */
 const calculateNights = (checkIn, checkOut) => {
   // todo: function used more than once refactor to be helper function
+  let nights = Math.abs(new Date (checkOut) - new Date(checkIn));
+  nights = nights / (1000 * 3600 * 24);
+  return nights;
 };
 
 module.exports = {
   formatReservation,
   sumReservationsForDate,
-  sumByRoomType
+  sumByRoomType,
+  calculateNights,
 };

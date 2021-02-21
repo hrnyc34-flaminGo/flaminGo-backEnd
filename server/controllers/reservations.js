@@ -69,13 +69,15 @@ module.exports = {
           hotelRooms[id].qty = qty;
         }
       }
-      // todo: Calculate nights to return reservation price
+
+      let nights = helpers.reservations.calculateNights(checkIn, checkOut);
       // Convert object to array
       let results = [];
       for (const key in hotelRooms) {
         if (hotelRooms[key].qty > 0) {
-          // todo: Mutliply price by nights and set price
-          results.push(hotelRooms[key]);
+          let room = hotelRooms[key];
+          room.price = (parseFloat(room.price) * 100 * nights / 100).toFixed(2);
+          results.push(room);
         }
       }
       res.status(200).json({ dates: [checkIn, checkOut], results });
@@ -87,8 +89,7 @@ module.exports = {
 
   post: (req, res) => {
     let { roomType, checkIn, checkOut, guestList, bookingGuest } = req.body;
-    let nights = new Date (checkOut) - new Date(checkIn);
-    nights = nights / (1000 * 3600 * 24);
+    let nights = helpers.reservations.calculateNights(checkIn, checkOut);
     // Get room type id
     RoomTypes.findOne({roomType})
       .then((roomType) => {
@@ -113,7 +114,8 @@ module.exports = {
       .then((result) => {
         res.sendStatus(201);
       })
-      .catch(err => {
+      .catch((err) => {
+        console.error(err);
         res.sendStatus(500);
       });
   },
