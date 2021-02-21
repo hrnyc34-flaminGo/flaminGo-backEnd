@@ -14,67 +14,9 @@ const roomsSchema = new Schema({
 }, {
   versionKey: false
 });
-// TODO: getting rid of data not using from other fields
-roomsSchema.statics.getRooms = function (query = {}) {
-  const pipeline = [
-    { $match: query }, {
-      $lookup: {
-        from: 'roomtypes',
-        localField: 'roomType_id',
-        foreignField: '_id',
-        as: 'add'
-      }
-    }, {
-      $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$add', 0] }, '$$ROOT'] } }
-    }, {
-      $lookup: {
-        from: 'tasks',
-        localField: '_id',
-        foreignField: 'room_id',
-        as: 'tasks'
-      }
-    }, {
-      $lookup: {
-        from: 'reservations',
-        localField: '_id',
-        foreignField: 'room_id',
-        as: 'currentGuest'
-      }
-    }, {
-      $replaceRoot: {
-        newRoot: {
-          $mergeObjects: [{
-            $arrayElemAt: ['$currentGuest', 0]
-          }, '$$ROOT']
-        }
-      }
-    }, {
-      $project: {
-        room_id: 0,
-        checkIn: 0,
-        checkOut: 0,
-        totalCost: 0,
-        bookingGuest: 0,
-        idString: 0,
-        add: 0,
-        currentGuest: 0
-      }
-    }, {
-      $addFields: {
-        currentGuests: '$guestList'
-      }
-    }, {
-      $project: {
-        guestList: 0
-      }
-    }
-  ];
-
-  return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
-};
 
 roomsSchema.statics.searchRooms = function (input = {}) {
-  let {roomType = {}, ...query} = input;
+  let { roomType = {}, ...query } = input;
   if (typeof roomType === 'string') {
     roomType = {
       'roomTypeObj': {
@@ -95,7 +37,7 @@ roomsSchema.statics.searchRooms = function (input = {}) {
         'as': 'roomTypeObj'
       }
     },
-    {'$match': roomType},
+    { '$match': roomType },
     {
       '$lookup': {
         'from': 'tasks',
@@ -139,7 +81,7 @@ roomsSchema.statics.searchRooms = function (input = {}) {
     }, {
       '$set': {
         'roomType': '$roomTypeObj.roomType',
-        'price': { '$toString': '$roomTypeObj.price'},
+        'price': { '$toString': '$roomTypeObj.price' },
         'amenities': '$roomTypeObj.amenities',
         'currentGuests': '$reservation.guestList'
       }
@@ -151,8 +93,111 @@ roomsSchema.statics.searchRooms = function (input = {}) {
     }
   ];
 
-  return this.aggregate(pipeline).sort({roomNumber: 1}).exec();
+  return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
 };
+
+roomsSchema.statics.getRoomsById = function (query = {}) {
+  const pipeline =
+  [
+    {
+      '$match': query
+    },
+    {
+      $lookup: {
+        from: 'roomtypes',
+        localField: 'roomType_id',
+        foreignField: '_id',
+        as: 'add'
+      }
+    }, { $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$add', 0] }, '$$ROOT'] } } }, {
+      $project: {
+        isClean: 0,
+        isOccupied: 0
+      }
+    }, {
+      $lookup: {
+        from: 'tasks',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'task'
+      }
+    }, {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [{
+            $arrayElemAt: ['$task', 0]
+          }, '$$ROOT']
+        }
+      }
+    }, {
+      $addFields: {
+        isClean: '$isComplete'
+      }
+    }, {
+      $lookup: {
+        from: 'reservations',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'currentGuest'
+      }
+    }, {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [{
+            $arrayElemAt: ['$currentGuest', 0]
+          }, '$$ROOT']
+        }
+      }
+    }, {
+      $lookup: {
+        from: 'tasks',
+        localField: '_id',
+        foreignField: 'room_id',
+        as: 'tasks'
+      }
+    }, {
+      $project: {
+        roomType_id: 1,
+        currentGuests: {
+          $cond: {
+            if: { $eq: ['', '$reservation_id'] },
+            then: [],
+            else: '$guestList'
+          }
+        },
+        reservation_id: {
+          $cond: {
+            if: { $eq: ['null', '$reservation_id'] },
+            then: '',
+            else: '$reservation_id'
+          }
+        },
+        roomNumber: 1,
+        floorNumber: 1,
+        roomType: 1,
+        price: 1,
+        amenities: 1,
+        isOccupied: {
+          $cond: {
+            if: { $eq: ['', '$reservation_id'] },
+            then: false,
+            else: true
+          }
+        },
+        isClean: {
+          $cond: {
+            if: { $eq: [false, '$isClean'] },
+            then: '$isClean',
+            else: true
+          }
+        },
+        isUsable: 1,
+        tasks: 1,
+      }
+    }];
+  return this.aggregate(pipeline).sort({ roomNumber: 1 }).exec();
+};
+
 
 module.exports = {
   Rooms: mongoose.model('Rooms', roomsSchema),
@@ -162,7 +207,6 @@ module.exports = {
       return module.exports.Rooms.findOne({ query }).exec();
     },
     create: (one) => {
-      console.log('one got hereeeeeeee:', one.roomNumber, one.floorNumber, one.roomType_i );
       return module.exports.Rooms.create(
         {
           reservation_id: one.reservations_id,
@@ -195,3 +239,80 @@ module.exports = {
     },
   }
 };
+
+
+// [{$lookup: {
+//   from: 'roomtypes',
+//   localField: 'roomType_id',
+//   foreignField: '_id',
+//   as: 'add'
+// }}, {$replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$add', 0] }, '$$ROOT'] } }}, {$project: {
+// isClean:0,
+// isOccupied:0
+// }}, {$lookup: {
+//   from: 'tasks',
+//   localField: '_id',
+//   foreignField: 'room_id',
+//   as: 'task'
+// }}, {$replaceRoot: {
+//   newRoot: {
+//     $mergeObjects: [{
+//       $arrayElemAt: ['$task', 0]
+//     }, '$$ROOT']
+//   }
+// }}, {$addFields: {
+//   isClean: '$isComplete'
+// }}, {$lookup: {
+//   from: 'reservations',
+//   localField: '_id',
+//   foreignField: 'room_id',
+//   as: 'currentGuest'
+// }}, {$replaceRoot: {
+//   newRoot: {
+//     $mergeObjects: [{
+//       $arrayElemAt: ['$currentGuest', 0]
+//     }, '$$ROOT']
+//   }
+// }}, {$lookup: {
+//   from: 'tasks',
+//   localField: '_id',
+//   foreignField: 'room_id',
+//   as: 'tasks'
+// }}, {$project: {
+//   roomType_id: 1,
+//   currentGuests: {
+//     $cond: {
+//         if: { $eq: [ "", "$reservation_id" ] },
+//         then: [],
+//         else: "$guestList"
+//     }
+//   },
+//   reservation_id:{
+//     $cond: {
+//         if: { $eq: [ "null", "$reservation_id" ] },
+//         then: "",
+//         else: "$reservation_id"
+//     }
+//   },
+//   roomNumber: 1,
+//   floorNumber: 1,
+//   roomType: 1,
+//   price: 1,
+//   amenities: 1,
+//   isOccupied:{
+//     $cond: {
+//         if: { $eq: [ "", "$reservation_id" ] },
+//         then: false,
+//         else: true
+//     }
+//   },
+//   isClean: {
+//     $cond: {
+//         if: { $eq: [ false, "$isClean" ] },
+//         then: "$isClean",
+//         else: true
+//     }
+//   },
+//   isUsable: 1,
+//   tasks: 1,
+// }}]
