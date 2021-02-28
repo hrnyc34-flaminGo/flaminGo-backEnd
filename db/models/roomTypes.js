@@ -4,7 +4,7 @@ const db = require('../../db');
 
 const roomTypesSchema = new Schema({
   roomType: { type: String, unique: true },
-  price: { type: Decimal128, default: 0.0 },
+  price: { type: Decimal128, default: 0.00 },
   amenities: []
 }, {
   versionKey: false
@@ -18,16 +18,24 @@ roomTypesSchema.statics.readOne = function( type ) {
   return this.findOne({ roomType: type }).exec();
 },
 
-roomTypesSchema.statics.update = function( one ) {
-  return this.updateMany(
-    { roomType: one.roomType },
+roomTypesSchema.statics.createOne = function( one ) {
+  return this.create(
     {
       roomType: one.roomType,
       price: one.price,
       amenities: one.amenities,
-    },
-    { upsert: true }
+    }
   );
+
+  // return this.updateMany(
+  //   { roomType: one.roomType },
+  //   {
+  //     roomType: one.roomType,
+  //     price: one.price,
+  //     amenities: one.amenities,
+  //   },
+  //   { upsert: true }
+  // );
 },
 
 roomTypesSchema.statics.deleteOne = function( type ) {

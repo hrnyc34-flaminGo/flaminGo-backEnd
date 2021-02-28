@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const controller = require('../controllers');
 
-router.get('/', controller.rooms.getRoomList);
+router.get('/', controller.rooms.getRooms);
 router.get('/id/:room_id', controller.rooms.getRoomById);
 router.get('/types', controller.rooms.getTypes);
 router.get('/amenities', controller.rooms.getAmenity);
