@@ -26,16 +26,6 @@ roomTypesSchema.statics.createOne = function( one ) {
       amenities: one.amenities,
     }
   );
-
-  // return this.updateMany(
-  //   { roomType: one.roomType },
-  //   {
-  //     roomType: one.roomType,
-  //     price: one.price,
-  //     amenities: one.amenities,
-  //   },
-  //   { upsert: true }
-  // );
 },
 
 roomTypesSchema.statics.deleteOne = function( type ) {
