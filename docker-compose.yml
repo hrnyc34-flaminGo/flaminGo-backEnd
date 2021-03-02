@@ -6,12 +6,14 @@ services:
     ports:
       - '3000:3000'
     env_file: ./.env
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongodb:27017/flaminGo
+      - NODE_ENV=production
     depends_on:
       - mongodb
 
   mongodb:
-    image: mongo
-    ports: 
-      - '27017:27017'
-    env_file: .env
-
+    build:
+      context: ./db
+      dockerfile: flaminGoDB.dockerfile
