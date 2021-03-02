@@ -1,5 +1,15 @@
 h1 {
+<<<<<<< HEAD
+  color: #a91cff;
+<<<<<<< HEAD
+}
+
+Body {
+  font-family: Open Sans, sans-serif;
+=======
+=======
   color: black;
+>>>>>>> c9dee9c6be2ec8af0bf9ddca5daf061f24825ce5
 }
 
 html {
@@ -758,7 +768,7 @@ select {
   height: calc(100% - 80px);
   margin: 0 0 15px 15px;
   border-radius: 20px;
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: scroll;
   position: relative;
   bottom: 0;
@@ -823,6 +833,7 @@ select {
 
 #room_H3 {
   color: black;
+>>>>>>> 91255ce9fb1046c5eea3d7f1d21f946627e5ee0e
 }
 
 #roomDetailsContainer {
