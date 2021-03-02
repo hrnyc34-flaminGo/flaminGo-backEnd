@@ -1,7 +1,4 @@
-FROM node:12.19.0
-
-# ARG MONGO_URL='mongodb://52.14.38.68:27017/flamingo'
-# ENV MONGO_URL='mongodb://52.14.38.68:27017/flamingo'
+FROM node:14.15.1
 
 ADD ./elasticsearch.yml /usr/share/elasticsearch/config/
 
@@ -9,7 +6,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --production
 
 COPY . .
 
