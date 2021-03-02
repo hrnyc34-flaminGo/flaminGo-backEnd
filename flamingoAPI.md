@@ -60,7 +60,8 @@
 
 ## Rooms
 ### List Rooms
-`GET /rooms` Retrieves a list of rooms. By default all rooms are returned
+`GET /rooms` Retrieves a list of available rooms. 
+By default all rooms are returned
 
 Parameters
 
@@ -89,42 +90,12 @@ Response
     "roomType": "Ocean View King Suite",
     "price": "400.00",
     "amenities": [
-        "Ocean View",
-        "TV",
-        "Non-Smoking"
+      "Ocean View",
+      "TV",
+      "Non-Smoking"
     ],
     "roomNumber": "110",
     "floorNumber": 1,
-    "isClean": true,
-    "isOccupied": false,
-    "isUsable": true,
-    "tasks": [
-      {
-        "_id": "602b282c94bd6e1e4f85dea2",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        "taskTitle": "Clean Room",
-        "taskDescription": "Daily Cleaning",
-        "department": "Housekeeping",
-        "createdAt": "2021-02-15T11:00:00.000Z",
-        "dueBy": "2021-02-15T20:00:00.000Z",
-        "isComplete": false,
-        "isCleaning": true,
-        "completedAt": "",
-        "employeeCompleted": "",
-        "employeeCreated": "system",
-        "employeeAssigned": "Spencer Brook",
-        "employeeAssigned_id": "auth0|602c301102061a0069805815",
-        "employeeCompleted_id": "",
-        "employeeCreated_id": ""
-      },
-      {
-        "_id": "602b29a394bd6e1e4f85deac",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        ...
-      }
-    ],
     "currentGuests": [
       {
         "firstName": "Guest",
@@ -134,17 +105,67 @@ Response
       },
       {
         "firstName": "Guest",
-      ...
+          ...
+      }
+    ],
+    "isOccupied": true,
+    "isUsable": true,
+    "isClean": true,
+    "tasks": [
+      {
+        "_id": "602b29a394bd6e1e4f85deac",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Clean Room",
+        "taskDescription": "Daily Cleaning",
+        "department": "Housekeeping",
+        "createdAt": "2021-02-14T11:00:00.000Z",
+        "dueBy": "2021-02-14T20:00:00.000Z",
+        "isComplete": true,
+        "isCleaning": true,
+        "completedAt": "2021-02-14T19:00:00.000Z",
+        "employeeCompleted": "Spencer Brook",
+        "employeeCreated": "system",
+        "employeeAssigned": "Spencer Brook",
+        "employeeAssigned_id": "auth0|602c301102061a0069805815",
+        "employeeCompleted_id": "auth0|602c301102061a0069805815",
+        "employeeCreated_id": ""
+      },
+      {
+        "_id": "602b2d4d94bd6e1e4f85deb6",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Touch up paint",
+        "taskDescription": "Paint is chipping behind headboard, please repaint.",
+        "department": "Maintenance",
+        ...
       }
     ]
   },
   {
-    "_id": "602b1b4d94bd6e1e4f85de79",
-    "roomType_id": "602b100e541461fcab3686a7",
+    "_id": "602b3db794bd6e1e4f85ded1",
+    "roomType_id": "602b118a541461fcab3686ac",
     "reservation_id": "",
-    "roomType": "Single Queen",
-    "price": "100.00",
-  ...
+    "roomType": "Ocean View King Suite",
+    "price": "400.00",
+    "amenities": [
+      "Ocean View",
+      "TV",
+      "Non-Smoking"
+    ],
+    "roomNumber": "111",
+    "floorNumber": 1,
+    "currentGuests": [],
+    "isOccupied": false,
+    "isUsable": true,
+    "isClean": true,
+    "tasks": []
+  },
+  {
+    "_id": "602b1f2694bd6e1e4f85de88",
+    "roomType_id": "602b1139541461fcab3686ab",
+    "reservation_id": "",
+    ...
   }
 ]
 ```
@@ -193,76 +214,25 @@ Response
 
 ```JSON
 {
-    "_id": "602b14fd541461fcab3686b5",
-    "roomType_id": "602b118a541461fcab3686ac",
-    "reservation_id": "602b3b5e94bd6e1e4f85decf",
-    "roomType": "Ocean View King Suite",
-    "price": "400.00",
-    "amenities": [
-        "Ocean View",
-        "TV",
-        "Non-Smoking"
-    ],
-    "roomNumber": "110",
-    "floorNumber": 1,
-    "isClean": true,
-    "isOccupied": false,
-    "isUsable": true,
-    "tasks": [
-      {
-        "_id": "602b282c94bd6e1e4f85dea2",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        "taskTitle": "Clean Room",
-        "taskDescription": "Daily Cleaning",
-        "department": "Housekeeping",
-        "createdAt": "2021-02-15T11:00:00.000Z",
-        "dueBy": "2021-02-15T20:00:00.000Z",
-        "isComplete": false,
-        "isCleaning": true,
-        "completedAt": "",
-        "employeeCompleted": "",
-        "employeeCreated": "system",
-        "employeeAssigned": "Spencer Brook",
-        "employeeAssigned_id": "auth0|602c301102061a0069805815",
-        "employeeCompleted_id": "",
-        "employeeCreated_id": ""
-      },
-      {
-        "_id": "602b29a394bd6e1e4f85deac",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        ...
-      }
-    ],
-    "currentGuests": [
-      {
-        "firstName": "Guest",
-        "lastName": "One",
-        "phone": "123-456-7890",
-        "email": "guestOne@madeup.com"
-      },
-      {
-        "firstName": "Guest",
-      ...
-      }
-    ]
-  }
+  "_id": "602b3db794bd6e1e4f85ded1",
+  "roomType_id": "602b118a541461fcab3686ac",
+  "reservation_id": "",
+  "roomType": "Ocean View King Suite",
+  "price": "400.00",
+  "amenities": [
+    "Ocean View",
+    "TV",
+    "Non-Smoking"
+  ],
+  "roomNumber": "111",
+  "floorNumber": 1,
+  "currentGuests": [],
+  "isOccupied": false,
+  "isUsable": true,
+  "isClean": true,
+  "tasks": []
+}
 ```
-
-<!-- ### Delete A Room
-`GET /rooms/:room_id` Delete a room
-
-| Parameter | Type | In | Description |
-| --------- | ---- | --- | ----------- |
-| room_id | string | path | String matching the mongo _id field |
-
-Response
-
-`Status: 204 NO CONTENT`
-
- -->
-
 
 ### List Amenities
 `GET /rooms/amenities` Retrieves a list of all room amenities

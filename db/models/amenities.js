@@ -8,25 +8,28 @@ const amenitiesSchema = new Schema({
   versionKey: false
 });
 
-const Amenities = mongoose.model('Amenities', amenitiesSchema);
+amenitiesSchema.statics.readAll = function() {
+  return this.find({}).exec();
+},
 
-let amenitiesMethod = {
-  readAll: () => {
-    console.log('readAll working');
-    return Amenities.find().exec();
-  },
-  readOne: ( id )=>{
-    return Amenities.findOne({ _id: id }).exec();
-  },
-  create: ( one ) => {
-    return Amenities.create({
+amenitiesSchema.statics.readOne = function( name ) {
+  return this.findOne({ amenity: name }).exec();
+},
+
+amenitiesSchema.statics.create = function( one ) {
+  return this.updateMany(
+    { amenity: one.amenity },
+    {
       amenity: one.amenity
-    });
-  },
-  deleteOne: ( id )=>{
-    return Amenities.deleteOne( { _id: id });
-  },
+    },
+    { upsert: true }
+  );
+},
+
+amenitiesSchema.statics.deleteOne = function( id ) {
+  return this.deleteOne( { _id: id });
 };
 
+const Amenities = mongoose.model('Amenities', amenitiesSchema);
+
 module.exports = Amenities;
-module.exports = amenitiesMethod;
