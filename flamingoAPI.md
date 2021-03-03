@@ -202,7 +202,7 @@ Response
 `Status: 201 CREATED`
 
 ### Get Specific Room
-`GET /rooms/:room_id` Retrieves a specific room by its id
+`GET /rooms/id/:room_id` Retrieves a specific room by its id
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -264,7 +264,7 @@ Response
 ```
 
 ### Add New Amenity
-`POST /amenities` Create a new amenity
+`POST /rooms/amenities` Create a new amenity
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -572,7 +572,7 @@ Parameters
 | taskDescription | string | body | [Optional] Description of the new task |
 | department | string | body | Selection for which Department this task is for (Maintenance or Housekeeping) |
 | employeeCreated | string | body | Employee first and last name who created the task
-| employeeCreated_Id | string | body | Employee AuthO id who created the task
+| employeeCreated_id | string | body | Employee AuthO id who created the task
 | employeeAssigned | string | body | [Optional] Employee first and last name who is assigned to the task
 | employeeAssigned_id | string | body | [Optional] Employee AuthO id who is assigned to the task
 | dueBy | string | body | [Optional] String of timestamp in ISO format |
