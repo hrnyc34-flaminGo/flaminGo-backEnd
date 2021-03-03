@@ -1,7 +1,7 @@
 const Reservation = require('../../db/models/reservations');
 const { ObjectId } = require('mongoose').Types;
-const { RoomTypes } = require('../../db/models/roomTypes');
-const { Rooms } = require('../../db/models/rooms');
+const RoomTypes = require('../../db/models/roomTypes');
+const Rooms = require('../../db/models/rooms');
 const Task = require('../../db/models/Task');
 const helpers = require('../helpers/index.js');
 

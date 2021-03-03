@@ -1,5 +1,5 @@
 const Task = require('../../db/models/Task.js');
-const { Rooms } = require('../../db/models/rooms.js');
+const Rooms = require('../../db/models/rooms.js');
 
 module.exports = {
   get: (req, res) => {
@@ -66,7 +66,7 @@ module.exports = {
         }
       })
       .catch(err => {
-        res.status(500);
+        res.sendStatus(500);
       });
   }
 };

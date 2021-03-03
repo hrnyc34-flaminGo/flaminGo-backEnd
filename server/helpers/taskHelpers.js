@@ -1,5 +1,5 @@
 const Task = require('../../db/models/Task.js');
-const { Rooms } = require('../../db/models/rooms.js');
+const Rooms = require('../../db/models/rooms.js');
 
 /**
  * Sets defaults for a system generated cleaning task
