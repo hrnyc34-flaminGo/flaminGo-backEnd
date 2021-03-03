@@ -596,7 +596,29 @@ Parameters
 
 Response
 
-`Status: 204 No Content`
+`Status: 200 OK`
+
+```JSON
+{
+    "taskDescription": "Daily Cleaning",
+    "dueBy": "Fri Feb 19 2021 17:00:00 GMT-0500 (Eastern Standard Time)",
+    "completedAt": "2021-03-03T21:44:06.742Z",
+    "isComplete": true,
+    "isCleaning": true,
+    "employeeCreated": "system",
+    "employeeCreated_id": "",
+    "employeeAssigned": "Spencer Brook",
+    "employeeAssigned_id": "auth0|602c301102061a0069805815",
+    "employeeCompleted": "Spencer Brooke",
+    "employeeCompleted_id": "auth0|602c301102061a0069805815",
+    "_id": "602f6d3794bd6e1e4f85dedc",
+    "room_id": "602b1b4d94bd6e1e4f85de7c",
+    "location": "124",
+    "taskTitle": "Clean Room",
+    "department": "Housekeeping",
+    "createdAt": "Fri Feb 19 2021 06:00:00 GMT-0500 (Eastern Standard Time)"
+}
+```
 
 
 ## Employees
@@ -626,10 +648,10 @@ Response
     "zipcode": "10012",
     "country": "USA",
     "phone": "123-456-7890",
-    "wage": 12654,
+    "wage": "12654.00",
     "startDate": "2021-02-13",
     "position": "systemAdministration",
-    "weekHours": 30,
+    "weekHours": "30.5",
     "isActive": true
   },
   {
@@ -668,10 +690,10 @@ Response
   "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
-  "wage": 12654,
+  "wage": "12654.00",
   "startDate": "2021-02-13",
   "position": "systemAdministration",
-  "weekHours": 30,
+  "weekHours": "30",
   "isActive": true
 }
 ```
@@ -694,8 +716,8 @@ Body Parameter
 | country | string | body | String of the employee's address country |
 | phone | string | body | [Optional] String of the employee's phone number |
 | email | string | body | String of the employee's email address |
-| wage | number | body | Number of the employee's hourly wage |
-| startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
+| wage | string | body | String of the employee's hourly wage Ex. "15.00" |
+| startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD" |
 | position | string | body | String of the employee's position (reference official list) |
 
 Response
@@ -704,21 +726,35 @@ Response
 
 ```JSON
 {
-  "id": "auth0|999999999999999999999999",
-  "name": "Theo Telonis",
-  "email": "theo123@gmail.com",
-  "address1": "456 Main St.",
-  "address2": "",
-  "city": "New York",
-  "state": "NY",
-  "zipcode": "10012",
-  "country": "USA",
-  "phone": "123-456-7890",
-  "wage": 12654,
-  "startDate": "2021-02-13",
-  "position": "systemAdministration",
-  "weekHours": 30,
-  "isActive": true
+    "created_at": "2021-03-03T22:25:18.159Z",
+    "email": "testhuman@gmail.com",
+    "email_verified": false,
+    "identities": [
+        {
+            "connection": "Username-Password-Authentication",
+            "user_id": "60400cce8756df0069a4f787",
+            "provider": "auth0",
+            "isSocial": false
+        }
+    ],
+    "name": "undefined Human",
+    "nickname": "testhuman",
+    "picture": "https://thisIsAnImageURL.png",
+    "updated_at": "2021-03-03T22:25:18.159Z",
+    "user_id": "auth0|60400cce4269df0069a4f787",
+    "user_metadata": {
+        "address1": "456 Main St.",
+        "address2": "",
+        "city": "New York",
+        "state": "NY",
+        "zipcode": "10012",
+        "country": "USA",
+        "phone": "123-456-7890",
+        "wage": "15.00",
+        "startDate": "2021-02-13",
+        "position": "systemAdministration",
+        "isActive": true
+    }
 }
 ```
 
@@ -746,7 +782,7 @@ Body Parameter
 
 Response
 
-`Status: 201 CREATED`
+`Status: 204 CREATED`
 
 ### Delete Employee
 `DELETE /employees/:employee_id` Will delete an existing employee
@@ -759,11 +795,11 @@ Path Variable
 
 Response
 
-`Status: 200 OK`
+`Status: 204 NO CONTENT`
 
 ## Timesheets
 
-### Get Employee's Timesheet
+### Get Employee's Timesheets
 `GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique AuthO id. Results are sorted with the most recent first
 
 Parameters
@@ -778,19 +814,31 @@ Response
 `Status: 200 OK`
 
 ```JSON
-{
-  "employee_id": "auth0|602c1cb963504c0071df24a6",
-  "monday": 8,
-  "tuesday": 7,
-  "wednesday": 8,
-  "thursday": 5,
-  "friday": 9,
-  "saturday": 0,
-  "sunday": 0,
-  "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14",
-  "weekHours": 37
-}
+[
+  {
+    "monday": 8,
+    "tuesday": 8,
+    "wednesday": 8,
+    "thursday": 0,
+    "friday": 0,
+    "saturday": 0,
+    "sunday": 0,
+    "weekStart": "2021-02-15",
+    "weekEnd": "2021-02-21",
+    "weekHours": 24,
+    "_id": "602b211894bd6e1e4f85de8c",
+    "employee_id": "auth0|602c1cb963504c0071df24a6"
+  },
+  {
+    "monday": 8,
+    "tuesday": 8,
+    "wednesday": 8,
+    "thursday": 8,
+    "friday": 8,
+    ...
+  },
+  ...
+]
 ```
 
 
@@ -813,4 +861,4 @@ Parameters
 
 Response
 
-`Status: 204 OK`
+`Status: 204 NO CONTENT`

@@ -143,7 +143,7 @@ module.exports = {
     try {
       let reservation = await Reservation.findOne({_id: reservation_id}).exec();
       let { room_id } = reservation;
-      if (!room_id) { throw Error('Reservation not checked in.'); }
+      if (!room_id) { throw Error('Reservation is not currently checked in'); }
 
       // get room
       let room = await Rooms.findOne({_id: room_id});

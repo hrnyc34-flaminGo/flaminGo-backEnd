@@ -124,12 +124,13 @@ module.exports = {
     RoomTypes.readOne( updateInfo.roomType )
       .then(result => {
         updateInfo['roomType_id'] = new ObjectId( result._id );
-        Rooms.update( updateInfo )
+        return Rooms.update( updateInfo )
           .then(result => {
             res.sendStatus( 201 );
           });
       })
       .catch(err => {
+        console.error(err);
         res.sendStatus( 500 );
       });
   }
