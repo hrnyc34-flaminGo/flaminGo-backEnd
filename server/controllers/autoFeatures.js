@@ -1,5 +1,5 @@
 const Task = require('../../db/models/Task.js');
-const { Rooms } = require('../../db/models/rooms.js');
+const Rooms = require('../../db/models/rooms.js');
 const cron = require('node-cron');
 
 //at 5pm everyday, checks if room isOccupied is true. If true, change room isClean to false.

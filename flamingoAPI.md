@@ -13,8 +13,12 @@
   - [Get Specific Room](#get-specific-room)
   
   - [List Amenities](#list-amenities)
+
+  - [Add New Amenity](#add-new-amenity)
   
   - [List Room Types](#list-room-types)
+
+  - [Add New Room Type](#add-new-room-type)
 
 - [Reservations](#reservations)
 
@@ -56,7 +60,8 @@
 
 ## Rooms
 ### List Rooms
-`GET /rooms` Retrieves a list of rooms. By default all rooms are returned
+`GET /rooms` Retrieves a list of available rooms. 
+By default all rooms are returned
 
 Parameters
 
@@ -85,42 +90,12 @@ Response
     "roomType": "Ocean View King Suite",
     "price": "400.00",
     "amenities": [
-        "Ocean View",
-        "TV",
-        "Non-Smoking"
+      "Ocean View",
+      "TV",
+      "Non-Smoking"
     ],
     "roomNumber": "110",
     "floorNumber": 1,
-    "isClean": true,
-    "isOccupied": false,
-    "isUsable": true,
-    "tasks": [
-      {
-        "_id": "602b282c94bd6e1e4f85dea2",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        "taskTitle": "Clean Room",
-        "taskDescription": "Daily Cleaning",
-        "department": "Housekeeping",
-        "createdAt": "2021-02-15T11:00:00.000Z",
-        "dueBy": "2021-02-15T20:00:00.000Z",
-        "isComplete": false,
-        "isCleaning": true,
-        "completedAt": "",
-        "employeeCompleted": "",
-        "employeeCreated": "system",
-        "employeeAssigned": "Spencer Brook",
-        "employeeAssigned_id": "auth0|602c301102061a0069805815",
-        "employeeCompleted_id": "",
-        "employeeCreated_id": ""
-      },
-      {
-        "_id": "602b29a394bd6e1e4f85deac",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        ...
-      }
-    ],
     "currentGuests": [
       {
         "firstName": "Guest",
@@ -130,17 +105,67 @@ Response
       },
       {
         "firstName": "Guest",
-      ...
+          ...
+      }
+    ],
+    "isOccupied": true,
+    "isUsable": true,
+    "isClean": true,
+    "tasks": [
+      {
+        "_id": "602b29a394bd6e1e4f85deac",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Clean Room",
+        "taskDescription": "Daily Cleaning",
+        "department": "Housekeeping",
+        "createdAt": "2021-02-14T11:00:00.000Z",
+        "dueBy": "2021-02-14T20:00:00.000Z",
+        "isComplete": true,
+        "isCleaning": true,
+        "completedAt": "2021-02-14T19:00:00.000Z",
+        "employeeCompleted": "Spencer Brook",
+        "employeeCreated": "system",
+        "employeeAssigned": "Spencer Brook",
+        "employeeAssigned_id": "auth0|602c301102061a0069805815",
+        "employeeCompleted_id": "auth0|602c301102061a0069805815",
+        "employeeCreated_id": ""
+      },
+      {
+        "_id": "602b2d4d94bd6e1e4f85deb6",
+        "room_id": "602b14fd541461fcab3686b5",
+        "location": "110",
+        "taskTitle": "Touch up paint",
+        "taskDescription": "Paint is chipping behind headboard, please repaint.",
+        "department": "Maintenance",
+        ...
       }
     ]
   },
   {
-    "_id": "602b1b4d94bd6e1e4f85de79",
-    "roomType_id": "602b100e541461fcab3686a7",
+    "_id": "602b3db794bd6e1e4f85ded1",
+    "roomType_id": "602b118a541461fcab3686ac",
     "reservation_id": "",
-    "roomType": "Single Queen",
-    "price": "100.00",
-  ...
+    "roomType": "Ocean View King Suite",
+    "price": "400.00",
+    "amenities": [
+      "Ocean View",
+      "TV",
+      "Non-Smoking"
+    ],
+    "roomNumber": "111",
+    "floorNumber": 1,
+    "currentGuests": [],
+    "isOccupied": false,
+    "isUsable": true,
+    "isClean": true,
+    "tasks": []
+  },
+  {
+    "_id": "602b1f2694bd6e1e4f85de88",
+    "roomType_id": "602b1139541461fcab3686ab",
+    "reservation_id": "",
+    ...
   }
 ]
 ```
@@ -177,7 +202,7 @@ Response
 `Status: 201 CREATED`
 
 ### Get Specific Room
-`GET /rooms/:room_id` Retrieves a specific room by its id
+`GET /rooms/id/:room_id` Retrieves a specific room by its id
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -189,64 +214,28 @@ Response
 
 ```JSON
 {
-    "_id": "602b14fd541461fcab3686b5",
-    "roomType_id": "602b118a541461fcab3686ac",
-    "reservation_id": "602b3b5e94bd6e1e4f85decf",
-    "roomType": "Ocean View King Suite",
-    "price": "400.00",
-    "amenities": [
-        "Ocean View",
-        "TV",
-        "Non-Smoking"
-    ],
-    "roomNumber": "110",
-    "floorNumber": 1,
-    "isClean": true,
-    "isOccupied": false,
-    "isUsable": true,
-    "tasks": [
-      {
-        "_id": "602b282c94bd6e1e4f85dea2",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        "taskTitle": "Clean Room",
-        "taskDescription": "Daily Cleaning",
-        "department": "Housekeeping",
-        "createdAt": "2021-02-15T11:00:00.000Z",
-        "dueBy": "2021-02-15T20:00:00.000Z",
-        "isComplete": false,
-        "isCleaning": true,
-        "completedAt": "",
-        "employeeCompleted": "",
-        "employeeCreated": "system",
-        "employeeAssigned": "Spencer Brook",
-        "employeeAssigned_id": "auth0|602c301102061a0069805815",
-        "employeeCompleted_id": "",
-        "employeeCreated_id": ""
-      },
-      {
-        "_id": "602b29a394bd6e1e4f85deac",
-        "room_id": "602b14fd541461fcab3686b5",
-        "location": "110",
-        ...
-      }
-    ],
-    "currentGuests": [
-      {
-        "firstName": "Guest",
-        "lastName": "One",
-        "phone": "123-456-7890",
-        "email": "guestOne@madeup.com"
-      },
-      {
-        "firstName": "Guest",
-      ...
-      }
-    ]
-  }
+  "_id": "602b3db794bd6e1e4f85ded1",
+  "roomType_id": "602b118a541461fcab3686ac",
+  "reservation_id": "",
+  "roomType": "Ocean View King Suite",
+  "price": "400.00",
+  "amenities": [
+    "Ocean View",
+    "TV",
+    "Non-Smoking"
+  ],
+  "roomNumber": "111",
+  "floorNumber": 1,
+  "currentGuests": [],
+  "isOccupied": false,
+  "isUsable": true,
+  "isClean": true,
+  "tasks": []
+}
 ```
+
 ### List Amenities
-`GET /rooms/amenities` Retrieves a list of all room amenities.
+`GET /rooms/amenities` Retrieves a list of all room amenities
 
 Response
 
@@ -273,6 +262,17 @@ Response
   ...
 ]
 ```
+
+### Add New Amenity
+`POST /rooms/amenities` Create a new amenity
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| amenity | string | body | Name of the new amenity |
+
+Response
+
+`Status 201 CREATED`
 
 ### List Room Types
 `GET /rooms/types` Retrieves a list of all room types
@@ -327,6 +327,19 @@ Response
 ]
 
 ```
+
+### Add New Room Type
+`POST /rooms/types` Creates a new room type
+
+| Parameter | Type | In | Description |
+| --------- | ---- | --- | ----------- |
+| roomType | string | body | Name of the new room type |
+| price | string | body | Price per night |
+| amenities | array | body | List of amenities |
+
+Response
+
+`Status: 201 CREATED`
 
 ## Reservations
 
@@ -545,7 +558,6 @@ Response
   },
   ...
 ]
-
 ```
 
 ### Add New Task
@@ -560,7 +572,7 @@ Parameters
 | taskDescription | string | body | [Optional] Description of the new task |
 | department | string | body | Selection for which Department this task is for (Maintenance or Housekeeping) |
 | employeeCreated | string | body | Employee first and last name who created the task
-| employeeCreated_Id | string | body | Employee AuthO id who created the task
+| employeeCreated_id | string | body | Employee AuthO id who created the task
 | employeeAssigned | string | body | [Optional] Employee first and last name who is assigned to the task
 | employeeAssigned_id | string | body | [Optional] Employee AuthO id who is assigned to the task
 | dueBy | string | body | [Optional] String of timestamp in ISO format |
@@ -569,52 +581,6 @@ Parameters
 
 Response
 `Status: 201 CREATED`
-
-*NOTE: _id and task_id are the same id*
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "",
-    "isComplete": false,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "",
-    "employeeCompleted_id": "",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
 
 ### Edit Task
 `PUT /tasks/:task_id` Will change the task to complete
@@ -625,57 +591,35 @@ Parameters
 | --------- | ---- | --- | ----------- |
 | task_id | string | path | String representation of mongo _id |
 | employeeCompleted | string | body | Employee first and last name who completed task |
-| employeeCompleted_id | string | body | Employee AuthO id
+| employeeCompleted_id | string | body | Employee AuthO id |
 | isComplete | boolean | body | Task completion status. Set to true. |
 
 Response
 
 `Status: 200 OK`
 
-*NOTE: _id and task_id are the same id*
 ```JSON
-  {
-    "_id": "60108729ffefc9bae107564d",
-    "task_id": "60108729ffefc9bae107564d",
-    "room_id": "507c7f79bcf86cd7994f6c0e",
-    "location": "110",
-    "taskTitle": "Clean dirty spot",
-    "taskDescription": "Behind the nightstand on the right side of the bed. Don't ask me how a guest got that there.",
-    "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
+{
+    "taskDescription": "Daily Cleaning",
+    "dueBy": "Fri Feb 19 2021 17:00:00 GMT-0500 (Eastern Standard Time)",
+    "completedAt": "2021-03-03T21:44:06.742Z",
     "isComplete": true,
     "isCleaning": true,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
-```
-or
-```JSON
-  {
-    "task_id": "60108729ffefc9bae107564d",
-    "location": "Pool",
-    "taskTitle": "Clean Pool",
-    "taskDescription": "Do some pool cleaning.",
+    "employeeCreated": "system",
+    "employeeCreated_id": "",
+    "employeeAssigned": "Spencer Brook",
+    "employeeAssigned_id": "auth0|602c301102061a0069805815",
+    "employeeCompleted": "Spencer Brooke",
+    "employeeCompleted_id": "auth0|602c301102061a0069805815",
+    "_id": "602f6d3794bd6e1e4f85dedc",
+    "room_id": "602b1b4d94bd6e1e4f85de7c",
+    "location": "124",
+    "taskTitle": "Clean Room",
     "department": "Housekeeping",
-    "createdAt": "2021-02-13T13:44:00.000Z",
-    "dueBy": "2021-02-14T10:00:00.000Z",
-    "completedAt": "2021-02-13T16:15:00.000Z",
-    "isComplete": true,
-    "isCleaning": false,
-    "employeeCreated": "Jane Doe",
-    "employeeCreated_id": "auth0|602c1cb963504c0071df24a6",
-    "employeeCompleted": "John Smith",
-    "employeeCompleted_id": "auth0|601g2cb963504c0071df22h5",
-    "employeeAssigned": "Joe Slo",
-    "employeeAssigned_id": "auth0|604a1cb963504c0071df24b8"
-  }
+    "createdAt": "Fri Feb 19 2021 06:00:00 GMT-0500 (Eastern Standard Time)"
+}
 ```
+
 
 ## Employees
 
@@ -701,13 +645,13 @@ Response
     "address2": "",
     "city": "New York",
     "state": "NY",
-    "zipcode": 10012,
+    "zipcode": "10012",
     "country": "USA",
     "phone": "123-456-7890",
-    "wage": 12654,
+    "wage": "12654.00",
     "startDate": "2021-02-13",
     "position": "systemAdministration",
-    "weekHours": 30,
+    "weekHours": "30.5",
     "isActive": true
   },
   {
@@ -743,13 +687,13 @@ Response
   "address2": "",
   "city": "New York",
   "state": "NY",
-  "zipcode": 10012,
+  "zipcode": "10012",
   "country": "USA",
   "phone": "123-456-7890",
-  "wage": 12654,
+  "wage": "12654.00",
   "startDate": "2021-02-13",
   "position": "systemAdministration",
-  "weekHours": 30,
+  "weekHours": "30",
   "isActive": true
 }
 ```
@@ -772,8 +716,8 @@ Body Parameter
 | country | string | body | String of the employee's address country |
 | phone | string | body | [Optional] String of the employee's phone number |
 | email | string | body | String of the employee's email address |
-| wage | number | body | Number of the employee's hourly wage |
-| startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD") |
+| wage | string | body | String of the employee's hourly wage Ex. "15.00" |
+| startDate | string | body | String of the employee's start date in the format "YYYY-MM-DD" |
 | position | string | body | String of the employee's position (reference official list) |
 
 Response
@@ -782,21 +726,35 @@ Response
 
 ```JSON
 {
-  "id": "auth0|999999999999999999999999",
-  "name": "Theo Telonis",
-  "email": "theo123@gmail.com",
-  "address1": "456 Main St.",
-  "address2": "",
-  "city": "New York",
-  "state": "NY",
-  "zipcode": 10012,
-  "country": "USA",
-  "phone": "123-456-7890",
-  "wage": 12654,
-  "startDate": "2021-02-13",
-  "position": "systemAdministration",
-  "weekHours": 30,
-  "isActive": true
+    "created_at": "2021-03-03T22:25:18.159Z",
+    "email": "testhuman@gmail.com",
+    "email_verified": false,
+    "identities": [
+        {
+            "connection": "Username-Password-Authentication",
+            "user_id": "60400cce8756df0069a4f787",
+            "provider": "auth0",
+            "isSocial": false
+        }
+    ],
+    "name": "undefined Human",
+    "nickname": "testhuman",
+    "picture": "https://thisIsAnImageURL.png",
+    "updated_at": "2021-03-03T22:25:18.159Z",
+    "user_id": "auth0|60400cce4269df0069a4f787",
+    "user_metadata": {
+        "address1": "456 Main St.",
+        "address2": "",
+        "city": "New York",
+        "state": "NY",
+        "zipcode": "10012",
+        "country": "USA",
+        "phone": "123-456-7890",
+        "wage": "15.00",
+        "startDate": "2021-02-13",
+        "position": "systemAdministration",
+        "isActive": true
+    }
 }
 ```
 
@@ -824,7 +782,7 @@ Body Parameter
 
 Response
 
-`Status: 201 CREATED`
+`Status: 204 CREATED`
 
 ### Delete Employee
 `DELETE /employees/:employee_id` Will delete an existing employee
@@ -837,11 +795,11 @@ Path Variable
 
 Response
 
-`Status: 200 OK`
+`Status: 204 NO CONTENT`
 
 ## Timesheets
 
-### Get Employee's Timesheet
+### Get Employee's Timesheets
 `GET /timesheets/:employee_id` Returns a list of timesheets for a specific employee based on their unique AuthO id. Results are sorted with the most recent first
 
 Parameters
@@ -856,27 +814,38 @@ Response
 `Status: 200 OK`
 
 ```JSON
-{
-  "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "auth0|602c1cb963504c0071df24a6",
-  "monday": 8,
-  "tuesday": 7,
-  "wednesday": 8,
-  "thursday": 5,
-  "friday": 9,
-  "saturday": 0,
-  "sunday": 0,
-  "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14",
-  "weekHours": 37
-}
+[
+  {
+    "monday": 8,
+    "tuesday": 8,
+    "wednesday": 8,
+    "thursday": 0,
+    "friday": 0,
+    "saturday": 0,
+    "sunday": 0,
+    "weekStart": "2021-02-15",
+    "weekEnd": "2021-02-21",
+    "weekHours": 24,
+    "_id": "602b211894bd6e1e4f85de8c",
+    "employee_id": "auth0|602c1cb963504c0071df24a6"
+  },
+  {
+    "monday": 8,
+    "tuesday": 8,
+    "wednesday": 8,
+    "thursday": 8,
+    "friday": 8,
+    ...
+  },
+  ...
+]
 ```
 
 
 ### Edit A Timesheet
 `PUT /timesheets` Will update the timesheet
 
-`Status: 200 OK`
+Parameters
 
 | Parameter | Type | In | Description |
 | --------- | ---- | --- | ----------- |
@@ -892,21 +861,4 @@ Response
 
 Response
 
-`Status: 200 OK`
-
-```JSON
-{
-  "timesheet_id": "60108729ffefc9bae1075652",
-  "employee_id": "auth0|602c1cb963504c0071df24a6",
-  "monday": 8,
-  "tuesday": 7,
-  "wednesday": 8,
-  "thursday": 5,
-  "friday": 9,
-  "saturday": 0,
-  "sunday": 0,
-  "weekStart": "2021-02-08",
-  "weekEnd": "2021-02-14",
-  "weekHours": 37
-}
-```
+`Status: 204 NO CONTENT`

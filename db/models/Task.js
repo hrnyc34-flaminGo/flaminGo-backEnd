@@ -24,6 +24,22 @@ const taskSchema = new Schema({
   versionKey: false
 });
 
+taskSchema.statics.searchTasks = function (query = {}) {
+  const pipeline = [
+    { $match: query }, {
+      '$set': {
+        'task_id': '$_id'
+      }
+    }, {
+      '$project': {
+        '_id': 0
+      }
+    }
+  ];
+
+  return this.aggregate(pipeline).sort({createdAt: 'desc'}).exec();
+};
+
 const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;

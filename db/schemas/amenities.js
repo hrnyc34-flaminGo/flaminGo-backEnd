@@ -6,6 +6,9 @@ db.createCollection('amenities', {
         'amenity'
       ],
       properties: {
+        _id: {
+          bsonType: 'objectId'
+        },
         'amenity': {
           bsonType: 'string',
         },

@@ -1,8 +1,13 @@
 const reformat = require('./reformat');
 const Reservation = require('../../db/models/reservations');
-const { Rooms } = require('../../db/models/rooms');
+const Rooms = require('../../db/models/rooms');
 
-
+/**
+ * Because mongo query objects are immutable and the reservations should be
+ * returned in a very specific format this function takes in the result of
+ * a query to reservations and formats it to match what the front end is
+ * expecting
+ */
 const formatReservation = (reservation) => {
   let bookingGuest = reformat.guestToName(reservation.bookingGuest);
   let guestList = reformat.guestListToNameList(reservation.guestList);
@@ -23,8 +28,10 @@ const formatReservation = (reservation) => {
   };
 };
 
-// Given a day in YYYY-MM-DD format returns promise of how many of each
-// roomtype is reserved for that day
+/**
+ * Given a date string in YYYY-MM-DD format returns promise of how many of each
+ * room type are reserved for the given date
+*/
 const sumReservationsForDate = (dateStr) => {
   let pipeline = [
     {
@@ -62,6 +69,11 @@ const sumReservationsForDate = (dateStr) => {
   return Reservation.aggregate(pipeline);
 };
 
+/**
+ * Return a promise that will resolve to an array of room types present
+ * in the database.  Each room type object will have a qty property that
+ * is the total number of room of that room type
+ */
 const sumByRoomType = () => {
   let pipeline = [
     {

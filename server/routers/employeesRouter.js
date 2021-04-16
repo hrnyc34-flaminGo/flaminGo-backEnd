@@ -1,8 +1,5 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-const { adminManagerPermissions } = require ('../middleware/authentication');
-
-// router.use(adminManagerPermissions);
 
 router.get('/', controller.employees.getAll);
 router.get('/:employee_id', controller.employees.getOne);

@@ -1,6 +1,9 @@
 const Task = require('../../db/models/Task.js');
-const { Rooms } = require('../../db/models/rooms.js');
+const Rooms = require('../../db/models/rooms.js');
 
+/**
+ * Sets defaults for a system generated cleaning task
+ */
 const cleanTaskDefault = {
   taskTitle: 'Clean Room',
   department: 'Housekeeping',
@@ -9,7 +12,9 @@ const cleanTaskDefault = {
   employeeCreated: 'system'
 };
 
-// Returns a promise with the newly created task
+/**
+ * Returns a promise with the newly created cleaning task
+ */
 const newCleaningTask = (location, room_id) => {
   return Promise.resolve(room_id)
     .then((room_id) => {
@@ -22,12 +27,12 @@ const newCleaningTask = (location, room_id) => {
     //
     })
     .then((rooms) => {
-      // create new task with cleaning defaults
+      // Create new task with cleaning defaults
       let task = Object.assign({}, cleanTaskDefault);
       task.location = location;
       task.createdAt = new Date(Date.now()).toISOString();
       let dueBy = new Date(Date.now());
-      dueBy.setHours(15, 0, 0); // todo: Set to 3pm for now but could be smarter
+      dueBy.setHours(15, 0, 0);
       task.dueBy = dueBy.toISOString();
 
       // If task is for a room add roomNumber and room_id

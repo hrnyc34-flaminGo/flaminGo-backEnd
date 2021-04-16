@@ -1,0 +1,740 @@
+// colors
+$grape: #a91cff;
+$berry: #ff2063;
+$white: #ffffff;
+$clementine: #ff8b03;
+$carrot: #ff4f03;
+$black: #252b2e;
+
+// gradients
+$clementineToCarrot: linear-gradient(135deg, #ff8b03, #ff4f03);
+$carrotToBerry: linear-gradient(135deg, #ff4f03, #ff2063);
+$berryToGrape: linear-gradient(135deg, #ff2063, #a91cff);
+
+// fonts
+$mainFont: 'Open Sans', sans-serif;
+$plain: 400;
+$semiBold: 600;
+$bold: 700;
+
+h1 {
+  color: black;
+}
+html {
+  height: 100%;
+  width: 100%;
+}
+Body {
+  font-family: $mainFont;
+  height: 100%;
+
+  background-image: $carrotToBerry;
+  margin: 0;
+}
+
+.main {
+  // border: 1px solid black;
+  background-image: $carrotToBerry;
+  height: 100%;
+  width: 100%;
+}
+
+/***************************************************************
+
+CHECK-IN / CHECK-OUT
+
+***************************************************************/
+
+.mainBox {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#mainBox {
+  margin: auto;
+  height: 500px
+}
+.checkInTitleDiv {
+  padding-top: 40px;
+  text-align: center;
+  // font-family: $mainFont;
+  font-style: normal;
+  font-weight: $bold;
+  font-size: 30px;
+  line-height: 41px;
+}
+.checkOutLabels {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+}
+input.inputs {
+  margin-bottom: 10px;
+}
+.centeredInputBars {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  padding-top: 6%;
+}
+#centeredInputBars {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  padding-top: 3%;
+}
+.searchButtonPlacement {
+  margin: auto;
+  width: 158px;
+  margin-top: 30px;
+}
+#searchButtonPlacement {
+  margin: auto;
+  width: 158px;
+  margin-top: 70px;
+  background-color: $berry;
+}
+.tables {
+  width: fit-content;
+  margin: auto;
+}
+.headings {
+  margin-top: 25px;
+}
+td {
+  padding-right: 50px;
+}
+#checkoutButton1 {
+  margin: auto;
+  background-color: $berry;
+  margin-right: 25px;
+}
+#checkoutButton2 {
+  margin: auto;
+  background-color: $berry;
+  margin-left: 25px;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.redirectMessage {
+  text-align: center;
+  margin-top: 25px;
+}
+/***************************************************************/
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  opacity: 0;
+}
+
+#mainHeader {
+  height: 100px;
+  padding: 0 0 0 30px;
+  color: $berry;
+  background-color: white;
+}
+
+#menuIcon {
+  float: right;
+  margin: 30px 30px 0 0;
+}
+
+#backButton {
+  margin: 0 0 0 30px;
+}
+
+#listContainer {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.listHeader {
+  margin: 0 30px 20px 30px;
+}
+
+.listHeaderSearch {
+  border: 1px $berry solid;
+  height: 40px;
+  width: 300px;
+  display: block;
+  float: right;
+  padding: 0 0 0 10px;
+}
+
+.listHeaderSearch img {
+  float: right;
+  margin: 10px 10px 0 0;
+}
+
+.listHeaderSearch input {
+  border: none;
+  margin: auto;
+  height: 38px;
+  width: 60%;
+  outline: none;
+  font-family: 'Open Sans';
+  font-size: 14px;
+}
+
+#listEntriesContainer {
+  margin: auto;
+  height: calc(100% - 80px);
+  width: calc(100% - 40px);
+  overflow: scroll;
+}
+
+#listEntriesHeader {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 60px;
+  font-weight: 600;
+  color: white;
+}
+
+.titleTable th {
+  width: 200px;
+  border-right: solid 1px white;
+  font-weight: 600;
+}
+
+#listEntry {
+  height: 100px;
+  width: calc(100% - 40px);
+  margin: 0 20px 20px 20px;
+  border-radius: 30px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.entryTable th {
+  font-weight: 400;
+  width: 200px;
+  color: black;
+}
+
+.listEntryText {
+  margin: 0 0 0 20px;
+}
+
+.listEntryButtons {
+  float: right;
+  justify-content: right;
+}
+
+/*Dropdown Test*/
+
+.list1 {
+  display: inline-block;
+}
+
+.list1 .anchor {
+  position: relative;
+}
+
+.list1 ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  background-color: $clementine;
+  border-top: none;
+  position: absolute;
+  width: 140px;
+  border-radius: 0 20px 0 20px;
+  padding: 10px;
+}
+
+.list1 ul.items li {
+  list-style: none;
+  color: white;
+  font-size: 14px;
+}
+
+.list1.visible .items {
+  display: block;
+}
+
+input[type='checkbox']:checked label {
+  color: #f3f3f3;
+  background-color: $berry;
+}
+
+.landingContainer {
+  height: 100%;
+  width: 100%;
+}
+
+  .listBgContainer {
+    height:100%;
+    width: 100%;
+    background-color: white;
+  }
+
+@import './createBooking';
+
+  //created separate stylesheet for AddTaskForm
+@import 'addTask';
+
+  // checkin CSS
+
+.mainBox {
+  display: block;
+  margin: 0 auto;
+}
+
+.checkInTitleDiv {
+  padding-top: 40px;
+  text-align: center;
+  font-style: normal;
+  font-weight: $bold;
+  font-size: 30px;
+  line-height: 41px;
+}
+
+.checkinLabels {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+#checkInGuestName {
+  margin-bottom: 40px;
+}
+
+.centeredInputBars {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  padding-top: 10%;
+}
+
+.searchButtonPlacement {
+}
+
+#reservationOuterContainer {
+  margin: auto;
+}
+
+#checkIn2Container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#checkIn3Container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#reservationTitle {
+  font-family: $mainFont;
+  font-weight: 700;
+  margin: 20px 0 0 0;
+  text-align: center;
+  font-size: 30px;
+}
+
+#reservationSubTitle {
+  font-family: $mainFont;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.resSearch {
+  font-weight: 400;
+}
+
+#reservationInnerContainer {
+  width: 900px;
+  height: 350px;
+  background-image: $berryToGrape;
+  border-radius: 30px;
+  margin: 0 0 30px 0;
+}
+
+#roomsListInnerContainer {
+  width: 840px;
+  height: 440px;
+  background-image: $berryToGrape;
+  margin: 0 auto;
+  border-radius: 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  justify-content: start;
+  overflow: scroll;
+}
+
+.roomBox{
+  background: $white;
+  width: 125px;
+  height: 125px;
+  margin-top: 10px;
+  margin-left: 10px;
+  line-height: 65px;
+  color: $black;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+  border-radius: 30px;
+}
+
+.roomBox:hover{
+  background-color: $grape;
+  cursor:pointer;
+}
+
+.roomBox:active {
+  background-color: $berry;
+  cursor:pointer;
+}
+
+.entryTableMini {
+  margin: auto;
+}
+
+.entryTableMini th {
+  font-weight: 400;
+  width: 220px;
+}
+
+.titleTableMini {
+  margin: auto;
+}
+
+.titleTableMini th {
+  width: 220px;
+  border-right: solid 1px white;
+  font-weight: 600;
+}
+
+#listEntriesHeaderMini {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: white;
+
+}
+
+#listEntriesScroll {
+  margin: 0 20px 20px 0;
+  height: 290px;
+  overflow: scroll;
+}
+
+#listEntryMini {
+  height: 100px;
+  width: calc(100% - 40px);
+  margin: 0 20px 20px 20px;
+  border-radius: 30px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#listEntryMini:hover{
+  background-color: $grape;
+  color: white;
+  cursor:pointer;
+}
+
+#listEntryMini:active {
+  background-color: $berry;
+  cursor:pointer;
+}
+
+.sortBy {
+  font-size: 14px;
+  width: 160px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: $clementine;
+  border-radius: 30px;
+}
+
+
+.filterBy {
+  font-size: 14px;
+  width: 160px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: $clementine;
+  border-radius: 30px;
+  margin: 0 30px 0 0;
+}
+
+select {
+  text-align: center;
+  text-align-last: center;
+  outline: none;
+}
+
+option {
+  text-align: left;
+  /* reset to left*/
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+.listBgContainer {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.roomDetails {
+  line-height: 2;
+  font-family: $mainFont;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  margin: 50px 0 0 0;
+}
+
+.roomDetails div {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.roomDetailsHeader {
+  text-align: center;
+  font-family: $mainFont;
+  font-weight: 700;
+  color: black;
+  font-size: 22px;
+}
+
+.detailsTitle {
+  font-weight: 700;
+}
+
+// .detailsContent {
+//   float: right;
+// }
+
+.closeRmDetails {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  font-family: Open Sans,sans-serif;
+  font-weight: 400;
+  color: #FFFFFF;
+  background-color: #FF8B03;
+  border: none;
+  border-radius: 20px;
+  width: 160px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+
+//RoomAddEdit
+#roomContainer {
+  font-family: $mainFont;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+#roomEntriesContainer {
+  padding: 30px;
+  display: flex;
+  height: calc(60% - 80px);
+  width: calc(100% - 40px);
+  flex-direction: column;
+}
+
+#roomBox_add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#roomHeaderBox {
+  font-family: $mainFont;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.roomTable {
+  margin-top: 0px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  display: block;
+  height: calc(90% - 80px);
+  width: calc(90% - 40px);
+  border-radius: 30px;
+  background-color: $berry;
+}
+
+#roomInnerTable1 {
+  height: 100px;
+  width: calc(100% - 40px);
+  height: calc(100% - 80px);
+  margin: 40px 0 0 15px;
+  border-radius: 20px;
+}
+
+#roomInputBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color:whitesmoke;
+}
+
+#roomlabel {
+  font-family: $mainFont;
+  font-size: 14px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+#roomInputQuery1, #roomInputQuery2 {
+  font-family: $mainFont;
+  font-size: 18px;
+  padding: 7px 7px 7px 7px;
+}
+
+#roomInputBoxInside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  align-items: center;
+}
+
+//selecting modal
+#roomInnerTable2 {
+  height: 80px;
+  width: calc(100% - 40px);
+  height: calc(100% - 80px);
+  margin: 0 0 15px 15px;
+  border-radius: 20px;
+  max-height: 500px;
+  overflow-y: scroll;
+  position : relative; bottom:0;
+}
+
+#roomInnerTable3 {
+  margin: 0 20px 10px 20px;
+  padding-bottom: 10px;
+}
+
+#roomSubmitButton{
+  width: 42%;
+  height: 60%;
+  font-size: 22px;
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: $clementine;
+}
+
+#roomSubmitButton:hover{
+  background-color: $carrot;
+  cursor:pointer;
+}
+
+#buttonRight {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-content: start;
+  margin-right: 45px;
+}
+
+//typeList in a child component
+#setTypeButton{
+  height: 50px;
+  width: calc(100% - 40px);
+  padding: 5px;
+  border-radius: 30px;
+  background-color: white;
+  text-align: center;
+  margin: 10px 10px 15px 0;
+}
+
+#roomSelectText {
+  font-family: $mainFont;
+  font-size: 20px;
+  font-weight: bold;
+  color: $berry;
+  border: none;
+  border-radius: 50px;
+  width: 400px;
+  height: 110px;
+  outline: none;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+#roomSelectText:hover{
+  color: $grape;
+  cursor: pointer;
+}
+
+#room_H3 {
+  color: rgb(0, 0, 0);
+}
+
+#roomDetailsContainer {
+  background-color: white;
+  width: 60%;
+  border-radius: 0 30px 0 30px;
+  overflow: scroll;
+}
+
+@media only screen and (max-width: 1300px) {
+  .titleTable th {
+    width: 120px;
+    border-right: solid 1px white;
+    font-weight: 600;
+  }
+
+  .entryTable th {
+    font-weight: 400;
+    width: 120px;
+  }
+
+}
