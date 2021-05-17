@@ -11,6 +11,8 @@ services:
       - MONGO_URL=mongodb://mongodb:27017/flaminGo
       - NODE_ENV=production
       - URL=https://flamingo.colinchauche.com
+      - REACT_APP_AUTH0_DOMAIN=flamingo-tonhil.us.auth0.com
+      - REACT_APP_AUTH0_CLIENT_ID=https://flamingo.colinchauche.com
     depends_on:
       - mongodb
 
