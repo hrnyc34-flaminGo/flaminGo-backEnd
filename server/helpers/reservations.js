@@ -1,6 +1,6 @@
 const reformat = require('./reformat');
 const Reservation = require('../../db/models/reservations');
-const { Rooms } = require('../../db/models/rooms');
+const Rooms = require('../../db/models/rooms');
 
 /**
  * Because mongo query objects are immutable and the reservations should be

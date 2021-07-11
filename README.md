@@ -15,12 +15,12 @@
 ---
 
 ## Introduction
-> 'Property Management Solutin APP' Developed by a team of 11 developers
+> 'Hotel Management Software' Developed by a team of 11 developers
 ```
 We developed this project as a group over the course of 7 days during the Hack Reactor program.
 UPDATED NEEDED
 ```
-* Deployed our site on AWS can be found [here](URL_for_link).
+* Deployed project can be found [here](URL_for_link).
 
 ## Technologies
 >  For this project, we used the following languages and frameworks in our implementation
@@ -66,6 +66,7 @@ Document can be found [here](URL_for_link).
   * Guest Check In
   * Guest Check Out
   * Check Room Status
+  * Add A Reservation
 
 
 #### 2 .HOUSEKEEPING / MAINTENANCE COMPONENTS
@@ -84,12 +85,23 @@ Document can be found [here](URL_for_link).
   * Add rooms
   * Edit rooms
 
-## Installation Guidelines
+## Installation/Running Instructions
 
-  1. clone the ‘flaminGo’ repo to your local machine
-  2. run ```mongorestore --drop --preserveUUID```  in the root directory of this repository
-  3. run ```docker-compose up -d``` in the root directory of this repository
-  4. find the site on ***localhost:3000***
+### Using docker-compose
+
+  1. Clone this repo to your local machine
+  2. Follow the instructions in the ```.env.example``` to set up an auth0 account and get the necessary connection info in to a ```.env``` file.
+  3. Run ```docker-compose up -d``` in the root directory of this repository
+  4. Navigate to ***localhost:3000*** to view the site
+
+### Without Docker
+  *These instructions assume that you have mongoDB installed and running on your computer using the default configuration.  We also assume that you have Node.js installed and are running at least v14*
+  1. Clone this repo to your local machine
+  2. Navigate to the ```/db/sampleData``` directory and run the command ```mongorestore --drop --preserveUUID``` to load sample application data
+  3. Follow the instructions in the ```.env.example``` to set up an auth0 account and get the necessary connection info in to a ```.env``` file.
+  5. Navigate to the root directory of the repo and run the command ```npm install```
+  6. Once all the dependencies have installed run ```npm start```
+  7. Site will be running on ***localhost:3000***
 
 
 _Have a great day!_

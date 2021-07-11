@@ -22,6 +22,8 @@ module.exports = {
         name: user.name,
         email: user.email,
         ...user.user_metadata,
+        zipcode: user.user_metadata.zipcode + '',
+        weekHours: user.user_metadata.weekHours + '',
       }))))
       .catch((err) => {
         console.log(err);
@@ -42,6 +44,8 @@ module.exports = {
         name: user.name,
         email: user.email,
         ...user.user_metadata,
+        zipcode: user.user_metadata.zipcode + '',
+        weekHours: user.user_metadata.weekHours + '',
       })))
       .catch((err) => {
         console.log(err);
@@ -92,7 +96,7 @@ module.exports = {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     }) // send back newly created user data as a response
-      .then(({ data }) => res.status(201).json(data))
+      .then(({ data }) => res.status(200).json(data))
       .catch((err) => {
         console.log(err);
         res.sendStatus(500);
@@ -150,7 +154,7 @@ module.exports = {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     }) // response status
-      .then(() => res.sendStatus(200))
+      .then(() => res.sendStatus(204))
       .catch((err) => {
         console.log(err);
         res.sendStatus(500);
@@ -165,7 +169,7 @@ module.exports = {
         Authorization: `Bearer ${MGMT_API_TOKEN}`,
       },
     })
-      .then(({ data }) => res.status(200).json(data))
+      .then(({ data }) => res.sendStatus(204))
       .catch((err) => {
         console.log(err);
         res.sendStatus(500);
